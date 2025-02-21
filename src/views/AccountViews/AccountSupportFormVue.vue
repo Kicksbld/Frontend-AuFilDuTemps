@@ -1,5 +1,5 @@
 <template>
-    <main class="grid place-content-center min-h-screen w-full">
+    <main class="grid place-content-center min-h-[50vh] w-full">
         <h1 class="text-4xl text-red-500">Support Form Page under development</h1>
     </main>
 </template>

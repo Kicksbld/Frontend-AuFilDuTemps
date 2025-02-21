@@ -13,6 +13,7 @@ import AccountConnectionsVue from '../views/AccountViews/AccountConnectionsVue.v
 import AccountOrderVue from '../views/AccountViews/AccountOrderVue.vue'
 import AccountPayementMethodVue from '../views/AccountViews/AccountPayementMethodVue.vue'
 import AccountSupportFormVue from '../views/AccountViews/AccountSupportFormVue.vue'
+import CompetitionGameVue from '../views/CompetitionGameVue.vue'
 
 
 const router = createRouter({
@@ -74,8 +75,8 @@ const router = createRouter({
       component: AccountConnectionsVue,
     },
     {
-      path: '/account/order',
-      name: 'account-order',
+      path: '/account/orders',
+      name: 'account-orders',
       component: AccountOrderVue,
     },
     {
@@ -88,7 +89,11 @@ const router = createRouter({
       name: 'account-support-form',
       component: AccountSupportFormVue,
     },
-    
+    {
+      path: '/competition-game',
+      name: 'competition-game',
+      component: CompetitionGameVue,
+    },
   ],
 })
 

@@ -1,6 +1,13 @@
 <template>
-    <main class="grid place-content-center min-h-screen w-full">
+    <main class="grid place-content-center min-h-[50vh] w-full">
         <h1 class="text-4xl text-red-500">Account Home Page under development</h1>
+        <div class="flex flex-col gap-4 mt-4">
+            <RouterLink class="text-blue-500" to="/account/orders">Orders</RouterLink>
+            <RouterLink class="text-blue-500" to="/account/connections">Connections</RouterLink>
+            <RouterLink class="text-blue-500" to="/account/adresses">Adresses</RouterLink>
+            <RouterLink class="text-blue-500" to="/account/payement-method">Payement Method</RouterLink>
+            <RouterLink class="text-blue-500" to="/account/support-form">Support Form</RouterLink>
+        </div>
     </main>
 </template>
 
