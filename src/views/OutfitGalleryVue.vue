@@ -5,7 +5,9 @@
             <RouterLink class="text-blue-500" to="/products">Products</RouterLink>
         </div>
     </main>
-
+    <div class="flex flex-col w-90 mt-1">
+    <img src="./img/card.png" alt="card penché"  style="clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);">
+    </div>
 </template>
 
 <script>
