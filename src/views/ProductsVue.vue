@@ -7,11 +7,14 @@
 
 <script setup>
 import { FwbCarousel } from 'flowbite-vue'
+import caroussel1 from '../assets/img/png/carous1.png';
+import caroussel2 from '../assets/img/png/carous2.png';
+import caroussel3 from '../assets/img/png/carous3.png'
 
 const pictures = [
-  {src: './img/carous1.png', alt: 'Image 1'},
-  {src: './img/carous2.png', alt: 'Image 2'},
-  {src: './img/carous3.png', alt: 'Image 3'},
+  {src: caroussel1, alt: 'Image 1'},
+  {src: caroussel2, alt: 'Image 2'}, 
+  {src: caroussel3, alt: 'Image 3'},
 ]
 </script>
 

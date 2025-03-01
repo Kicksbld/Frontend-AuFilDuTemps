@@ -6,8 +6,8 @@
         </div>
     </main>
     <div class="grid grid-cols-2 gap-4 w-full mt-1">
-    <img src="./img/card.png" alt="card penché"  style="clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);">
-    <img src="./img/card.png" alt="img 2" style="clip-path: polygon(25% 0%, 100% 0%, 89% 100%, 0% 100%);">
+    <img src="../assets/img/png/card.png" alt="card penché"  style="clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);">
+    <img src="../assets/img/png/card.png" alt="img 2" style="clip-path: polygon(25% 0%, 100% 0%, 89% 100%, 0% 100%);">
     </div>
 </template>
 
