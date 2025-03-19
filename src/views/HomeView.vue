@@ -2,6 +2,7 @@
 /* import { useDataBaseStore } from "../stores/dataBaseData";
 import { onMounted, computed } from "vue"; */
 import { RouterLink } from "vue-router";
+import BookAnimated from "../UI/Components/BookAnimated.vue";
 
 /* const { fetchDBData, state } = useDataBaseStore(); */
 
@@ -20,6 +21,7 @@ import { RouterLink } from "vue-router";
       <RouterLink class="text-blue-500" to="/collections">Collections</RouterLink>
       <RouterLink class="text-blue-500" to="/competition-game">Competition Game</RouterLink>
     </div>
+    <BookAnimated />
   </main>
 
 </template>
