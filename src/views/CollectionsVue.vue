@@ -11,13 +11,21 @@
     <div class="scroll-bar" :style="{ height: `${barHeight}%` }"></div>
     <div class="content">
     
-      <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div>
+      <!-- <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> -->
     </div>
   </div>
 
 </template>
 
 <script>
+
+import { gsap } from "gsap";
+    
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+
+gsap.registerPlugin(ScrollToPlugin);
+
 export default {
   data() {
     return {
@@ -55,15 +63,16 @@ export default {
 </script>
 
 <style scoped>
-.container {
+/* .container {
   height: 100vh;
   position: relative;
   padding: 20px;
   background-color: #f0f0f0;
-}
+} */
 
 .scroll-bar {
   position: fixed;
+  align-items: center;
   top: 0;
   left: 0;
   width: 10px;
@@ -74,14 +83,14 @@ export default {
 .content {
   margin-top: 50px;
   height: 2000px; 
-}
+} 
 
-.content-item {
+/* .content-item {
   padding: 10px;
   margin: 5px 0;
   background-color: #ddd;
   border-radius: 5px;
-}
+}  */
 </style>
 
 
