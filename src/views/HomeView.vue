@@ -1,16 +1,15 @@
 <script setup>
-import { useDataBaseStore } from "../stores/dataBaseData";
-import { onMounted, computed } from "vue";
+/* import { useDataBaseStore } from "../stores/dataBaseData";
+import { onMounted, computed } from "vue"; */
 import { RouterLink } from "vue-router";
-import PanZoomMap from "../UI/Components/PanZoomMap.vue";
 
-const { fetchDBData, state } = useDataBaseStore();
+/* const { fetchDBData, state } = useDataBaseStore(); */
 
-onMounted(() => {
+/* onMounted(() => {
   fetchDBData("users");
-});
+}); */
 
-const users = computed(() => Array.isArray(state.data) ? state.data : []);
+/* const users = computed(() => Array.isArray(state.data) ? state.data : []); */
 
 </script>
 
@@ -21,7 +20,6 @@ const users = computed(() => Array.isArray(state.data) ? state.data : []);
       <RouterLink class="text-blue-500" to="/collections">Collections</RouterLink>
       <RouterLink class="text-blue-500" to="/competition-game">Competition Game</RouterLink>
     </div>
-    <PanZoomMap />
   </main>
 
 </template>

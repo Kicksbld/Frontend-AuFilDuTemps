@@ -14,6 +14,7 @@ import AccountOrderVue from '../views/AccountViews/AccountOrderVue.vue'
 import AccountPayementMethodVue from '../views/AccountViews/AccountPayementMethodVue.vue'
 import AccountSupportFormVue from '../views/AccountViews/AccountSupportFormVue.vue'
 import CompetitionGameVue from '../views/CompetitionGameVue.vue'
+import DesignSystem from '../views/DesignSytem.vue'
 
 
 const router = createRouter({
@@ -94,6 +95,11 @@ const router = createRouter({
       name: 'competition-game',
       component: CompetitionGameVue,
     },
+    {
+      path: '/design-sytem',
+      name: 'designsytem',
+      component: DesignSystem,
+    }
   ],
 })
 
