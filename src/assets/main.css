@@ -1,2 +1,43 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Flaemische";
+  font-style: normal;
+  font-display: swap;
+  src: url("./fonts/FlaemischeKanzleischrift.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "HalenoirCompact-Medium";
+  font-style: normal;
+  font-display: swap;
+  src: url("./fonts/HalenoirCompact-Medium.otf") format("truetype");
+}
+
+@font-face {
+    font-family: "scholar";
+    font-style: normal;
+    font-display: swap;
+    src: url("./fonts/scholar-regular.otf") format("truetype");
+  }
+
+@theme {
+  --font-halenoir: "HalenoirCompact-Medium", sans-serif;
+  --font-flaemische: "Flaemische", sans-serif;
+  --font-scholar: "scholar", sans-serif;
+
+  --color-primary: #400106;
+  --color-secondary: #5A3719;
+  --color-tertiary: #A77246;
+  --color-quaternary: #BF8E63;
+  --color-quinary : #250101;
+  --color-error: #FF0000;
+  --color-success: #008000;
+}
+
+
+.app_container {
+    max-width: 1520px;
+    padding: 12px;
+    margin: 0 auto;
+}

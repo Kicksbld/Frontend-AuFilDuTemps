@@ -1,4 +1,5 @@
 import './assets/main.css'
+import panZoom from 'vue-panzoom'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -8,6 +9,7 @@ import router from './router'
 
 const app = createApp(App)
 
+app.use(panZoom)
 app.use(createPinia())
 app.use(router)
 
