@@ -62,30 +62,32 @@
       <div>
         <h3 class="text-lg font-medium mb-4">Combined Examples</h3>
         <div class="space-y-4">
-          <Typography 
-            variant="h2" 
-            theme="primary" 
-            weight="bold" 
-            font="halenoir"
-          >
+          <Typography variant="h2" theme="primary" weight="bold" font="halenoir">
             Primary Bold Halenoir
           </Typography>
-          <Typography 
-            variant="bodymd" 
-            theme="secondary" 
-            weight="medium" 
-            font="scholar"
-          >
+          <Typography variant="bodymd" theme="secondary" weight="medium" font="scholar">
             Secondary Medium Scholar
           </Typography>
-          <Typography 
-            variant="bodysmall" 
-            theme="tercery" 
-            weight="light" 
-            font="flaemische"
-          >
+          <Typography variant="bodysmall" theme="tercery" weight="light" font="flaemische">
             Tercery Light Flaemische
           </Typography>
+        </div>
+      </div>
+
+
+
+      <div class="mt-10">
+        <h3 class="text-lg font-medium mb-4">Buttons</h3>
+        <div class="space-y-4 flex flex-col w-fit">
+          <Button variant="primary" size="medium">
+            Primary
+          </Button>
+          <Button variant="secondary" size="medium">
+            Secondary
+          </Button>
+          <Button variant="outline" size="medium">
+            Outline
+          </Button>
         </div>
       </div>
     </div>
@@ -94,11 +96,13 @@
 
 <script>
 import Typography from '../UI/design-system/Typography.vue'
+import Button from '../UI/design-system/Button.vue';
 
 export default {
   name: 'DesignSystem',
   components: {
-    Typography
+    Typography,
+    Button
   }
 }
 </script>

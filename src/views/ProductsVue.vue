@@ -1,8 +1,5 @@
 <template>
-  <main class="grid place-content-center min-h-[50vh] w-full">
-    <h1 class="text-4xl text-red-500">Products Page under development</h1>
-  </main>
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between pt-40 min-h-screen">
     <div class="flex-col flex items-center gap-[3px]" id="img_products">
       <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
         style="clip-path: polygon(0% 15%, 100% 0%, 100% 100%, 0% 100%);">
@@ -17,7 +14,7 @@
       <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
         style="clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);">
     </div>
-    <div class="ml-[1%]" id="img_primary" >
+    <div class="ml-[1%]" id="img_primary">
       <img class="w-125" src="../assets/img/png/card.png" alt="produit img"
         style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
     </div>
@@ -34,7 +31,8 @@
       </Typography>
 
       <hr>
-      <Typography class="mt-[60px] mb-[5%]" variant="h3" component="h3" font="halenoir" weight="regular" theme="tercery">
+      <Typography class="mt-[60px] mb-[5%]" variant="h3" component="h3" font="halenoir" weight="regular"
+        theme="tercery">
         Noir : 6543688
       </Typography>
 
@@ -52,29 +50,29 @@
         Quibus occurrere bene pertinax miles explicatis ordinibus parans hastisque feriens scuta qui
         habitus iram pugnantium concitat et dolorem proximos
       </Typography>
-     
+
     </div>
   </div>
 
 
   <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="light" theme="tercery">
-          Article similaire
+    Article similaire
   </Typography>
-<div class="flex gap-[2%] items-center justify-center">
-  <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%);">
-      <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 90% 0%, 100% 90%, 0% 100%);">
-      <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 100%, 0% 100%);">
-      <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-      <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-      <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);">
-    </div>
-    
+  <div class="flex gap-[2%] items-center justify-center">
+    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%);">
+    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 0%, 90% 0%, 100% 90%, 0% 100%);">
+    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 0%, 100% 3%, 100% 100%, 0% 100%);">
+    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);">
+  </div>
+
   <br>
   <fwb-carousel :pictures="pictures" />
 
@@ -94,5 +92,4 @@ const pictures = [
 ]
 </script>
 
-<style>
-</style>
+<style></style>

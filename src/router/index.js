@@ -96,7 +96,7 @@ const router = createRouter({
       component: CompetitionGameVue,
     },
     {
-      path: '/design-sytem',
+      path: '/design-system',
       name: 'designsytem',
       component: DesignSystem,
     }

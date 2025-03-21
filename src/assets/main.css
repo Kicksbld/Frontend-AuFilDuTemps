@@ -15,11 +15,11 @@
 }
 
 @font-face {
-    font-family: "scholar";
-    font-style: normal;
-    font-display: swap;
-    src: url("./fonts/scholar-regular.otf") format("truetype");
-  }
+  font-family: "scholar";
+  font-style: normal;
+  font-display: swap;
+  src: url("./fonts/scholar-regular.otf") format("truetype");
+}
 
 @theme {
   --font-halenoir: "HalenoirCompact-Medium", sans-serif;
@@ -27,17 +27,38 @@
   --font-scholar: "scholar", sans-serif;
 
   --color-primary: #400106;
-  --color-secondary: #5A3719;
-  --color-tertiary: #A77246;
-  --color-quaternary: #BF8E63;
-  --color-quinary : #250101;
-  --color-error: #FF0000;
+  --color-secondary: #5a3719;
+  --color-tertiary: #a77246;
+  --color-quaternary: #bf8e63;
+  --color-quinary: #250101;
+  --color-error: #ff0000;
   --color-success: #008000;
 }
 
-
 .app_container {
-    max-width: 1520px;
-    padding: 12px;
-    margin: 0 auto;
+  max-width: 1520px;
+  padding: 12px;
+  margin: 0 auto;
+}
+
+.logo {
+  width: clamp(225px, 17.865vw, 343px);
+  cursor: pointer;
+}
+
+.menu-burger {
+  width: clamp(35px, 2.552vw, 49px);
+  cursor: pointer;
+}
+
+.bg-header-box {
+  border: 1px solid rgba(234, 217, 203, 0.2);
+
+  background: linear-gradient(
+    94deg,
+    rgba(234, 217, 203, 0.2) 0%,
+    rgba(234, 217, 203, 0.05) 100%
+  );
+
+  backdrop-filter: blur(4px);
 }
