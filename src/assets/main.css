@@ -42,7 +42,7 @@
 }
 
 .logo {
-  width: clamp(225px, 17.865vw, 343px);
+  width: clamp(200px, 17.865vw, 343px);
   cursor: pointer;
 }
 
