@@ -7,59 +7,69 @@
         </div>
     </main>
 
-  <div class="container">
+  <!-- <div class="container">
     <div class="scroll-bar" :style="{ height: `${barHeight}%` }"></div>
     <div class="content">
     
-      <!-- <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> -->
+   <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> 
     </div>
-  </div>
+  </div> -->
+
+  <div class="grid grid-cols-2 gap-5 max-w-7xl mx-auto">
+  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+</div>
+
+
+
 
 </template>
 
 <script>
 
-import { gsap } from "gsap";
+// import { gsap } from "gsap";
     
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+// import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 
-gsap.registerPlugin(ScrollToPlugin);
+// gsap.registerPlugin(ScrollToPlugin);
 
-export default {
-  data() {
-    return {
-      scrollPosition: 0,
-      documentHeight: 0,
-      windowHeight: 0,
-      barHeight: 0,
-    };
-  },
-  mounted() {
-    this.updateScroll();
-    window.addEventListener('scroll', this.onScroll);
-    window.addEventListener('resize', this.updateScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.onScroll);
-    window.removeEventListener('resize', this.updateScroll);
-  },
-  methods: {
-    onScroll() {
-      this.scrollPosition = window.scrollY;
-      this.updateBarHeight();
-    },
-    updateScroll() {
-      this.documentHeight = document.documentElement.scrollHeight;
-      this.windowHeight = window.innerHeight;
-      this.updateBarHeight();
-    },
-    updateBarHeight() {
-      const maxScroll = this.documentHeight - this.windowHeight;
-      this.barHeight = (this.scrollPosition / maxScroll) * 100;
-    },
-  },
-};
+// export default {
+//   data() {
+//     return {
+//       scrollPosition: 0,
+//       documentHeight: 0,
+//       windowHeight: 0,
+//       barHeight: 0,
+//     };
+//   },
+//   mounted() {
+//     this.updateScroll();
+//     window.addEventListener('scroll', this.onScroll);
+//     window.addEventListener('resize', this.updateScroll);
+//   },
+//   beforeDestroy() {
+//     window.removeEventListener('scroll', this.onScroll);
+//     window.removeEventListener('resize', this.updateScroll);
+//   },
+//   methods: {
+//     onScroll() {
+//       this.scrollPosition = window.scrollY;
+//       this.updateBarHeight();
+//     },
+//     updateScroll() {
+//       this.documentHeight = document.documentElement.scrollHeight;
+//       this.windowHeight = window.innerHeight;
+//       this.updateBarHeight();
+//     },
+//     updateBarHeight() {
+//       const maxScroll = this.documentHeight - this.windowHeight;
+//       this.barHeight = (this.scrollPosition / maxScroll) * 100;
+//     },
+//   },
+// };
 </script>
 
 <style scoped>
@@ -70,7 +80,7 @@ export default {
   background-color: #f0f0f0;
 } */
 
-.scroll-bar {
+/* .scroll-bar {
   position: fixed;
   align-items: center;
   top: 0;
@@ -83,7 +93,7 @@ export default {
 .content {
   margin-top: 50px;
   height: 2000px; 
-} 
+}  */
 
 /* .content-item {
   padding: 10px;
