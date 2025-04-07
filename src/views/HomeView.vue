@@ -4,7 +4,7 @@ import { onMounted } from "vue";
 
 onMounted(async () => {
   try {
-    const data = await fetch('http://localhost:3000/api/me', {
+    const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/me`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
