@@ -15,6 +15,8 @@ import AccountPayementMethodVue from '../views/AccountViews/AccountPayementMetho
 import AccountSupportFormVue from '../views/AccountViews/AccountSupportFormVue.vue'
 import CompetitionGameVue from '../views/CompetitionGameVue.vue'
 import DesignSystem from '../views/DesignSytem.vue'
+import SignUp from '../views/authentificationViews/SignUp.vue'
+import LogIn from '../views/authentificationViews/LogIn.vue'
 
 
 const router = createRouter({
@@ -99,6 +101,16 @@ const router = createRouter({
       path: '/design-system',
       name: 'designsytem',
       component: DesignSystem,
+    },
+    {
+      path: '/sign-up',
+      name: 'sign-up',
+      component: SignUp,
+    },
+    {
+      path: '/log-in',
+      name: 'log-in',
+      component: LogIn,
     }
   ],
 })

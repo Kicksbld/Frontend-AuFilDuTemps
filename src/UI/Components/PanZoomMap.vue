@@ -1,38 +1,41 @@
 <template>
-  <div>
+  <div class="mt-26">
     <div class="text-center mb-4">
       Find the circle number: {{ selectedCircleIndex + 1 }}
     </div>
     <div class="panzoom-container">
-      <panZoom :options="{ minZoom: 1, maxZoom: 3 }" @init="handlePanZoomInit" ref="panZoom">
+      <div ref="panElement">
         <svg :width="svgWidth" :height="svgHeight" viewBox="0 0 2000 2000">
           <image
-            :href="'/src/assets/img/png/patternTest.png'"
+            :href="patternImage"
             :width="imageWidth"
             :height="imageHeight"
           />
-
           <circle
             v-for="(circle, index) in circles"
             :key="index"
             :cx="circle.x"
             :cy="circle.y"
-            r="20"
+            r="50"
             :fill="circle.color"
             @click="handleCircleClick(index)"
             class="cursor-pointer hover:opacity-80 transition-opacity"
           />
         </svg>
-      </panZoom>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import panzoom from 'panzoom';
+import patternImage from '@/assets/img/png/patternTest.png';
+
 export default {
   data() {
     return {
-      selectedCircleIndex: -1, 
+      patternImage,
+      selectedCircleIndex: -1,
       instance: null,
       circles: [
         { x: 250, y: 300, color: "#FF5733", isSelected: false },
@@ -46,12 +49,6 @@ export default {
   },
 
   methods: {
-    selectRandomCircle() {
-      const randomIndex = Math.floor(Math.random() * this.circles.length);
-      this.selectedCircleIndex = randomIndex;
-      this.circles[randomIndex].isSelected = true;
-    },
-
     handleCircleClick(index) {
       if (this.circles[index].isSelected) {
         alert("Great job!");
@@ -60,9 +57,36 @@ export default {
       }
     },
 
-    handlePanZoomInit(instance) {
-      this.instance = instance;
+    initPanZoom() {
+      this.instance = panzoom(this.$refs.panElement, {
+        maxZoom: 3,
+        minZoom: 1,
+        bounds: true,
+        boundsPadding: 0.1
+      });
     },
+
+    logSomething() {
+      console.log("Something");
+    },
+
+    selectRandomCircle() {
+      console.log("Selecting random circle");
+      const randomIndex = Math.floor(Math.random() * this.circles.length);
+      this.selectedCircleIndex = randomIndex;
+      this.circles[randomIndex].isSelected = true;
+    },
+  },
+
+  mounted() {
+    this.initPanZoom();
+    this.selectRandomCircle();
+  },
+
+  beforeUnmount() {
+    if (this.instance) {
+      this.instance.dispose();
+    }
   },
 
   computed: {
@@ -75,8 +99,8 @@ export default {
 
 <style scoped>
 .panzoom-container {
-  width: 300px;
-  height: 300px;
+  width: 600px;
+  height: 500px;
   background-color: #f5f5f5;
   position: relative;
   overflow: hidden;

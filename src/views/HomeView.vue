@@ -1,21 +1,29 @@
 <script setup>
-/* import { useDataBaseStore } from "../stores/dataBaseData";
-import { onMounted, computed } from "vue"; */
-import { RouterLink } from "vue-router";
-/* import BookAnimated from "../UI/Components/BookAnimated.vue"; */
 import Header from "../UI/Components/Header.vue";
+import { onMounted } from "vue";
 
-/* const { fetchDBData, state } = useDataBaseStore(); */
+onMounted(async () => {
+  try {
+    const data = await fetch('http://localhost:3000/api/me', {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
 
-/* onMounted(() => {
-  fetchDBData("users");
-}); */
+    if (!data.ok) {
+      throw new Error('Failed to fetch session data');
+    }
+    
+    const session = await data.json();
+    console.log('Session data:', session);
 
-/* const users = computed(() => Array.isArray(state.data) ? state.data : []); */
-
+  } catch (error) {
+    console.error('Error fetching session:', error);
+  }
+});
 </script>
 
 <template>
   <Header />
-
 </template>
