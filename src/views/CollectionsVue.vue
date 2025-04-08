@@ -14,12 +14,17 @@
    <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> 
     </div>
   </div> -->
+  <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="tercery" class="text-9xl">PRODUIT</Typography>
 
-  <div class="grid grid-cols-2 gap-5 max-w-7xl mx-auto">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <div class="grid grid-cols-2 gap-3 item-center justify-center">
+  <img class="w-[500px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <Typography class="absolute text-center">Pantalon</Typography>
+  <img class="w-[500px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <Typography class="absolute">T-shirt</Typography>
+  <img class="w-[500px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <Typography class="absolute">Pull</Typography>
+  <img class="w-[500px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <Typography class="absolute">Sweat shirt</Typography>
 </div>
 
 
@@ -27,7 +32,9 @@
 
 </template>
 
-<script>
+<script setup>
+import Typography from '../UI/design-system/Typography.vue';
+
 
 // import { gsap } from "gsap";
     
