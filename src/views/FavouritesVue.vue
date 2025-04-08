@@ -6,7 +6,7 @@
         </div>
     </main>
 
-    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="scholar" weight="regular" theme="tercery">
+    <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="tercery">
         FAVORIS
     </Typography>
 
@@ -15,9 +15,10 @@
             <div class="flex flex-col items-center relative w-100">
                 <img class="w-100" src="../assets/img/png/card.png" alt="produit img"
                     style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%);">
-                <span class="absolute top-2 right-2 text-xl text-gray-700 cursor-pointer">🗑️</span>
+                
+                <span class="absolute top-2 right-2 text-xl text-gray-700 cursor-pointer"><img src="../assets/img/svg/icons/bin-beige.svg"></span>
                 <div class="flex justify-between w-full mt-4 text-lg font-semibold">
-                    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="light"
+                    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="scholar" weight="light"
                         theme="tercery">
                         Nom du produit
                     </Typography>
@@ -27,7 +28,7 @@
                     </Typography>
                 </div>
                 <hr class="w-full my-2 border-[1px] border-black">
-                <Button @click="router.push('/design-sytem')" variant="primary" size="medium">
+                <Button class="w-[400px]" @click="router.push('/design-sytem')" variant="primary" size="medium">
                     AJOUTER
                 </Button>
             </div>
@@ -37,9 +38,9 @@
         <div class="flex flex-col items-center relative ">
                 <img class="w-100" src="../assets/img/png/card.png" alt="produit img"
                     style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%);">
-                <span class="absolute top-2 right-2 text-xl text-gray-700 cursor-pointer">🗑️</span>
+                    <span class="absolute top-2 right-2 text-xl text-gray-700 cursor-pointer"><img src="../assets/img/svg/icons/bin-beige.svg"></span>
                 <div class="flex justify-between w-full mt-4 text-lg font-semibold">
-                    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="light"
+                    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="scholar" weight="light"
                         theme="tercery">
                         Nom du produit
                     </Typography>
@@ -49,7 +50,7 @@
                     </Typography>
                 </div>
                 <hr class="w-full my-2 border-[1px] border-black">
-                <Button @click="router.push('/design-sytem')" variant="primary" size="medium">
+                <Button class="w-[400px]"  @click="router.push('/design-sytem')" variant="primary" size="medium">
                     AJOUTER
                 </Button>
             </div>
@@ -57,9 +58,9 @@
         <div class="flex flex-col items-center relative ">
                 <img class="w-100" src="../assets/img/png/card.png" alt="produit img"
                     style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%);">
-                <span class="absolute top-2 right-2 text-xl text-gray-700 cursor-pointer">🗑️</span>
+                    <span class="absolute top-2 right-2 text-xl text-gray-700 cursor-pointer"><img src="../assets/img/svg/icons/bin-beige.svg"></span>
                 <div class="flex justify-between w-full mt-4 text-lg font-semibold">
-                    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="light"
+                    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="scholar" weight="light"
                         theme="tercery">
                         Nom du produit
                     </Typography>
@@ -69,7 +70,7 @@
                     </Typography>
                 </div>
                 <hr class="w-full my-2 border-[1px] border-black">
-                <Button @click="router.push('/design-sytem')" variant="primary" size="medium">
+                <Button class="w-[400px]" @click="router.push('/design-sytem')" variant="primary" size="medium">
                     AJOUTER
                 </Button>
             </div>
@@ -79,9 +80,10 @@
 
 </template>
 
-<script>
+<script setup>
 import Typography from '../UI/design-system/Typography.vue';
 import Button from '../UI/design-system/Button.vue';
+
 
 
 </script>

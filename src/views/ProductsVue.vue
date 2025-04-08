@@ -1,4 +1,4 @@
-<template>
+<template  class="bg-gray-100">
   <div class="flex justify-between pt-40 min-h-screen">
     <div class="flex-col flex items-center gap-[3px]" id="img_products">
       <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
@@ -24,7 +24,9 @@
         <Typography variant="h1" component="h1" font="scholar" weight="light" theme="tercery">
           Nom du produit
         </Typography>
-        <img id="like_button" class="w-10" src="../assets/img/png/like.png" alt="button like">
+        <router-link to="/favorites" >
+    <img class="w-10" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
       </div>
       <Typography class="mb-[5%]" variant="h2" component="h2" font="halenoir" weight="medium" theme="primary">
         45,95 EUR
@@ -53,25 +55,97 @@
 
     </div>
   </div>
-
-
   <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="light" theme="tercery">
-    Article similaire
-  </Typography>
-  <div class="flex gap-[2%] items-center justify-center">
-    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 100%);">
-    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 90% 0%, 100% 90%, 0% 100%);">
-    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 100% 3%, 100% 100%, 0% 100%);">
-    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-    <img class="w-40" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);">
+  Articles similaires
+</Typography>
+<div class="grid grid-cols-6 gap-[2%] items-center justify-center">
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
   </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 90% 10%, 100% 90%, 0% 100%);">
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+      <router-link to="/favourites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+      <router-link to="/favourites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 90% 10%, 100% 90%, 0% 100%);">
+      <router-link to="/favourites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </div>
+</div>
+
+<Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="light" theme="tercery">
+  Voir plus
+</Typography>
+
+<div class="grid grid-cols-6 gap-[2%] items-center justify-center">
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+      <router-link to="/favorites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 90% 10%, 100% 90%, 0% 100%);">
+      <router-link to="/favorites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+      <router-link to="/favorites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+      <router-link to="/favorites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 90% 10%, 100% 90%, 0% 100%);">
+      <router-link to="/favorites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+  <div class="relative w-full">
+    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
+      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+      <router-link to="/favorites" >
+    <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
+  </router-link>
+  </div>
+</div>
+
 
   <br>
   <fwb-carousel :pictures="pictures" />
