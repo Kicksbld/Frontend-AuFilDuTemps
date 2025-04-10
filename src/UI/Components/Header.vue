@@ -1,6 +1,6 @@
 <template>
     <div class="w-full min-h-[100vh] flex items-end">
-        <img src="/src/assets/img/png/bg-header.png" class="absolute top-0 left-o w-screen h-full object-cover -z-20" alt="video-header" />
+        <img src="/src/assets/img/png/bg-header.png" class="absolute top-0 left-o w-screen h-full object-cover" alt="video-header" />
         <div class="bg-header-box max-w-[1036px] space-y-[15px] px-[38px] py-[32px] mx-[6.198vw] mb-[3.75vw]">
             <Typography font="scholar" variant="h1" theme="headerText">
                 Tisser des souvenirs pour ne pas laisser filer le temps

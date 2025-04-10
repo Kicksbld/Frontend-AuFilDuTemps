@@ -1,6 +1,9 @@
 <script setup>
 import Header from "../UI/Components/Header.vue";
 import { onMounted } from "vue";
+import Separator from "../UI/Components/Separator.vue";
+import HeaderCollection from "../UI/Components/HeaderCollection.vue";
+import HeaderGame from "../UI/Components/HeaderGame.vue";
 
 onMounted(async () => {
   try {
@@ -14,7 +17,7 @@ onMounted(async () => {
     if (!data.ok) {
       throw new Error('Failed to fetch session data');
     }
-    
+
     const session = await data.json();
     console.log('Session data:', session);
 
@@ -25,5 +28,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Header />
+  <div class="w-full bg-quinary">
+    <Header />
+    <Separator />
+    <HeaderGame />
+    <Separator />
+    <HeaderCollection />
+  </div>
 </template>
