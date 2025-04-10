@@ -14,20 +14,121 @@
    <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> 
     </div>
   </div> -->
+  <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="primary" class="text-9xl">PRODUITS</Typography>
+  <div class="grid grid-cols-2 gap-10 px-10">
+  <div class="flex flex-col items-center">
+    <img src="../assets/img/png/card.png" alt="Produit 1" class="w-full object-cover rounded-md ">
+    <div class="flex justify-between w-full mt-4 text-lg">
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">Pantalon</Typography>
+      <Typography  variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+    </div>
+      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
+    <div class="flex w-full gap-2 mt-2">
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XS
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        S
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        M
+                    </Button>
+                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
+                        L
+                    </Button>
+                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
+                        XL
+                    </Button>
+    </div>
+  </div>
 
-  <div class="grid grid-cols-2 gap-5 max-w-7xl mx-auto">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  <img class="w-[1000px]" src="../assets/img/png/card.png" alt="produit img" style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
+  <div class="flex flex-col items-center">
+    <img src="../assets/img/png/card.png" alt="Produit 2" class="w-full object-cover rounded-md">
+    <div class="flex justify-between w-full mt-4 text-lg">
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">T-shirt</Typography>
+      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+    </div>
+      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
+    <div class="flex justify-between w-full gap-2 mt-2">
+                    <Button  class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XS
+                    </Button>
+                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
+                        S
+                    </Button>
+                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
+                        M
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        L
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XL
+                    </Button>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <img src="../assets/img/png/card.png" alt="Produit 3" class="w-full object-cover rounded-md">
+    <div class="flex justify-between w-full mt-4 text-lg ">
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">Sweat Shirt</Typography>
+      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+    </div>
+      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
+    <div class="flex justify-between w-full gap-2 mt-2">
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XS
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        S
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        M
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        L
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XL
+                    </Button>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <img src="../assets/img/png/card.png" alt="Produit 4" class="w-full object-cover rounded-md">
+    <div class="flex justify-between w-full mt-4 text-lg">
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">Pull</Typography>
+      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+    </div>
+      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
+    <div class="flex justify-between w-full g mt-2">
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XS
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        S
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        M
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        L
+                    </Button>
+                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
+                        XL
+                    </Button>
+    </div>
+  </div>
 </div>
-
-
-
 
 </template>
 
-<script>
+<script setup>
+import Typography from '../UI/design-system/Typography.vue';
+import Button from '../UI/design-system/Button.vue';
+
+
+
 
 // import { gsap } from "gsap";
     
