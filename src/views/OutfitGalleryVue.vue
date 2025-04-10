@@ -6,7 +6,7 @@
         </div>
     </main>
 
-    <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="tercery" class="text-9xl">GALERIE D'OUTFIT</Typography>
+    <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="primary" class="text-9xl">GALERIE D'OUTFIT</Typography>
 
     <div class="grid grid-cols-2 gap-4 w-full mt-1">
         <img class="w-[400px] ml-[100px]" src="../assets/img/png/card.png" alt="card penché">
@@ -24,9 +24,6 @@
         <img class="w-[400px] ml-[100px] " src="../assets/img/png/card.png" alt="card penché">
         <img class=" w-[400px]" src="../assets/img/png/card.png" alt="card penché">
     </div>
-
-
-
 </template>
 
 <script setup>
