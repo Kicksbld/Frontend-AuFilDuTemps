@@ -62,3 +62,9 @@
 
   backdrop-filter: blur(4px);
 }
+
+
+.bubbles {
+  height: auto;
+  width: clamp(60px, 7.3vw, 94px);
+}

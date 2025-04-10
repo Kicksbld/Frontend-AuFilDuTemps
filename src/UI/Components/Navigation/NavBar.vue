@@ -1,8 +1,9 @@
 <template>
-    <div class="app_container flex items-center justify-between fixed top-0 left-0 right-0 w-full">
+    <div class="app_container z-50 flex items-center justify-between fixed top-0 left-0 right-0 w-full">
         <div class="w-full">
-            <p>{{ userData?.name || 'Loading...' }}</p>
-            <Button @click="handleLogOut" variant="primary">Log Out</Button>
+            <!-- <p>{{ userData?.name || 'Loading...' }}</p>
+            <Button @click="handleLogOut" variant="primary">Log Out</Button> -->
+            <img class="menu-burger" src="/src/assets/img/svg/icons/menu-beige.svg" alt="">
         </div>
         <router-link to="/">
             <div class="w-max">
@@ -11,7 +12,7 @@
 
         </router-link>
         <div class="w-full flex justify-end">
-            <img class="menu-burger" src="/src/assets/img/svg/icons/menu-brown.svg" alt="">
+           
         </div>
     </div>
 </template>
