@@ -17,6 +17,7 @@ import CompetitionGameVue from '../views/CompetitionGameVue.vue'
 import DesignSystem from '../views/DesignSytem.vue'
 import SignUp from '../views/authentificationViews/SignUp.vue'
 import LogIn from '../views/authentificationViews/LogIn.vue'
+import GameHome from '../views/GameHome.vue'
 
 
 const router = createRouter({
@@ -111,6 +112,11 @@ const router = createRouter({
       path: '/log-in',
       name: 'log-in',
       component: LogIn,
+    },
+    {
+      path: '/home-game',
+      name: 'home-game',
+      component: GameHome,
     }
   ],
 })

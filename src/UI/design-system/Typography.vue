@@ -23,7 +23,7 @@ export default {
     theme: {
       type: String,
       default: 'primary',
-      validator: (value) => ['primary', 'secondary', 'tercery', 'error', 'success', "headerText"].includes(value)
+      validator: (value) => ['primary', 'secondary', 'tercery', 'error', 'success', "headerText", "gold", "chocolate"].includes(value)
     },
     font: {
       type: String,
@@ -57,7 +57,9 @@ export default {
         quinary: 'text-quinary',
         error: 'text-error',
         success: 'text-success',
-        headerText: 'text-[#EAD9CB]'
+        headerText: 'text-[#EAD9CB]',
+        chocolate: 'text-[#AC9377]',
+        gold: 'text-gold'
       },
       variantClasses: {
         display: 'text-4xl',

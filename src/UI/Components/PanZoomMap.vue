@@ -1,8 +1,5 @@
 <template>
   <div class="mt-26">
-    <div class="text-center mb-4">
-      Find the circle number: {{ selectedCircleIndex + 1 }}
-    </div>
     <div class="panzoom-container">
       <div ref="panElement">
         <svg :width="svgWidth" :height="svgHeight" viewBox="0 0 2000 2000">

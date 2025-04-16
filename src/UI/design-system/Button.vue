@@ -7,6 +7,7 @@
       { 'opacity-50 cursor-not-allowed': disabled },
     ]"
     :disabled="disabled"
+    :type="buttonType"
     @click="$emit('click')"
   >
     <slot></slot>
@@ -30,6 +31,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    buttonType: {
+      type: String,
+      default: "button",
+    }
   },
 
   data() {
@@ -37,11 +42,11 @@ export default {
       sizeClasses: {
         small: "px-3 py-1.5 text-sm",
         medium: "px-4 py-2 text-base",
-        large: "px-6 py-3 text-lg",
+        large: "px-6 py-3 text-2xl",
       },
       variantClasses: {
-        primary: "bg-none border-quinary border uppercase font-halenoir ",
-        secondary: "bg-gray-600 text-white hover:bg-gray-700 ",
+        primary: "bg-none border-quinary border uppercase font-scholar ",
+        secondary: "bg-none linear-bg border-gold border uppercase font-scholar text-gold bg-primary ",
         outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 ",
       },
     };
