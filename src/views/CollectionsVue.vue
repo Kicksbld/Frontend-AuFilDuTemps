@@ -1,4 +1,6 @@
 <template>
+
+  <div class="w-full bg-quinary p-10">
     <main class="grid place-content-center min-h-[50vh] w-full">
         <h1 class="text-4xl text-red-500">Collection Page under development</h1>
         <div class="flex flex-col gap-4 mt-4">
@@ -14,13 +16,13 @@
    <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> 
     </div>
   </div> -->
-  <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="primary" class="text-9xl">PRODUITS</Typography>
+  <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="quaternary" class="text-9xl text-shadow-custom">PRODUITS</Typography>
   <div class="grid grid-cols-2 gap-10 px-10">
   <div class="flex flex-col items-center">
     <img src="../assets/img/png/card.png" alt="Produit 1" class="w-full object-cover rounded-md ">
     <div class="flex justify-between w-full mt-4 text-lg">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">Pantalon</Typography>
-      <Typography  variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">Pantalon</Typography>
+      <Typography  variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
     </div>
       <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
     <div class="flex w-full gap-2 mt-2">
@@ -45,8 +47,8 @@
   <div class="flex flex-col items-center">
     <img src="../assets/img/png/card.png" alt="Produit 2" class="w-full object-cover rounded-md">
     <div class="flex justify-between w-full mt-4 text-lg">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">T-shirt</Typography>
-      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">T-shirt</Typography>
+      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
     </div>
       <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
     <div class="flex justify-between w-full gap-2 mt-2">
@@ -71,8 +73,8 @@
   <div class="flex flex-col items-center">
     <img src="../assets/img/png/card.png" alt="Produit 3" class="w-full object-cover rounded-md">
     <div class="flex justify-between w-full mt-4 text-lg ">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">Sweat Shirt</Typography>
-      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">Sweat Shirt</Typography>
+      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
     </div>
       <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
     <div class="flex justify-between w-full gap-2 mt-2">
@@ -97,8 +99,8 @@
   <div class="flex flex-col items-center">
     <img src="../assets/img/png/card.png" alt="Produit 4" class="w-full object-cover rounded-md">
     <div class="flex justify-between w-full mt-4 text-lg">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="primary">Pull</Typography>
-      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="primary">45,95 EUR</Typography>
+      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">Pull</Typography>
+      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
     </div>
       <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
     <div class="flex justify-between w-full g mt-2">
@@ -120,7 +122,7 @@
     </div>
   </div>
 </div>
-
+</div>
 </template>
 
 <script setup>
@@ -174,6 +176,10 @@ import Button from '../UI/design-system/Button.vue';
 </script>
 
 <style scoped>
+.text-shadow-custom {
+  text-shadow: 0 0 10px #E7B276;
+}
+
 /* .container {
   height: 100vh;
   position: relative;

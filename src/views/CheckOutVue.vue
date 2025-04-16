@@ -1,4 +1,5 @@
 <template>
+  <div class="w-full bg-quinary">
     <main class="grid place-content-center min-h-[50vh] w-full">
       <h1 class="text-4xl text-red-500">Checkout Page under development</h1>
       <div class="flex flex-col gap-4 mt-4">
@@ -15,6 +16,8 @@
         </button>
       </div>
     </main>
+
+  </div>
   </template>
   
   <script>
@@ -50,4 +53,9 @@
   };
   </script>
   
-  <style scoped></style>
+  <style scoped>
+  .text-shadow-custom {
+  text-shadow: 0 0 10px #E7B276;
+}
+
+</style>
