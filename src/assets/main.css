@@ -33,16 +33,13 @@
   --color-quinary: #250101;
   --color-error: #ff0000;
   --color-success: #008000;
+  --color-gold: #E7B276;
 }
 
-.app_container {
-  max-width: 1520px;
-  padding: 12px;
-  margin: 0 auto;
-}
+
 
 .logo {
-  width: clamp(200px, 17.865vw, 343px);
+  max-width: 250px;
   cursor: pointer;
 }
 
@@ -54,11 +51,9 @@
 .bg-header-box {
   border: 1px solid rgba(234, 217, 203, 0.2);
 
-  background: linear-gradient(
-    94deg,
-    rgba(234, 217, 203, 0.2) 0%,
-    rgba(234, 217, 203, 0.05) 100%
-  );
+  background: linear-gradient(94deg,
+      rgba(234, 217, 203, 0.2) 0%,
+      rgba(234, 217, 203, 0.05) 100%);
 
   backdrop-filter: blur(4px);
 }
@@ -67,4 +62,33 @@
 .bubbles {
   height: auto;
   width: clamp(60px, 7.3vw, 94px);
+}
+
+.titleAnimation {
+  animation: slideIn 500ms ease-in-out;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.bgLogIn {
+  background-image: url('./img/png/fondLogIn.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.titleTag {
+  width: clamp(150px, 35vw, 300px);
+}
+
+.linear-bg {
+  box-shadow: 0px 4px 30px 0px rgba(231, 178, 118, 0.30);
 }

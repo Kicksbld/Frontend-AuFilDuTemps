@@ -1,9 +1,9 @@
 <template>
-    <div class="app_container z-50 flex items-center justify-between fixed top-0 left-0 right-0 w-full">
+    <div class=" bg-primary z-100 flex py-6 items-center justify-between absolute top-0 left-0 right-0 w-full h-37.5">
         <div class="w-full">
             <!-- <p>{{ userData?.name || 'Loading...' }}</p>
             <Button @click="handleLogOut" variant="primary">Log Out</Button> -->
-            <img class="menu-burger" src="/src/assets/img/svg/icons/menu-beige.svg" alt="">
+            
         </div>
         <router-link to="/">
             <div class="w-max">

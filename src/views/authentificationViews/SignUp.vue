@@ -1,56 +1,23 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50">
-    <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-gray-900">Create an account</h2>
-        <p class="mt-2 text-sm text-gray-600">Sign up to get started</p>
-      </div>
-      
-      <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
-        <div class="space-y-4">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-            <input
-              id="name"
-              v-model="formData.name"
-              type="text"
-              required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+  <div class="min-h-screen flex pt-10 justify-center bgLogIn relative">
+    <img src="../../assets/img/svg/logInBar.svg" class="top-1/2 left-2.5 transform absolute -translate-y-1/2 hidden md:block" alt="">
+    <img src="../../assets/img/svg/logInBar.svg" class="top-1/2  right-2.5 transform absolute -translate-y-1/2 hidden md:block" alt="">
+    <div class="max-w-xl w-full space-y-16 p-4">
 
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-            <input
-              id="email"
-              v-model="formData.email"
-              type="email"
-              required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <img src="../../assets/img/svg/inscriptionTitle.svg" alt="" class="titleTag mx-auto">
+      <form class="mt-8 space-y-14" @submit.prevent="handleSubmit">
+        <div class="space-y-8">
+          <CustomInput v-model="formData.name" label="Ton Nom" placeholder="Ton nom" id="name" type="text" />
 
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              id="password"
-              v-model="formData.password"
-              type="password"
-              required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+          <CustomInput v-model="formData.email" label="Email" placeholder="exemple@text.com" id="email" type="email" />
+
+          <CustomInput v-model="formData.password" label="Mot de passe" placeholder="********" id="password"
+            type="password" />
         </div>
 
-        <div>
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-          >
-            {{ isLoading ? 'Signing up...' : 'Sign up' }}
-          </button>
-        </div>
+        <Button size="large" variant="secondary" :disabled="isLoading" type="submit" class="w-full">
+          {{ isLoading ? '..' : 'Creer un Compte' }}
+        </Button>
       </form>
     </div>
   </div>
@@ -58,9 +25,16 @@
 
 <script>
 import { authClient } from '../../lib/auth-client'; //import the auth client
+import CustomInput from '../../UI/design-system/CustomInput.vue';
+import Button from '../../UI/design-system/Button.vue';
 
 export default {
   name: 'SignUp',
+
+  components: {
+    Button,
+    CustomInput
+  },
 
   data() {
     return {
