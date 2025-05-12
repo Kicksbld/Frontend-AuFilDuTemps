@@ -19,6 +19,7 @@ import SignUp from '../views/authentificationViews/SignUp.vue'
 import LogIn from '../views/authentificationViews/LogIn.vue'
 import GameHome from '../views/GameHome.vue'
 import ProductSlug from '../views/ProductSlug.vue'
+import GameEndView from '../views/GameEndView.vue'
 
 
 const router = createRouter({
@@ -126,8 +127,16 @@ const router = createRouter({
       path: '/home-game',
       name: 'home-game',
       component: GameHome,
+    },
+    {
+      path: '/game-end',
+      name: 'game-end',
+      component: GameEndView,
     }
   ],
-})
+  scrollBehavior() {
+    return { top: 0 }
+  }
+});
 
 export default router

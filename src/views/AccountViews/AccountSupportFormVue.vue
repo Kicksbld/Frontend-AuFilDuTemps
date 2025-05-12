@@ -10,43 +10,43 @@
      <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-35" />
     </div>
 
-    <form @submit.prevent="sendForm" class="border-2 border-[#E7B276] px-16 py-12 space-y-12 w-full max-w-6xl mx-auto">
-  <div class="flex flex-col items-start w-full">
-    <Typography variant="h2" component="h2" font="scholar" theme="gold" class="mb-2">Nom, Prénom</Typography>
-    <input 
-      v-model="form.name"
-      required 
-      :placeholder="placeholder"
-      class="text-scholar linear-bg w-full px-6 py-4 border-2 border-gold rounded-md bg-primary text-gold shadow-[0_0_10px_#E7B276] focus:bg-primary"
-    />
-  </div>
 
-  <div class="flex flex-col items-start w-full">
-    <Typography variant="h2" component="h2" font="scholar" theme="gold" class="mb-2">Adresse mail</Typography>
-    <input 
-      v-model="form.email"
-      required 
-      :placeholder="placeholder"
-      class="text-scholar linear-bg w-full px-6 py-4 border-2 border-gold rounded-md bg-primary text-gold shadow-[0_0_10px_#E7B276] focus:bg-primary"
-    />
-  </div>
+    <form @submit.prevent="sendForm" class="border-2 border-[#E7B276] p-4 space-y-4">
+      <div class="flex items-center">
+        <Typography variant="h2" component="h2" font="scholar" theme="quaternary">Nom</Typography>
+        <input
+          v-model="form.name"
+          name="name"
+          type="text"
+          class="border border-[#E7B276] text-[#E7B276] ml-4 p-1"
+        />
+      </div>
 
-  <div class="flex flex-col items-start w-full">
-    <Typography variant="h2" component="h2" font="scholar" theme="gold" class="mb-2">Votre message</Typography>
-    <textarea
-      v-model="form.content"
-      required
-      :placeholder="placeholder"
-      class="text-scholar linear-bg w-full px-6 py-4 border-2 border-gold rounded-md bg-primary text-gold shadow-[0_0_10px_#E7B276] focus:bg-primary resize-none"
-      rows="4"
-    ></textarea>
-  </div>
 
-  <div class="flex justify-center">
-    <Button type="submit" variant="secondary">Envoyer</Button>
-  </div>
-</form>
+      <div class="flex items-center">
+        <Typography variant="h2" component="h2" font="scholar" theme="quaternary">Email</Typography>
+        <input
+          v-model="form.email"
+          type="email"
+          required
+          class="border border-[#E7B276] text-[#E7B276] ml-4 p-1"
+        />
+      </div>
 
+      <div>
+        <label>
+          <Typography variant="h2" component="h2" font="scholar" theme="quaternary">Votre message</Typography>
+        </label>
+        <textarea
+          v-model="form.message"
+          id="content"
+          class="border border-[#E7B276] text-[#E7B276]  w-full p-2 mt-1"
+          required
+        ></textarea>
+      </div>
+
+      <Button type="submit" variant="secondary">Envoyer</Button>
+    </form>
   </div>
     </div>
 </template>
@@ -54,35 +54,33 @@
 <script setup>
 import Button from '../../UI/design-system/Button.vue'
 import Typography from '../../UI/design-system/Typography.vue'
+import { ref } from 'vue'
 
-const form = ({
+const form = ref({
   name: '',
   email: '',
-  content: ''
+  message: ''
 })
 
 const sendForm = () => {
-  fetch('https://backend-au-fil-du-temps.vercel.app/api/sendEmail', {
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/sendEmail`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(form.value)
   })
-  .then(response => response.json().then(data => {
-    if (response.ok) {
-      alert('Nouvelle donnée !')
-      form.value = {
-        name: '',
-        email: '',
-        content: ''
-      }
-    } else {
-      alert('Erreur serveur : ' + data.message)
+  .then(response => response.json())
+  .then(data => {
+    alert('Message envoyé avec succès !')
+    form.value = {
+      name: '',
+      email: '',
+      message: ''
     }
-  }))
+  })
   .catch(error => {
-    alert('Erreur réseau : ' + error.message)
+    alert('Erreur : ' + error.message)
   })
 }
 
