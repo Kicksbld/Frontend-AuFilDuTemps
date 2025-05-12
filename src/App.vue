@@ -7,7 +7,7 @@ import BottomNav from "./UI/Components/Navigation/BottomNav.vue";
 
 const route = useRoute();
 const hideNavAndFooter = computed(() => {
-  return ['/log-in', '/sign-up', '/home-game', '/competition-game'].includes(route.path);
+  return ['/log-in', '/sign-up', '/home-game', '/competition-game', '/game-end'].includes(route.path);
 });
 </script>
 

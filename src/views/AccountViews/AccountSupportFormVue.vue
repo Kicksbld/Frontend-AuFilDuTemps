@@ -37,7 +37,7 @@
           <Typography variant="h2" component="h2" font="scholar" theme="quaternary">Votre message</Typography>
         </label>
         <textarea
-          v-model="form.content"
+          v-model="form.message"
           id="content"
           class="border border-[#E7B276] text-[#E7B276]  w-full p-2 mt-1"
           required
@@ -53,35 +53,33 @@
 <script setup>
 import Button from '../../UI/design-system/Button.vue'
 import Typography from '../../UI/design-system/Typography.vue'
+import { ref } from 'vue'
 
-const form = ({
+const form = ref({
   name: '',
   email: '',
-  content: ''
+  message: ''
 })
 
 const sendForm = () => {
-  fetch('https://backend-au-fil-du-temps.vercel.app/api/sendEmail', {
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/sendEmail`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(form.value)
   })
-  .then(response => response.json().then(data => {
-    if (response.ok) {
-      alert('Message envoyé avec succès !')
-      form.value = {
-        name: '',
-        email: '',
-        content: ''
-      }
-    } else {
-      alert('Erreur serveur : ' + data.message)
+  .then(response => response.json())
+  .then(data => {
+    alert('Message envoyé avec succès !')
+    form.value = {
+      name: '',
+      email: '',
+      message: ''
     }
-  }))
+  })
   .catch(error => {
-    alert('Erreur réseau : ' + error.message)
+    alert('Erreur : ' + error.message)
   })
 }
 </script>
