@@ -18,6 +18,7 @@ import DesignSystem from '../views/DesignSytem.vue'
 import SignUp from '../views/authentificationViews/SignUp.vue'
 import LogIn from '../views/authentificationViews/LogIn.vue'
 import GameHome from '../views/GameHome.vue'
+import ProductSlug from '../views/ProductSlug.vue'
 import GameEndView from '../views/GameEndView.vue'
 
 
@@ -54,6 +55,14 @@ const router = createRouter({
       name: 'products',
       component: ProductsVue,
     },
+
+    {
+      path: '/product/:id',
+      name: 'productSlug',
+      component: ProductSlug,
+
+    },   
+   
     {
       path: '/favourites',
       name: 'favourites',

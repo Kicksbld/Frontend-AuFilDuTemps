@@ -1,14 +1,15 @@
 <template>
     <div class="w-full bg-quinary">
-    <main class="grid place-content-center min-h-[50vh] w-full">
-        <h1 class="text-4xl text-red-500">Support Form Page under development</h1>
+    <main class="grid place-content-center min-h-[25vh] w-full">
+
     </main>
 
   <div>
-    <div class="flex mb-6">
-      <Typography variant="h1" component="h1" font="flaemische" theme="quaternary" class="text-[50px] text-shadow-custom">C</Typography>
-      <Typography variant="h1" component="h1" font="scholar" theme="quaternary" class="text-[70px] text-shadow-custom">ontact</Typography>
+    <div class="flex">
+     <img src="../../assets/img/svg/formulaire.svg">
+     <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-35" />
     </div>
+
 
     <form @submit.prevent="sendForm" class="border-2 border-[#E7B276] p-4 space-y-4">
       <div class="flex items-center">
@@ -82,14 +83,16 @@ const sendForm = () => {
     alert('Erreur : ' + error.message)
   })
 }
+
+
+
+
 </script>
 
 
 <style scoped>
-
-.text-shadow-custom {
-  text-shadow: 0 0 10px #E7B276;
+form {
+  background-image: url(../../assets/img/png/fondLogIn.png);
 }
-
 
 </style>

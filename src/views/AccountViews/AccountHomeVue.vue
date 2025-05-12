@@ -1,65 +1,65 @@
 <template>
       <div class="w-full bg-quinary p-10">
-    <main class="grid place-content-center min-h-[50vh] w-full">
-        <h1 class="text-4xl text-red-500">Account Home Page under development</h1>
-        <div class="flex flex-col gap-4 mt-4">
-            <RouterLink class="text-blue-500" to="/account/orders">Orders</RouterLink>
-            <RouterLink class="text-blue-500" to="/account/connections">Connections</RouterLink>
-            <RouterLink class="text-blue-500" to="/account/adresses">Adresses</RouterLink>
-            <RouterLink class="text-blue-500" to="/account/payement-method">Payement Method</RouterLink>
-            <RouterLink class="text-blue-500" to="/account/support-form">Support Form</RouterLink>
-        </div>
+    <main class="grid place-content-center min-h-[20vh]">
+       
     </main>
 
     <div class="flex">
-    <Typography variant="h1" component="h1" font="flaemische" theme="quaternary" class="text-[50px] text-shadow-custom">R</Typography>
-    <Typography variant="h1" component="h1" font="scholar" theme="quaternary" class="text-[60px] text-shadow-custom">aphaël</Typography>
+    <img src="../../assets/img/svg/Bienvenue.svg">
+    <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-30" />
 </div>
 
-    <div class="flex justify-center gap-[90px]">
-        <div>
-            <RouterLink to="/account/payement-method" >
-    <Button><img src="../../assets/img/png/commande.png"></Button>
-    <Typography variant="h2" component="h2" font="scholar" theme="quaternary" weight="regular" class="text-center" >Mes commandes</Typography>
-</RouterLink>
+<div class="flex flex-wrap justify-center gap-19 px-4 mt-30">
+<div class="flex flex-col items-center">
+  <RouterLink to="/account/connections">
+    <Button>
+    <img src="../../assets/img/svg/preference.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+  </Button>
+  </RouterLink>
+  <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
+    Mes preferences
+  </Typography>
+
+
+
 </div>
+  <div class="flex flex-col items-center">
+    <RouterLink to="/account/adresses">
+      <Button>
+        <img src="../../assets/img/svg/adresse.svg" class="md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+      </Button>
+      <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
+        Mes adresses
+      </Typography>
+    </RouterLink>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <RouterLink to="/account/orders">
+      <Button>
+        <img src="../../assets/img/svg/commande.svg" class=" md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+      </Button>
+      <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
+       Mes commandes
+      </Typography>
+    </RouterLink>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <RouterLink to="/account/payement-method">
+      <Button>
+        <img src="../../assets/img/svg/parametre.svg" class="md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+      </Button>
+      <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
+        Paramètres
+      </Typography>
+    </RouterLink>
+  </div>
+</div>
+
+
 <div>
-    <RouterLink to="/account/support-form" >
-    <Button><img src="../../assets/img/png/message.png"></Button>
-    <Typography variant="h2" component="h2" font="scholar" theme="quaternary" weight="regular" class="text-center">Mes messages</Typography>
-</RouterLink>
-</div>
-
-<div>
-    <Button><img src="../../assets/img/png/setting.png"></Button>
-    <Typography variant="h2" component="h2" font="scholar" theme="quaternary" weight="regular" class="text-center">Paramètres</Typography>
-    </div>
-</div>
-
-    <div class="flex justify-between mt-[200px]">
-    <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="quaternary">Mes préférences</Typography>
-
-  <RouterLink to="./orders"> 
-    <Button><img src="../../assets/img/png/edit.png" class="w-11"></Button>
-</RouterLink> 
-</div>
-
-<div class="p-[90px]">
-<div class=" flex justify-between">
-    <div>
-        <Typography variant="h2" component="h2" font="scholar" theme="quaternary">Sexe</Typography>
-        <Typography variant="h3" comonent="h3" font="scholar" theme="quaternary">Homme</Typography>
-    </div>
-    <div>
-<Typography variant="h2" component="h2" font="scholar" theme="quaternary">Taille</Typography>
-<Typography variant="h3" comonent="h3" font="scholar" theme="quaternary">M</Typography>
-</div>
-</div>
-<div>
-<Typography variant="h2" component="h2" font="scholar" theme="quaternary" class="text-center">Couleur favoris</Typography>
-<Typography variant="h3" comonent="h3" font="scholar" theme="quaternary" class="text-center">Vert, Rouge</Typography>
-
-</div>
+   
 </div>
 
 
@@ -71,6 +71,22 @@
 <script setup>
 import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
+
+import { ref, onMounted } from 'vue'
+
+const infos = ref({
+  sexe: 'Non renseigné',
+  taille: 'Non renseigné',
+  couleurs: 'Non renseigné'
+})
+
+onMounted(() => {
+  const data = localStorage.getItem('userInfos')
+  if (data) {
+    infos.value = JSON.parse(data)
+  }
+})
+
 
     
 </script>
