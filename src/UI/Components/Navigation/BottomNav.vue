@@ -8,7 +8,7 @@
         </router-link>
         <div class="w-[1px] h-[85%] bg-gold"></div>
         <router-link to="/favourites">
-            <Typography variant="h3" font="scholar" theme="gold">Favorie</Typography>
+            <Typography variant="h3" font="scholar" theme="gold">Favories</Typography>
         </router-link>
         <div class="w-[1px] h-[85%] bg-gold"></div>
         <router-link to="/outfit-gallery">
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
 import Button from '../../design-system/Button.vue';
 import Typography from '../../design-system/Typography.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -41,7 +40,7 @@ export default {
         const isScrolled = ref(false);
 
         const handleScroll = () => {
-            const navHeight = 80;
+            const navHeight = 0;
             isScrolled.value = window.scrollY > navHeight;
         };
 

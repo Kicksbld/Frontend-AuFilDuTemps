@@ -1,8 +1,13 @@
 <script setup>
 import PanZoomMap from "../UI/Components/PanZoomMap.vue";
 import Button from "../UI/design-system/Button.vue";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
+const handleGameEnd = () => {
+    router.push('/game-end');
+};
 </script>
 
 <template>
@@ -20,7 +25,13 @@ import Button from "../UI/design-system/Button.vue";
                <img src="../assets/img/svg/check.svg" alt="">
             </div>
         </div>
-        <Button class="absolute bottom-8 right-8 w-[241px]" variant="primary">terminer</Button>
+        <Button 
+            @click="handleGameEnd" 
+            class="absolute bottom-8 right-8 w-[241px]" 
+            variant="primary"
+        >
+            terminer
+        </Button>
     </main>
 </template>
 

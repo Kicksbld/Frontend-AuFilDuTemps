@@ -1,8 +1,8 @@
 <template>
   <Transition>
     <div class="wrapper" v-if="show">
-      <div v-if="isTitleShown" class="sticky titleAnimation top-8 w-full flex justify-center items-center z-50">
-        <img class="w-[80%] sm:w-[60%] md:w-[50%] lg:w-[40%] xl:w-[30%] h-auto" alt="Jeu Concours"
+      <div v-if="isTitleShown" class="sticky titleAnimation top-16 w-full flex justify-center items-center z-50">
+        <img class="w-[80%] sm:w-[60%] md:w-[50%] lg:w-[30%] xl:w-[30%] h-auto" alt="Jeu Concours"
           src="/src/assets/img/svg/jeuConcours.svg" />
       </div>
       <Button v-if="isTitleShown" @click="handleButtonClick"
@@ -53,7 +53,7 @@ export default {
       const width = container.value.clientWidth || window.innerWidth;
       const height = container.value.clientHeight || window.innerHeight;
 
-      renderer = new THREE.WebGLRenderer({
+      renderer = new THREE.WebGLRenderer({ 
         antialias: true,
         alpha: true  // Enable transparency
       });
@@ -126,12 +126,26 @@ export default {
             mixer.update(0);
           });
 
-          if (self.progress > 0.8) {
+          if (self.progress > 0.8 && self.progress < 0.9) {
+            // Longer static period
             isTitleShown.value = true;
+          } else if (self.progress >= 0.9) {
+            isTitleShown.value = true;
+            // Shorter translation window
+            const translateX = ((self.progress - 0.9) / 0.1) * -100;
+            gsap.to('.wrapper', {
+              x: `${translateX}%`,
+              duration: 0.1,
+              ease: 'none'
+            });
           } else {
             isTitleShown.value = false;
+            gsap.to('.wrapper', {
+              x: '0%',
+              duration: 0.1,
+              ease: 'none'
+            });
           }
-
         }
       });
 

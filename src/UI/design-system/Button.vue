@@ -45,8 +45,8 @@ export default {
         large: "px-6 py-3 text-2xl",
       },
       variantClasses: {
-        primary: "bg-none border-quinary border uppercase font-scholar ",
-        secondary: "bg-none linear-bg border-gold border uppercase font-scholar text-gold bg-primary ",
+        primary: "bg-none border-quinary border uppercase font-scholar hover:bg-primary hover:text-gold transition-all duration-300  ",
+        secondary: "bg-none linear-bg border-gold border uppercase font-scholar text-gold bg-primary hover:bg-gold hover:text-primary transition-all duration-300 ",
         outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 ",
       },
     };
