@@ -1,12 +1,8 @@
 <template>
 
   <div class="w-full bg-quinary p-10">
-    <main class="grid place-content-center min-h-[50vh] w-full">
-        <h1 class="text-4xl text-red-500">Collection Page under development</h1>
-        <div class="flex flex-col gap-4 mt-4">
-            <RouterLink class="text-blue-500" to="/products">Products</RouterLink>
-            <RouterLink class="text-blue-500" to="/outfit-gallery">Outfit Collection</RouterLink>
-        </div>
+    <main class="grid place-content-center min-h-[20vh] w-full">
+        
     </main>
 
   <!-- <div class="container">
@@ -16,118 +12,133 @@
    <div v-for="i in 10" :key="i" class="content-item">Item {{ i }}</div> 
     </div>
   </div> -->
-  <Typography variant="h1" component="h1" font="scholar" weigth="light" theme="quaternary" class="text-9xl text-shadow-custom">PRODUITS</Typography>
+  <div class="flex">
+  <img src="../assets/img/svg/produits.svg">
+  <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
+  </div>
+
   <div class="grid grid-cols-2 gap-10 px-10">
-  <div class="flex flex-col items-center">
-    <img src="../assets/img/png/card.png" alt="Produit 1" class="w-full object-cover rounded-md ">
-    <div class="flex justify-between w-full mt-4 text-lg">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">Pantalon</Typography>
-      <Typography  variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
-    </div>
-      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
-    <div class="flex w-full gap-2 mt-2">
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XS
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        S
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        M
-                    </Button>
-                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
-                        L
-                    </Button>
-                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
-                        XL
-                    </Button>
-    </div>
-  </div>
+  <div
+      v-for="produit in articles"
+      :key="produit.id"
+      class="flex flex-col items-center"
+    >
+    
+      <img
+        :src="produit.images[0]"
+        :alt="produit.name"
+        class="w-full object-cover rounded-md"
+      />
+      <div class="flex justify-between w-full mt-4 text-lg">
+        <Typography
+          variant="h2"
+          component="h2"
+          font="halenoir"
+          weight="regular"
+          theme="gold"
+        >
+          {{ produit.name }}
+        </Typography>
+        <Typography
+          variant="h2"
+          component="h1"
+          font="halenoir"
+          weight="regular"
+          theme="gold"
+        >
+          {{ produit.price }} €
+        </Typography>
+      </div>
 
-  <div class="flex flex-col items-center">
-    <img src="../assets/img/png/card.png" alt="Produit 2" class="w-full object-cover rounded-md">
-    <div class="flex justify-between w-full mt-4 text-lg">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">T-shirt</Typography>
-      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
-    </div>
-      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
-    <div class="flex justify-between w-full gap-2 mt-2">
-                    <Button  class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XS
-                    </Button>
-                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
-                        S
-                    </Button>
-                    <Button class="w-full"  @click="router.push('')" variant="primary" size="medium">
-                        M
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        L
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XL
-                    </Button>
-    </div>
-  </div>
+      <Button
+        variant="secondary"
+        size="medium"
+        class="w-full"
+        @click="ajouterAuPanier(produit)"
+      >
+        AJOUTER
+      </Button>
 
-  <div class="flex flex-col items-center">
-    <img src="../assets/img/png/card.png" alt="Produit 3" class="w-full object-cover rounded-md">
-    <div class="flex justify-between w-full mt-4 text-lg ">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">Sweat Shirt</Typography>
-      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
-    </div>
-      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
-    <div class="flex justify-between w-full gap-2 mt-2">
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XS
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        S
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        M
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        L
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XL
-                    </Button>
+      <div class="flex w-full gap-2 mt-2">
+        <Button
+          v-for="taille in tailles"
+          :key="taille"
+          class="w-full"
+          variant="secondary"
+          size="medium"
+          :class="selectedTaille[produit.id] === taille ? 'bg-[#D4AF8E] text-white' : ''"
+          @click="selectTaille(produit.id, taille)"
+        >
+          {{ taille }}
+        </Button>
+      </div>
     </div>
   </div>
-
-  <div class="flex flex-col items-center">
-    <img src="../assets/img/png/card.png" alt="Produit 4" class="w-full object-cover rounded-md">
-    <div class="flex justify-between w-full mt-4 text-lg">
-      <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="quaternary">Pull</Typography>
-      <Typography variant="h2" component="h1" font="halenoir" weight="regular"theme="quaternary">45,95 EUR</Typography>
-    </div>
-      <Button variant="primary" size="medium" class="w-full">AJOUTER</Button>
-    <div class="flex justify-between w-full g mt-2">
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XS
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        S
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        M
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        L
-                    </Button>
-                    <Button class="w-full" @click="router.push('')" variant="primary" size="medium">
-                        XL
-                    </Button>
-    </div>
-  </div>
-</div>
 </div>
 </template>
 
 <script setup>
-import Typography from '../UI/design-system/Typography.vue';
-import Button from '../UI/design-system/Button.vue';
+
+import { onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Typography from '../UI/design-system/Typography.vue'
+import Button from '../UI/design-system/Button.vue'
+
+const router = useRouter()
+
+const articles = ref([])
+const tailles = ['XS', 'S', 'M', 'L', 'XL']
+const selectedTaille = reactive({})
+
+const fetchArticles = async () => {
+  try {
+    const response = await fetch('https://backend-au-fil-du-temps.vercel.app/products')
+    if (!response.ok) throw new Error('Erreur lors du chargement des produits')
+    const data = await response.json()
+    articles.value = data
+  } catch (error) {
+    console.error('Erreur API :', error)
+  }
+}
+
+onMounted(() => {
+  fetchArticles()
+})
+
+const selectTaille = (produitId, taille) => {
+  selectedTaille[produitId] = taille
+}
+
+const ajouterAuPanier = (produit) => {
+  const tailleChoisie = selectedTaille[produit.id]
+
+  if (!tailleChoisie) {
+    alert('Veuillez sélectionner une taille avant d’ajouter au panier.')
+    return
+  }
+
+  let panier = JSON.parse(localStorage.getItem('panier')) || []
+
+  const existe = panier.find(
+    item => item.id === produit.id && item.taille === tailleChoisie
+  )
+
+  if (!existe) {
+    const articleInfos = {
+      id: produit.id,
+      nom: produit.name,
+      prix: produit.price,
+      images: produit.images,
+      taille: tailleChoisie,
+      quantité: 1,
+    }
+
+    panier.push(articleInfos)
+    localStorage.setItem('panier', JSON.stringify(panier))
+  }
+
+  router.push('/cart')
+}
 
 
 

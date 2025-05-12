@@ -1,80 +1,163 @@
 <template>
   <div class="w-full bg-quinary p-10">
 
-    <main class="grid place-content-center min-h-[50vh] w-full">
-        <h1 class="text-4xl text-red-500">Cart Page under development</h1>
-        <div class="flex flex-col gap-4 mt-4">
-            <RouterLink class="text-blue-500" to="/checkout">Checkout</RouterLink>
-        </div>
+    <main class="grid place-content-center min-h-[20vh] w-full">
+       
     </main>
     
-    <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="quaternary" class="text-[80px] text-shadow-custom mb-10">
-      PANIER
-    </Typography>
+    <div class="flex">
+    <img src="../assets/img/svg/panier.svg">
+    <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
+    </div>
 
-    <div class="flex gap-10 items-start">
-      <div class="relative">
-        <img src="../assets/img/png/card.png" alt="Produit" class="rounded w-[500px]" />
-        <img src="../assets/img/svg/icons/bin-beige.svg" alt="Supprimer" class="absolute top-2 right-2 w-6 h-6 cursor-pointer" />
-      </div>
+    <div class="p-6">
+      <div>
+    <div v-if="panier.length === 0" class="text-lg text-[#E7B276]">Le panier est vide.</div>
 
-      <div class="w-[2px] h-[500px] bg-[#BF8E63]"></div>
 
-      <div class="flex flex-col justify-start w-full">
-        <div class="flex justify-between items-start mb-6">
-          <div class="flex gap-4 items-baseline">
-            <Typography variant="h1" component="h1" font="scholar" weight="medium" theme="quaternary">
-              Blouson
-            </Typography>
-            <Typography variant="h2" component="h2" font="halenoir" weight="medium" theme="quaternary">
-              49,95 EUR
-            </Typography>
-          </div>
+    
+    <div v-else class="space-y-8 flex flex-col-2">
+      <div
+        v-for="produit in panier"
+        :key="produit.id"
+        class="relative w-[300px] rounded shadow-lg p-4"
+      >
+      
+        <!-- <img
+          class="w-[300px]"
+          :src="produit.images[0]"
+          style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)"
+        /> -->
 
-          <select v-model="quantity" class="border text-[20px] px-4 py-1 rounded bg-transparent text-[#D4AF8E]">
+        
+        <div
+          class="absolute top-2 right-1 cursor-pointer w-[20px]"
+          @click="supprimerArticle(produit.id)"
+        >
+          <img src="../assets/img/svg/icons/bin-brown.svg" />
+        </div>
+        
+        <div class="flex justify-between w-full mt-4 text-lg">
+       
+          <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">
+            {{ produit.name }}
+          </Typography>
+
+          <span class="text-right text-[#E7B276] text-scholar text-[16px]">{{ produit.taille }}</span>
+    
+        </div>
+     
+        <hr class="w-full my-2 border-[1px] border-[#D4AF8E]" />
+
+        <div class="flex justify-between items-center w-full mt-2">
+          <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">
+            {{ produit.price }} €
+          </Typography>
+
+          <select
+            v-model="produit.quantité"
+            @change="updateQuantité(produit.id, produit.quantité)"
+            class="border border-[#D4AF8E] text-[16px] px-4 py-1 rounded bg-transparent text-[#E7B276]"
+          >
             <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
           </select>
         </div>
-
-        <div class="flex gap-4 mb-6">
-          <Button variant="secondary" size="medium">XS</Button>
-          <Button variant="secondary" size="medium">S</Button>
-          <Button variant="secondary" size="medium">M</Button>
-          <Button variant="secondary" size="medium">L</Button>
-          <Button variant="secondary" size="medium">XL</Button>
-        </div>
-
-        <div class="flex items-center gap-4 mb-6">
-          <Button class="border-none p-0">
-            <img src="../assets/img/svg/icons/bin-beige.svg" class="w-9" />
-          </Button>
-          <Button class="border-none p-0">
-            <img src="../assets/img/svg/icons/favorie-filled-beige.svg" class="w-9" />
-          </Button>
-        </div>
       </div>
-      
     </div>
-
-    <Typography variant="h1" component="h1" font="halenoir" theme="quaternary"> Total: 49,95 EUR</Typography>
-
-    <RouterLink to="/account/payement-method">
-      <Button variant="secondary" size="medium" class="w-[300px] ml-100 text-center flex justify-center align-center">
-        Commander
-      </Button>
-    </RouterLink>
-
   </div>
+<div class="grid grid-cols-2 gap-9 justify-center px-4 text-[#D4AF8E]">
+  <div class="grid gap-2">
+    <div class="flex flex-col items-center relative">
+
+      <img 
+        class="w-[300px]" 
+        src="../assets/img/png/card.png" 
+        style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%);">
+
+      <div class="absolute top-2 right-1 cursor-pointer w-[40px]">
+        <img src="../assets/img/svg/icons/bin-brown.svg">
+      </div>
+
+      <div class="flex justify-between w-full mt-4 text-lg">
+        <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold" class="text-[20px]">Blouson </Typography><span class="text-right text-[#E7B276] text-[16px]">M</span>
+      </div>
+
+      <hr class="w-full my-2 border-[1px] border-[#D4AF8E]">
+      <div class="flex justify-between items-center w-full mt-2">
+        <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold" class="text-[18px]">49,95 EUR </Typography>
+        <select 
+          v-model="quantity" 
+          class="border border-[#D4AF8E] text-[16px] px-4 py-1 rounded bg-transparent text-[#D4AF8E]">
+          <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="flex flex-col items-center mt-10 ">
+<div class="flex">
+  <Typography variant="h1" component="h1" font="scholar" theme="gold">TOTAL</Typography>
+  <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">
+    {{ totalPanier }} €
+  </Typography>
+</div>
+
+<Button variant="secondary" size="medium" class="w-[700px]">Commander</Button>
+</div>
+  </div>
+  </div>
+
 </template>
 
 <script setup>
 import Typography from '../UI/design-system/Typography.vue';
 import Button from '../UI/design-system/Button.vue';
+import { ref, onMounted, watch, computed } from 'vue';
+
+
+const panier = ref([])
+
+onMounted(() => {
+  const donnees = localStorage.getItem('panier')
+  if (donnees) {
+    panier.value = JSON.parse(donnees)
+  }
+  console.log('panier :', panier.value)
+  console.log('type de panier[0] :', typeof panier.value[0])
+})
+
+const supprimerArticle = (id) => {
+  const index = panier.value.findIndex(produit => produit.id === id)
+  if (index !== -1) {
+    panier.value.splice(index, 1)
+    localStorage.setItem('panier', JSON.stringify(panier.value))
+  }
+}
+
+const updateQuantité = (id, quantité) => {
+  const index = panier.value.findIndex(produit => produit.id === id)
+  if (index !== -1) {
+    panier.value[index].quantité = quantité
+    localStorage.setItem('panier', JSON.stringify(panier.value))
+  }
+}
+const totalPanier = computed(() => {
+  return panier.value.reduce((total, produit) => {
+    const prix = parseFloat(produit.price) || 0
+    const quantite = parseInt(produit.quantité) || 1
+    return total + prix * quantite
+  }, 0).toFixed(2)
+})
+
+
 </script>
 
 <style scoped>
 .text-shadow-custom {
   text-shadow: 0 0 10px #E7B276;
 }
-
 </style>
+
+

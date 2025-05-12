@@ -1,30 +1,27 @@
 <template>
     <div class=" w-full bg-quinary">
-    <main class="grid place-content-center min-h-[50vh] w-full">
-        <h1 class="text-4xl text-red-500">Order Page under development</h1>
+    <main class="grid place-content-center min-h-[20vh] w-full">
+       
     </main>
 
-    <div class="flex ">
-    <Typography variant="h1" component="h1" font="flaemische" theme="quaternary" class="text-[50px] text-shadow-custom pb-[4px]">V</Typography>
-    <Typography variant="h1" component="h1" font="scholar" theme="quaternary" class="text-[60px] text-shadow-custom">os dernières commandes</Typography>
-</div>
+ <img src="../../assets/img/svg/dernierescommandes.svg">
 
         <!--    v-for="(product, index) in orders"
         :key="index" -->
     <div class="flex gap-8 justify-center">
       <div
           v-for="n in 4"
-        :key="n" class=" w-[200px] h-[350px] bg-[#4C0B0C]"
-        :style="{ clipPath: 'polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)' }">
-        <img src="../../assets/img/png/card.png" class="w-full h-[180px] object-cover" />
-        <div class="p-4 flex flex-col justify-between h-[170px]">
+        :key="n" class=" w-full h-full bg-[#4C0B0C]"
+        :style="{ clipPath: 'polygon(0% 0%, 100% 5%, 100% 100%, 0% 98%)' }">
+        <img src="../../assets/img/png/card.png" class="w-full " />
+        <div class="p-4 flex flex-col justify-between">
           <div>
-            <Typography variant="h2" font="scholar" weight="regular" theme="quaternary" >Pull #{{n }}</Typography>
+            <Typography variant="h2" font="scholar" weight="regular" theme="gold" >Pull #{{n }}</Typography>
             <br>
-            <Typography variant="h3" font="scholar" weight="regular" theme="quaternary">description</Typography>
+            <Typography variant="h3" font="scholar" weight="regular" theme="gold">description</Typography>
           </div>
           <div class="flex items-center justify-between mt-auto">
-            <Typography variant="h3" font="scholar" weight="regular" theme="quaternary">Date d'achat</Typography>
+            <Typography variant="h3" font="scholar" weight="regular" theme="gold">Date d'achat</Typography>
             <img src="../../assets/img/svg/icons/cart-brown.svg" class="bg-white rounded-xl w-6 h-6 p-1" />
           </div>
         </div>
@@ -36,6 +33,8 @@
 
 <script setup>
 import Typography from '../../UI/design-system/Typography.vue';
+
+
 
 //& les produits enregistrés
 
