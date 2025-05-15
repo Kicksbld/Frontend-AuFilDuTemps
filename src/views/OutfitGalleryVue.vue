@@ -30,11 +30,13 @@
   <img src="../assets/img/png/card.png" class="w-[260px] rotate-[1deg] shadow-lg rounded-lg" />
 </div>
 
+  <ParticlesBackground />
 </div>
 </template>
 
 <script setup>
 import Typography from '../UI/design-system/Typography.vue';
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 
 </script>

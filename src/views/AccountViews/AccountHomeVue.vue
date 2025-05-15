@@ -1,5 +1,6 @@
 <template>
       <div class="w-full bg-quinary p-10">
+        <ParticlesBackground />
     <main class="grid place-content-center min-h-[20vh]">
        
     </main>
@@ -73,6 +74,7 @@ import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
 
 import { ref, onMounted } from 'vue'
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const infos = ref({
   sexe: 'Non renseigné',

@@ -1,6 +1,7 @@
 <template>
 
 <div class="w-full bg-quinary p-10">
+  <ParticlesBackground />
 
   <div class="pt-40 min-h-screen flex flex-col">
   <div class="flex justify-between">
@@ -126,6 +127,7 @@ import { ref, onMounted, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const route = useRoute()
 const router = useRouter()
