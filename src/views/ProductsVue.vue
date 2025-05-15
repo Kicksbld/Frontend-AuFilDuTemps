@@ -4,85 +4,104 @@
   <ParticlesBackground />
 
   <div class="pt-40 min-h-screen flex flex-col">
-  <div class="flex justify-between">
 
-    <div class="flex-col flex items-center gap-[3px]" id="img_products">
-      <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 15%, 100% 0%, 100% 100%, 0% 100%);">
-      <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 90%, 0% 100%);">
-      <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 100%, 0% 100%);">
-      <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-      <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-      <img class="w-20" src="../assets/img/png/card.png" alt="produit img"
-        style="clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);">
-    </div>
-  
-  <div id="img_primary">
-    <img class="w-125" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 0%, 100% 3%, 100% 98%, 0% 100%);">
-  </div>
+   
+    <!-- POPUP -->
+<div
+  v-if="modalProduit"
+  class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center"
+>
+  <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
+    <img :src="modalProduit.images" alt="image produit" class="w-[300px] h-auto object-cover" />
 
-    <div class="grid grid-col">
-    <div v-for="produit in produit" class="ml-[5%] w-[8°%]" id="detail_products">
-  <div :key="produit.id" class="flex justify-between items-center">
-    <RouterLink :to="`/product/${produit.id}`">
-    <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">
-      {{ produit.name }}
-    </Typography>
-  </RouterLink>
+    <div class="flex flex-col justify-center">
+      <Typography class="mb-2" variant="h2" font="scholar" weight="regular" theme="gold">
+        {{ modalProduit.name }}
+      </Typography>
+      <Typography class="mb-4" variant="h3" font="halenoir" weight="regular" theme="gold">
+        {{ modalProduit.price }} €
+      </Typography>
 
-    <Button @click="ajouterAuxFavoris(produit)">
-  <img class="w-10" src="../assets/img/png/likeBeige.png" alt="like icon" />
-</Button>
+      <p class="text-gold mb-2">Sélectionnez votre taille</p>
+      <div class="flex gap-2 mb-4">
+        <Button
+          v-for="taille in tailles"
+          :key="taille"
+          @click="selectTaille(modalProduit.id, taille)"
+          :variant="selectedTaille[modalProduit.id] === taille ? 'primary' : 'secondary'"
+          size="small"
+        >
+          {{ taille }}
+        </Button>
+      </div>
 
-  </div>
-
-  <Typography class="mb-[5%]" variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">
-    {{ produit.price }} EUR
-  </Typography>
-
-  <hr class="bg-[#BF8E63] h-[2px] my-4" />
-
-  <Typography class="mt-[60px] mb-[5%]" variant="h3" component="h3" font="halenoir" weight="regular" theme="gold">
-    {{ produit.color }} - {{ produit.sku }}
-  </Typography>
-
-   <!-- Ajout au panier -->
-   <Button
-        class="w-full"
-        @click="ajouterAuPanier(produit)"
-        variant="secondary"
-        size="medium"
-      >
+      <Button @click="validerAjoutPanier" variant="secondary" size="medium">
         AJOUTER
       </Button>
+    </div>
 
-  <div class="flex gap-3 pt-2 w-full">
     <Button
-  v-for="taille in tailles"
-  :key="taille"
-  class="w-full"
-  @click="selectTaille(produit.id, taille)"
+      class="absolute top-4 right-4 text-gold text-2xl"
+      @click="fermerPopup"
+    >
+      ✕
+    </Button>
+  </div>
+</div>
+
+   
+    <div class="flex flex-wrap justify-center gap-12 mt-12">
+  <div
+    v-for="produit in produit"
+    :key="produit.id"
+    class="relative  shadow-md w-[350px] min-h-[580px] flex flex-col justify-between"
+  >
+    <RouterLink :to="`/product/${produit.id}`">
+      <div class="h-[320px] overflow-hidden">
+        <img
+          class="w-full h-full object-cover"
+          :src="produit.images"
+          alt="produit img"
+          style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)"
+        />
+      </div>
+    </RouterLink>
+
+    <div
+      class="absolute bottom-40 right-6 cursor-pointer w-[40px]"
+      @click.stop ="ajouterAuxFavoris(produit)"
+    >
+      <img
+        src="../assets/img/png/likeBeige.png"
+        alt="supprimer"
+        class="w-full "
+      />
+    </div>
+
+    <div class="mt-6">
+      <div class="flex justify-between text-lg mb-4">
+        <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">
+          {{ produit.name }}
+        </Typography>
+        <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">
+          {{ produit.price }} €
+        </Typography>
+      </div>
+
+      <div class="h-px bg-gold my-4"></div>
+
+      <Button
+  class="w-full mb-4"
+  @click="ouvrirPopup(produit)"
   variant="secondary"
   size="medium"
 >
-  {{ taille }}
+  AJOUTER
 </Button>
-
+    </div>
   </div>
-
-  <Typography class="mt-[5%]" variant="p" component="p" font="halenoir" weight="regular" theme="gold">
-    {{ produit.description}}
-  </Typography>
-
+</div>
   </div>
-
-</div>
-</div>
 
 
 <div>
@@ -91,22 +110,42 @@
 </Typography>
 <div class="grid grid-cols-6 gap-[2%] items-center justify-center">
   <div class="relative w-full">
-    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+    
+    <router-link :to="`/product/${produit.id}`">
+        <img
+          class="w-full h-full object-cover"
+          :src="produit.images"
+          alt="produit img"
+          style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%)"
+        />
+    </router-link>
+
       <router-link to="/favourites" >
     <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
   </router-link>
   </div>
   <div class="relative w-full">
-    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+    <router-link :to="`/product/${produit.id}`">
+        <img
+          class="w-full h-full object-cover"
+          :src="produit.images"
+          alt="produit img"
+          style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%)"
+        />
+    </router-link>
       <router-link to="/favourites" >
     <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
   </router-link>
   </div>
   <div class="relative w-full">
-    <img class="w-full" src="../assets/img/png/card.png" alt="produit img"
-      style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%);">
+    <router-link :to="`/product/${produit.id}`">
+        <img
+          class="w-full h-full object-cover"
+          :src="produit.images"
+          alt="produit img"
+          style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%)"
+        />
+    </router-link>
       <router-link to="/favourites" >
     <img class="absolute bottom-2 right-2 w-6" src="../assets/img/png/like.png" alt="like icon">
   </router-link>
@@ -118,12 +157,11 @@
   </div>
   <!-- 
   <fwb-carousel :pictures="pictures" /> -->
-</div>
+
 </template>
 
 <script setup>
-
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive , computed} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
@@ -134,6 +172,18 @@ const router = useRouter()
 const produit = ref([])
 const tailles = ['XS', 'S', 'M', 'L', 'XL']
 const selectedTaille = ref({})
+
+
+import { useSessionDataStore } from "../stores/getUserSession";
+
+
+const sessionStore = useSessionDataStore();
+
+onMounted(() => {
+  sessionStore.fetchSession(); // ← recharge si localStorage est vide après reset
+});
+
+const user = computed(() => sessionStore.getUserData);
 
 const fetchProduit = async () => {
   try {
@@ -146,37 +196,9 @@ const fetchProduit = async () => {
   }
 }
 
-
 const selectTaille = (produitId, taille) => {
   selectedTaille.value[produitId] = taille
 }
-const ajouterAuPanier = (produit) => {
-  const taille = selectedTaille.value[produit.id]
-
-  if (!taille) {
-    alert("Veuillez choisir une taille avant d'ajouter au panier.")
-    return
-  }
-
-  const panier = JSON.parse(localStorage.getItem('panier')) || []
-
-  // Vérifie si le produit avec la même taille est déjà dans le panier
-  const existeDeja = panier.some(
-    produit => produit.id === produit.id && produit.taille === taille
-  )
-
-  if (!existeDeja) {
-    panier.push({
-      ...produit,
-      taille
-    })
-    localStorage.setItem('panier', JSON.stringify(panier))
-  }
-
-  // Redirection
-  router.push('/cart')
-}
-
 
 const ajouterAuxFavoris = (produit) => {
   let favoris = JSON.parse(localStorage.getItem('favoris')) || []
@@ -186,8 +208,8 @@ const ajouterAuxFavoris = (produit) => {
     favoris.push(produit)
     localStorage.setItem('favoris', JSON.stringify(favoris))
   }
+  router.push('/favourites')
 }
-
 
 const articlesSimilaires = ref([])
 
@@ -210,6 +232,38 @@ onMounted(() => {
   fetchArticlesSimilaires()
 })
 
+const modalProduit = ref(null)
+
+const ouvrirPopup = (produit) => {
+  modalProduit.value = produit
+}
+
+const fermerPopup = () => {
+  modalProduit.value = null
+}
+
+const validerAjoutPanier = () => {
+  const produit = modalProduit.value
+  const taille = selectedTaille.value[produit.id]
+
+  if (!taille) {
+    alert("Veuillez choisir une taille avant d'ajouter au panier.")
+    return
+  }
+
+  const panier = JSON.parse(localStorage.getItem('panier')) || []
+  const existeDeja = panier.some(
+    p => p.id === produit.id && p.taille === taille
+  )
+
+  if (!existeDeja) {
+    panier.push({ ...produit, taille })
+    localStorage.setItem('panier', JSON.stringify(panier))
+  }
+
+  fermerPopup()
+  router.push('/cart')
+}
 
 // import { FwbCarousel } from 'flowbite-vue'
 // import caroussel1 from '../assets/img/png/carous1.png';

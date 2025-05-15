@@ -16,6 +16,49 @@
   <img src="../assets/img/svg/produits.svg">
   <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
   </div>
+<!-- Popup -->
+<div
+  v-if="modalProduit"
+  class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center"
+>
+  <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
+    <img :src="modalProduit.images" alt="image produit" class="w-[300px] h-auto object-cover" />
+
+    <div class="flex flex-col justify-center">
+      <Typography class="mb-2" variant="h2" font="scholar" weight="regular" theme="gold">
+        {{ modalProduit.name }}
+      </Typography>
+      <Typography class="mb-4" variant="h3" font="halenoir" weight="regular" theme="gold">
+        {{ modalProduit.price }} €
+      </Typography>
+
+      <p class="text-gold mb-2">Sélectionnez votre taille</p>
+      <div class="flex gap-2 mb-4">
+        <Button
+          v-for="taille in tailles"
+          :key="taille"
+          @click="selectTaille(modalProduit.id, taille)"
+          :variant="selectedTaille[modalProduit.id] === taille ? 'primary' : 'secondary'"
+          size="small"
+        >
+          {{ taille }}
+        </Button>
+      </div>
+
+      <Button @click="validerAjoutPanier" variant="secondary" size="medium">
+        AJOUTER
+      </Button>
+    </div>
+
+    <button
+      class="absolute top-4 right-4 text-gold text-2xl"
+      @click="fermerPopup"
+    >
+      ✕
+    </button>
+  </div>
+</div>
+
 
   <div class="grid grid-cols-2 gap-10 px-10">
   <div
@@ -25,7 +68,7 @@
     >
     
       <img
-        :src="produit.images[0]"
+        :src="produit.images"
         :alt="produit.name"
         class="w-full object-cover rounded-md"
       />
@@ -49,29 +92,15 @@
           {{ produit.price }} €
         </Typography>
       </div>
-
       <Button
-        variant="secondary"
-        size="medium"
-        class="w-full"
-        @click="ajouterAuPanier(produit)"
-      >
-        AJOUTER
-      </Button>
+  variant="secondary"
+  size="medium"
+  class="w-full"
+  @click="ouvrirPopup(produit)"
+>
+  AJOUTER
+</Button>
 
-      <div class="flex w-full gap-2 mt-2">
-        <Button
-          v-for="taille in tailles"
-          :key="taille"
-          class="w-full"
-          variant="secondary"
-          size="medium"
-          :class="selectedTaille[produit.id] === taille ? 'bg-[#D4AF8E] text-white' : ''"
-          @click="selectTaille(produit.id, taille)"
-        >
-          {{ taille }}
-        </Button>
-      </div>
     </div>
   </div>
 </div>
@@ -137,6 +166,37 @@ const ajouterAuPanier = (produit) => {
     localStorage.setItem('panier', JSON.stringify(panier))
   }
 
+  router.push('/cart')
+}
+
+const modalProduit = ref(null)
+
+const ouvrirPopup = (produit) => {
+  modalProduit.value = produit
+}
+
+const fermerPopup = () => {
+  modalProduit.value = null
+}
+
+const validerAjoutPanier = () => {
+  const produit = modalProduit.value
+  const taille = selectedTaille[produit.id]
+
+  if (!taille) {
+    alert("Veuillez choisir une taille avant d'ajouter au panier.")
+    return
+  }
+
+  const panier = JSON.parse(localStorage.getItem('panier')) || []
+  const existeDeja = panier.some(p => p.id === produit.id && p.taille === taille)
+
+  if (!existeDeja) {
+    panier.push({ ...produit, taille })
+    localStorage.setItem('panier', JSON.stringify(panier))
+  }
+
+  fermerPopup()
   router.push('/cart')
 }
 

@@ -20,6 +20,7 @@ import LogIn from '../views/authentificationViews/LogIn.vue'
 import GameHome from '../views/GameHome.vue'
 import ProductSlug from '../views/ProductSlug.vue'
 import GameEndView from '../views/GameEndView.vue'
+import AccountPriceVue from '../views/AccountViews/AccountPriceVue.vue'
 
 
 const router = createRouter({
@@ -97,6 +98,11 @@ const router = createRouter({
       path: '/account/payement-method',
       name: 'account-payement-method',
       component: AccountPayementMethodVue,
+    },
+    {
+      path: '/account/price',
+      name: 'account-price',
+      component: AccountPriceVue,
     },
     {
       path: '/account/support-form',
