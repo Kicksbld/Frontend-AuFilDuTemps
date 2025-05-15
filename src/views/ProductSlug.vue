@@ -1,6 +1,6 @@
 <template>
     <div>
-
+  <ParticlesBackground />
         <div class="w-full bg-quinary p-10">
 
 
@@ -87,6 +87,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const route = useRoute()
 const produit = ref(null)

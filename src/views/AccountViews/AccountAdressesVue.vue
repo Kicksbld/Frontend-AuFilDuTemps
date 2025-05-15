@@ -1,6 +1,7 @@
 
 <template>
   <div class="w-full bg-quinary p-10">
+    <ParticlesBackground />
     <div class="flex">
       <img src="../../assets/img/svg/titre_adresse.svg" />
       <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-35" />
@@ -75,9 +76,11 @@ import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Typography from '../../UI/design-system/Typography.vue'
 import Button from '../../UI/design-system/Button.vue'
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 export default {
   components: {
+    ParticlesBackground,
     Typography,
     Button
   },
