@@ -1,11 +1,8 @@
 <template>
   <div v-if="!isLoggedIn" class="text-center py-20">
-    <p class="text-lg text-gray-600">
-      Vous devez être connecté pour voir vos favoris.
-    </p>
-    <RouterLink to="/sign-up" class="text-gold underline"
-    >Se connecter</RouterLink
-    >
+    <ParticlesBackground />
+    <p class="text-lg text-gray-600">Vous devez être connecté pour voir vos favoris.</p>
+    <RouterLink to="/sign-up" class="text-gold underline">Se connecter</RouterLink>
   </div>
 
   <div class="w-full bg-quinary p-10" v-else>
@@ -48,118 +45,53 @@
       </div>
     </div>
 
-  
-  <!-- POPUP -->
-  <div
-  v-if="produitSelectionne"
-  class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center"
->
-  <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
-    <!-- Image produit -->
-    <img :src="produitSelectionne.images" alt="image produit" class="w-[300px] h-auto object-cover" />
 
-    <!-- Contenu -->
-    <div class="flex flex-col justify-center">
-      <Typography class="mb-2" variant="h2" font="scholar" weight="regular" theme="gold">
-        {{ produitSelectionne.name }}
-      </Typography>
-      <Typography class="mb-4" variant="h3" font="halenoir" weight="regular" theme="gold">
-        {{ produitSelectionne.price }} €
-      </Typography>
-
-      <p class="text-gold mb-2">Sélectionnez votre taille</p>
-      <div class="flex gap-2 mb-4">
-        <Button
-          v-for="taille in tailles"
-          :key="taille"
-          @click="selectTaille(taille)"
-          :variant="selectedTaille === taille ? 'primary' : 'secondary'"
-          size="small"
-        >
-          {{ taille }}
-        </Button>
-      </div>
-
-      <Button @click="validerAjoutPanier" variant="secondary" size="medium">
-    <div v-for="produit in articles" :key="produit.id" class="relative">
-      <RouterLink :to="`/product/${produit.id}`">
-        <div>
-          <img
-              class="w-full"
-              :src="produit.images[0]"
-              alt="produit img"
-              style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)"
-          />
-        </div>
-      </RouterLink>
-      <div
-          class="absolute top-2 right-2 cursor-pointer w-[30px]"
-          @click.stop="supprimerArticle(produit.id)"
-      >
-        <img
-            src="../assets/img/svg/icons/bin-brown.svg"
-            alt="supprimer"
-            class="w-full"
-        />
-      </div>
-
-      <div class="flex justify-between w-full mt-4 text-lg">
-        <Typography
-            variant="h1"
-            component="h1"
-            font="scholar"
-            weight="regular"
-            theme="gold"
-        >
-          {{ produit.name }}
-        </Typography>
-
-        <Typography
-            variant="h2"
-            component="h2"
-            font="halenoir"
-            weight="regular"
-            theme="gold"
-        >
-          {{ produit.price }} €
-        </Typography>
-      </div>
-      <div class="h-px bg-gold my-6"></div>
-      <!-- Ajout au panier -->
-      <Button
-          class="w-full"
-          @click="ajouterAuPanier(produit)"
-          variant="secondary"
-          size="medium"
-      >
-        AJOUTER
-      </Button>
-    </div>
-
-    <Button
-      class="absolute top-4 right-4 text-gold text-2xl"
-      @click="fermerPopup"
+    <!-- POPUP -->
+    <div
+        v-if="produitSelectionne"
+        class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center"
     >
-      ✕
-    </Button>
-  </div>
-</div>
+      <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
+        <!-- Image produit -->
+        <img :src="produitSelectionne.images" alt="image produit" class="w-[300px] h-auto object-cover" />
 
-      <!-- Choix de la taille -->
-      <div class="flex gap-3 pt-2 w-full">
+        <!-- Contenu -->
+        <div class="flex flex-col justify-center">
+          <Typography class="mb-2" variant="h2" font="scholar" weight="regular" theme="gold">
+            {{ produitSelectionne.name }}
+          </Typography>
+          <Typography class="mb-4" variant="h3" font="halenoir" weight="regular" theme="gold">
+            {{ produitSelectionne.price }} €
+          </Typography>
+
+          <p class="text-gold mb-2">Sélectionnez votre taille</p>
+          <div class="flex gap-2 mb-4">
+            <Button
+                v-for="taille in tailles"
+                :key="taille"
+                @click="selectTaille(taille)"
+                :variant="selectedTaille === taille ? 'primary' : 'secondary'"
+                size="small"
+            >
+              {{ taille }}
+            </Button>
+          </div>
+
+          <Button @click="validerAjoutPanier" variant="secondary" size="medium">
+            AJOUTER
+          </Button>
+        </div>
+
         <Button
-            v-for="taille in tailles"
-            :key="taille"
-            class="w-full"
-            @click="selectTaille(produit.id, taille)"
-            :variant="selectedTaille[produit.id] === taille ? 'primary' : 'secondary'"
-            size="medium"
+            class="absolute top-4 right-4 text-gold text-2xl"
+            @click="fermerPopup"
         >
-          {{ taille }}
+          ✕
         </Button>
       </div>
     </div>
-    <ParticlesBackground />
+
+
   </div>
 
 </template>
@@ -206,7 +138,7 @@ const supprimerArticle = (id) => {
   }
 }
 
-// POPUP 
+// POPUP
 const popupVisible = ref(false)
 const produitSelectionne = ref(null)
 const selectedTaille = ref(null)
@@ -236,7 +168,7 @@ const validerAjoutPanier = () => {
   const panier = JSON.parse(localStorage.getItem('panier')) || []
 
   const existeDeja = panier.some(
-    p => p.id === produit.id && p.taille === selectedTaille.value
+      p => p.id === produit.id && p.taille === selectedTaille.value
   )
 
   if (!existeDeja) {
@@ -251,4 +183,3 @@ const validerAjoutPanier = () => {
   router.push('/cart')
 }
 </script>
-

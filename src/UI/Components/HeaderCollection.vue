@@ -86,7 +86,7 @@ export default {
         });
 
         const navigateToCollection = () => {
-            router.push('/collections');
+            router.push('/outfit-gallery');
         };
 
         return {

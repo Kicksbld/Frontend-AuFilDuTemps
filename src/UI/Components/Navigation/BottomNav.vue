@@ -43,6 +43,7 @@
   
 
   <script>
+
   import { ref, computed, onMounted, onUnmounted } from 'vue'
   import { useRouter } from 'vue-router'
   import { useSessionDataStore } from '@/stores/getUserSession.js'
@@ -51,39 +52,39 @@
   const router = useRouter()
   export default {
     name: 'HeaderComponent',
-  
+
     components: {
       Button,
       Typography
     },
-  
+
     setup() {
       const sessionStore = useSessionDataStore()
       const { fetchSession, getSessionData } = sessionStore
-  
+
       const isLoggedIn = computed(() => !!getSessionData)
 
         const isScrolled = ref(false)
-  
+
       const handleScroll = () => {
         isScrolled.value = window.scrollY > 0
       }
-  
+
       onMounted(async () => {
-  const wasLoggedIn = !!getSessionData 
+  const wasLoggedIn = !!getSessionData
 
   await fetchSession()
 
-  const isNowLoggedIn = !!getSessionData 
+  const isNowLoggedIn = !!getSessionData
 
   if (!wasLoggedIn && isNowLoggedIn) {
-   
+
   }
 
   window.addEventListener('scroll', handleScroll)
 })
 
-  
+
       onUnmounted(() => {
         window.removeEventListener('scroll', handleScroll)
       })
@@ -95,6 +96,6 @@
     }
   }
   </script>
-  
+
 
 <style scoped></style>

@@ -1,5 +1,6 @@
 <template>
     <div class="bg-quinary w-full">
+      <ParticlesBackground />
     <main class="grid place-content-center min-h-[20vh] w-full ">
         
     </main>
@@ -98,9 +99,11 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 export default {
   components: {
+    ParticlesBackground,
     Typography,
     Button
   },

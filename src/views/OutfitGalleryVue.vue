@@ -66,7 +66,6 @@
 <script setup>
 import Typography from '../UI/design-system/Typography.vue'
 import { ref, onMounted } from 'vue'
-import Typography from '../UI/design-system/Typography.vue';
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const produits = ref([])

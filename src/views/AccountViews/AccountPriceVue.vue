@@ -1,5 +1,6 @@
 <template>
  <div class="bg-quinary w-full">
+   <ParticlesBackground />
     <main class="grid place-content-center min-h-[25vh] w-full "></main>
 
     <div class="flex">
@@ -20,4 +21,5 @@
 
 <script setup>
 import Typography from '../../UI/design-system/Typography.vue';
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 </script>

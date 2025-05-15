@@ -1,5 +1,6 @@
 <template>
   <div class="bg-quinary w-full">
+    <ParticlesBackground />
     <main class="grid place-content-center min-h-[25vh] w-full"></main>
 
     <!-- -----------Paramètres-------------->
@@ -129,9 +130,11 @@ import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
 import { authClient } from '../../lib/auth-client';
 import { useSessionDataStore } from '../../stores/getUserSession';
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 export default {
   components: {
+    ParticlesBackground,
     Typography,
     Button
   },

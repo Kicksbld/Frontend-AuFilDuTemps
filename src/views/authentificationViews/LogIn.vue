@@ -66,8 +66,7 @@ export default {
 
         // Redirect to home page or dashboard after successful login
         this.$router.push('/');
-        
-        window.location.reload();
+
       } catch (err) {
         alert(err.message);
         console.error('Login error:', err);

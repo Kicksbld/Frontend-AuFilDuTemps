@@ -50,7 +50,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import Typography from '../../UI/design-system/Typography.vue'
 import Button from '../../UI/design-system/Button.vue'
 import Typography from '../../UI/design-system/Typography.vue';
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";

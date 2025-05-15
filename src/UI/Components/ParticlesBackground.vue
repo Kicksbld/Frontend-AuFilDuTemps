@@ -96,7 +96,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="fixed top-0 left-0 w-full h-full" />
+  <div ref="container" class="fixed top-0 left-0 w-full h-full pointer-events-none" />
 </template>
 
 <style scoped>
