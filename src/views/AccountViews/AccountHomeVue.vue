@@ -8,61 +8,73 @@
     <img src="../../assets/img/svg/Bienvenue.svg">
     <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-30" />
 </div>
+<div class="overflow-x-auto whitespace-nowrap px-4 mt-10">
+  <div class="flex gap-8">
 
-<div class="flex flex-wrap justify-center gap-19 px-4 mt-30">
-<div class="flex flex-col items-center">
-  <RouterLink to="/account/connections">
-    <Button>
-    <img src="../../assets/img/svg/preference.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
-  </Button>
-  </RouterLink>
-  <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
-    Mes preferences
-  </Typography>
+    <div class="flex flex-col items-center shrink-0 w-[220px]">
+      <RouterLink to="/account/connections">
+        <Button>
+          <img src="../../assets/img/svg/preference.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+        </Button>
+      </RouterLink>
+      <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
+        Mes préférences
+      </Typography>
+    </div>
 
-
-
-</div>
-  <div class="flex flex-col items-center">
-    <RouterLink to="/account/adresses">
-      <Button>
-        <img src="../../assets/img/svg/adresse.svg" class="md:w-[200px] h-[150px] md:h-[200px] object-contain" />
-      </Button>
+    <!-- Carte 2 -->
+    <div class="flex flex-col items-center shrink-0 w-[220px]">
+      <RouterLink to="/account/adresses">
+        <Button>
+          <img src="../../assets/img/svg/adresse.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+        </Button>
+      </RouterLink>
       <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
         Mes adresses
       </Typography>
-    </RouterLink>
-  </div>
+    </div>
 
-  <div class="flex flex-col items-center">
-    <RouterLink to="/account/orders">
-      <Button>
-        <img src="../../assets/img/svg/commande.svg" class=" md:w-[200px] h-[150px] md:h-[200px] object-contain" />
-      </Button>
+    <!-- Carte 3 -->
+    <div class="flex flex-col items-center shrink-0 w-[220px]">
+      <RouterLink to="/account/orders">
+        <Button>
+          <img src="../../assets/img/svg/commande.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+        </Button>
+      </RouterLink>
       <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
-       Mes commandes
+        Mes commandes
       </Typography>
-    </RouterLink>
-  </div>
+    </div>
 
-  <div class="flex flex-col items-center">
-    <RouterLink to="/account/payement-method">
-      <Button>
-        <img src="../../assets/img/svg/parametre.svg" class="md:w-[200px] h-[150px] md:h-[200px] object-contain" />
-      </Button>
+    <!-- Carte 4 -->
+    <div class="flex flex-col items-center shrink-0 w-[220px]">
+      <RouterLink to="/account/payement-method">
+        <Button>
+          <img src="../../assets/img/svg/parametre.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+        </Button>
+      </RouterLink>
       <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
         Paramètres
       </Typography>
-    </RouterLink>
+    </div>
+
+    <!-- Carte 5 -->
+    <div class="flex flex-col items-center shrink-0 w-[220px]">
+      <RouterLink to="/account/price">
+        <Button>
+          <img src="../../assets/img/svg/coupon.svg" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] object-contain" />
+        </Button>
+      </RouterLink>
+      <Typography variant="h2" component="h2" font="scholar" theme="gold" weight="regular" class="text-center">
+        Mes prix
+      </Typography>
+    </div>
   </div>
 </div>
-
 
 <div>
    
 </div>
-
-
 </div>
 
 
@@ -71,8 +83,11 @@
 <script setup>
 import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
-
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router';
+
+
+let router = useRouter()
 
 const infos = ref({
   sexe: 'Non renseigné',
@@ -87,7 +102,7 @@ onMounted(() => {
   }
 })
 
-
+      
     
 </script>
 

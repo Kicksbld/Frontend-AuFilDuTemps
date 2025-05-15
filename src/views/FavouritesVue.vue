@@ -1,11 +1,10 @@
 <template>
-
-<div v-if="!isLoggedIn" class="text-center py-20">
+  <div v-if="!isLoggedIn" class="text-center py-20">
     <p class="text-lg text-gray-600">Vous devez être connecté pour voir vos favoris.</p>
     <RouterLink to="/sign-up" class="text-gold underline">Se connecter</RouterLink>
   </div>
 
-  <div class="w-full bg-quinary p-10">
+  <div class="w-full bg-quinary p-10" v-else>
     <main class="grid place-content-center min-h-[20vh] w-full"></main>
 
     <div class="flex">
@@ -13,74 +12,92 @@
       <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
     </div>
 
-    <div v-if="articles.length === 0" class="text-center text-gray-600">
-      Aucun favori pour le moment.
+    <div v-if="articles.length === 0" class="flex flex-col items-center justify-center text-center text-lg text-gold gap-4">
+      <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">Aucun favori pour le moment.</Typography>
+      <router-link to="/">
+        <Button class="justify-center" variant="secondary">Explorer</Button>
+      </router-link>
     </div>
 
-    <div v-for="produit in articles" :key="produit.id" class="relative">
-     
-      <RouterLink :to="`/product/${produit.id}`">
-        <div>
-          <img
-            class="w-full"
-            :src="produit.images[0]"
-            alt="produit img"
-            style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)"
-          />
+    <div class="flex flex-wrap justify-center gap-12 mt-12">
+      <div v-for="produit in articles" :key="produit.id" class="relative p-4 rounded-2xl shadow-md w-[300px] min-h-[580px] flex flex-col justify-between">
+        <router-link :to="`/product/${produit.id}`">
+          <div class="h-[320px] overflow-hidden">
+            <img class="w-full h-full object-cover" :src="produit.images" alt="produit img" style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)" />
+          </div>
+        </router-link>
+
+        <div class="absolute top-6 right-6 cursor-pointer w-[40px]" @click.stop="supprimerArticle(produit.id)">
+          <img src="../assets/img/svg/icons/bin-brown.svg" alt="supprimer" class="w-full" />
         </div>
-      </RouterLink>
-      <div
-        class="absolute top-2 right-2 cursor-pointer w-[30px]"
-        @click.stop="supprimerArticle(produit.id)"
-      >
-        <img
-          src="../assets/img/svg/icons/bin-brown.svg"
-          alt="supprimer"
-          class="w-full"
-        />
+
+        <div class="mt-6">
+          <div class="flex justify-between text-lg mb-4">
+            <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">{{ produit.name }}</Typography>
+            <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">{{ produit.price }} €</Typography>
+          </div>
+
+          <div class="h-px bg-gold my-4"></div>
+
+          <Button class="w-full mb-4" @click="ouvrirPopup(produit)" variant="secondary" size="medium">AJOUTER</Button>
+        </div>
+      </div>
+    </div>
+
+  
+  <!-- POPUP -->
+  <div
+  v-if="produitSelectionne"
+  class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center"
+>
+  <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
+    <!-- Image produit -->
+    <img :src="produitSelectionne.images" alt="image produit" class="w-[300px] h-auto object-cover" />
+
+    <!-- Contenu -->
+    <div class="flex flex-col justify-center">
+      <Typography class="mb-2" variant="h2" font="scholar" weight="regular" theme="gold">
+        {{ produitSelectionne.name }}
+      </Typography>
+      <Typography class="mb-4" variant="h3" font="halenoir" weight="regular" theme="gold">
+        {{ produitSelectionne.price }} €
+      </Typography>
+
+      <p class="text-gold mb-2">Sélectionnez votre taille</p>
+      <div class="flex gap-2 mb-4">
+        <Button
+          v-for="taille in tailles"
+          :key="taille"
+          @click="selectTaille(taille)"
+          :variant="selectedTaille === taille ? 'primary' : 'secondary'"
+          size="small"
+        >
+          {{ taille }}
+        </Button>
       </div>
 
-   
-      <div class="flex justify-between w-full mt-4 text-lg">
-        <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">
-          {{ produit.name }}
-        </Typography>
-
-        <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">
-          {{ produit.price }} €
-        </Typography>
-      </div>
-      <div class="h-px bg-gold my-6 "></div>
-      <!-- Ajout au panier -->
-      <Button
-        class="w-full"
-        @click="ajouterAuPanier(produit)"
-        variant="secondary"
-        size="medium"
-      >
+      <Button @click="validerAjoutPanier" variant="secondary" size="medium">
         AJOUTER
       </Button>
+    </div>
 
-   <!-- Choix de la taille -->
-<div class="flex gap-3 pt-2 w-full">
-  <Button
-    v-for="taille in tailles"
-    :key="taille"
-    class="w-full"
-    @click="selectTaille(produit.id, taille)"
-    :variant="selectedTaille[produit.id] === taille ? 'primary' : 'secondary'"
-    size="medium"
-  >
-    {{ taille }}
-  </Button>
+    <Button
+      class="absolute top-4 right-4 text-gold text-2xl"
+      @click="fermerPopup"
+    >
+      ✕
+    </Button>
+  </div>
 </div>
 
-    </div>
+
   </div>
+
 </template>
 
+
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionDataStore } from '@/stores/getUserSession.js'
 import Typography from '../UI/design-system/Typography.vue'
@@ -88,68 +105,80 @@ import Button from '../UI/design-system/Button.vue'
 
 const sessionStore = useSessionDataStore()
 const { fetchSession, getSessionData } = sessionStore
-
 const isLoggedIn = computed(() => !!getSessionData)
 const router = useRouter()
+
 
 const articles = ref([])
 const tailles = ['XS', 'S', 'M', 'L', 'XL']
 
 onMounted(async () => {
-  await fetchSession() 
-
+  await fetchSession()
   if (!isLoggedIn.value) {
-    router.push('/sign-up')
+    router.push('/log-in')
     return
   }
-
   fetchArticles()
 })
-
 
 const fetchArticles = () => {
   const favoris = JSON.parse(localStorage.getItem('favoris')) || []
   articles.value = favoris
 }
 
-const selectedTaille = ref({})
-
-const selectTaille = (produitId, taille) => {
-  selectedTaille.value[produitId] = taille
+const supprimerArticle = (id) => {
+  const favoris = JSON.parse(localStorage.getItem('favoris')) || []
+  const index = favoris.findIndex(produit => produit.id === id)
+  if (index !== -1) {
+    favoris.splice(index, 1)
+    localStorage.setItem('favoris', JSON.stringify(favoris))
+    fetchArticles()
+  }
 }
-const ajouterAuPanier = (produit) => {
-  const taille = selectedTaille.value[produit.id]
 
-  if (!taille) {
-    alert("Veuillez choisir une taille avant d'ajouter au panier.")
+// POPUP 
+const popupVisible = ref(false)
+const produitSelectionne = ref(null)
+const selectedTaille = ref(null)
+
+const ouvrirPopup = (produit) => {
+  produitSelectionne.value = produit
+  selectedTaille.value = null
+  popupVisible.value = true
+}
+
+const fermerPopup = () => {
+  produitSelectionne.value = null
+  popupVisible.value = false
+}
+
+const selectTaille = (taille) => {
+  selectedTaille.value = taille
+}
+
+const validerAjoutPanier = () => {
+  if (!selectedTaille.value) {
+    alert("Veuillez choisir une taille avant de valider.")
     return
   }
 
+  const produit = produitSelectionne.value
   const panier = JSON.parse(localStorage.getItem('panier')) || []
+
   const existeDeja = panier.some(
-    produit => produit.id === produit.id && produit.taille === taille
+    p => p.id === produit.id && p.taille === selectedTaille.value
   )
 
   if (!existeDeja) {
     panier.push({
       ...produit,
-      taille
+      taille: selectedTaille.value
     })
     localStorage.setItem('panier', JSON.stringify(panier))
   }
 
+  fermerPopup()
   router.push('/cart')
 }
-
-
-const supprimerArticle = (id) => {
-  const favoris = JSON.parse(localStorage.getItem('favoris')) || []
-  const index = favoris.findIndex(produit => produit.id === id)
-
-  if (index !== -1) {
-    favoris.splice(index, 1)
-    localStorage.setItem('favoris', JSON.stringify(favoris))
-    fetchArticles()  
-  }
-}
 </script>
+
