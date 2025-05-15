@@ -1,7 +1,8 @@
 <template>
     <div :class="[
-      'z-40 flex items-center justify-around h-12 w-full bg-primary transition-all duration-300',
-      isScrolled ? 'fixed top-0 left-0 right-0' : 'fixed top-[150px] left-0 right-0'
+        'z-40 flex items-center justify-around h-12 w-full bg-quinary transition-all duration-300',
+        isScrolled ? 'fixed top-0 left-0 right-0' : 'fixed top-[150px] left-0 right-0'
+
     ]">
       <router-link to="/products">
         <Typography variant="h3" font="scholar" theme="gold">Produits</Typography>

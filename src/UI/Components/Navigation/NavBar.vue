@@ -1,5 +1,5 @@
 <template>
-    <div class=" bg-primary z-100 flex py-6 items-center justify-between absolute top-0 left-0 right-0 w-full h-37.5">
+    <div class=" bg-quinary z-100 flex py-6 items-center justify-between absolute top-0 left-0 right-0 w-full h-37.5">
         <div class="w-full">
             <!-- <p>{{ userData?.name || 'Loading...' }}</p>
             <Button @click="handleLogOut" variant="primary">Log Out</Button> -->

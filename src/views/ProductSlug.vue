@@ -1,5 +1,6 @@
 <template>
   <div v-if="produit" class="w-full bg-quinary p-10 min-h-screen">
+   <ParticlesBackground />
     <div class="flex pt-40 gap-10 flex-wrap">
 
       <!-- img à gauche -->
@@ -75,6 +76,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const route = useRoute()
 const router = useRouter()

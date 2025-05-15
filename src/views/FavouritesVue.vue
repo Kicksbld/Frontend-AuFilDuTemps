@@ -1,7 +1,11 @@
 <template>
   <div v-if="!isLoggedIn" class="text-center py-20">
-    <p class="text-lg text-gray-600">Vous devez être connecté pour voir vos favoris.</p>
-    <RouterLink to="/sign-up" class="text-gold underline">Se connecter</RouterLink>
+    <p class="text-lg text-gray-600">
+      Vous devez être connecté pour voir vos favoris.
+    </p>
+    <RouterLink to="/sign-up" class="text-gold underline"
+    >Se connecter</RouterLink
+    >
   </div>
 
   <div class="w-full bg-quinary p-10" v-else>
@@ -77,6 +81,57 @@
       </div>
 
       <Button @click="validerAjoutPanier" variant="secondary" size="medium">
+    <div v-for="produit in articles" :key="produit.id" class="relative">
+      <RouterLink :to="`/product/${produit.id}`">
+        <div>
+          <img
+              class="w-full"
+              :src="produit.images[0]"
+              alt="produit img"
+              style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)"
+          />
+        </div>
+      </RouterLink>
+      <div
+          class="absolute top-2 right-2 cursor-pointer w-[30px]"
+          @click.stop="supprimerArticle(produit.id)"
+      >
+        <img
+            src="../assets/img/svg/icons/bin-brown.svg"
+            alt="supprimer"
+            class="w-full"
+        />
+      </div>
+
+      <div class="flex justify-between w-full mt-4 text-lg">
+        <Typography
+            variant="h1"
+            component="h1"
+            font="scholar"
+            weight="regular"
+            theme="gold"
+        >
+          {{ produit.name }}
+        </Typography>
+
+        <Typography
+            variant="h2"
+            component="h2"
+            font="halenoir"
+            weight="regular"
+            theme="gold"
+        >
+          {{ produit.price }} €
+        </Typography>
+      </div>
+      <div class="h-px bg-gold my-6"></div>
+      <!-- Ajout au panier -->
+      <Button
+          class="w-full"
+          @click="ajouterAuPanier(produit)"
+          variant="secondary"
+          size="medium"
+      >
         AJOUTER
       </Button>
     </div>
@@ -90,7 +145,21 @@
   </div>
 </div>
 
-
+      <!-- Choix de la taille -->
+      <div class="flex gap-3 pt-2 w-full">
+        <Button
+            v-for="taille in tailles"
+            :key="taille"
+            class="w-full"
+            @click="selectTaille(produit.id, taille)"
+            :variant="selectedTaille[produit.id] === taille ? 'primary' : 'secondary'"
+            size="medium"
+        >
+          {{ taille }}
+        </Button>
+      </div>
+    </div>
+    <ParticlesBackground />
   </div>
 
 </template>
@@ -102,6 +171,7 @@ import { useRouter } from 'vue-router'
 import { useSessionDataStore } from '@/stores/getUserSession.js'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const sessionStore = useSessionDataStore()
 const { fetchSession, getSessionData } = sessionStore

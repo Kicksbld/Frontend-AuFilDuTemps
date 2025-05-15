@@ -10,27 +10,27 @@
         <img ref="image1" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
             top-[15%] sm:top-[20%] left-[5%] sm:left-[10%] transform -translate-y-1/2" 
             alt="Collection"
-            src="../../assets/img/png/collectionTest.png" 
+            src="../../assets/img/png/collection1.png"
         />
         <img ref="image2" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
             top-[35%] sm:top-[40%] right-[5%] sm:right-[15%] transform -translate-y-1/2" 
             alt="Collection"
-            src="../../assets/img/png/collectionTest.png" 
+            src="../../assets/img/png/collection2.png"
         />
         <img ref="image3" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
             top-[60%] sm:top-[70%] left-[8%] sm:left-[20%] transform -translate-y-1/2" 
             alt="Collection"
-            src="../../assets/img/png/collectionTest.png" 
+            src="../../assets/img/png/collection3.png"
         />
         <img ref="image4" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
             top-[80%] sm:top-[85%] right-[10%] sm:right-[25%] transform -translate-y-1/2" 
             alt="Collection"
-            src="../../assets/img/png/collectionTest.png" 
+            src="../../assets/img/png/collection4.png"
         />
         <img ref="image5" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
             top-[25%] sm:top-[30%] right-[2%] transform -translate-y-1/2 hidden sm:block" 
             alt="Collection"
-            src="../../assets/img/png/collectionTest.png" 
+            src="../../assets/img/png/collectionTest.png"
         />
     </div>
 </template>
@@ -74,7 +74,7 @@ export default {
                         delay: index * 0.2,
                         scrollTrigger: {
                             trigger: image,
-                            start: "top 80%",
+                            start: "top 100%",
                             end: "top 50%",
                             toggleActions: "play none none reverse",
                             markers: false,

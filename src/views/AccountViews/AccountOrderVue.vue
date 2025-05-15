@@ -1,6 +1,10 @@
 <template>
   <div class="w-full bg-quinary">
-    <main class="grid place-content-center min-h-[20vh] w-full"></main>
+    
+      <ParticlesBackground />
+    <main class="grid place-content-center min-h-[20vh] w-full">
+       
+    </main>
 
     <img src="../../assets/img/svg/dernierescommandes.svg" />
 
@@ -48,6 +52,8 @@ import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import Typography from '../../UI/design-system/Typography.vue'
 import Button from '../../UI/design-system/Button.vue'
+import Typography from '../../UI/design-system/Typography.vue';
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const products = ref([])
 

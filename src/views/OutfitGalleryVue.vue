@@ -43,7 +43,6 @@
   </div>
 </div>
 
-
 <!-- Bas  -->
 <div class="flex flex-wrap justify-center gap-8 mt-12">
   <div v-if="produits[2]">
@@ -55,6 +54,7 @@
   <div v-if="produits[2]">
     <img :src="produits[1].image" class="w-[260px] shadow-lg rounded-lg rotate-[2deg]" />
   </div>
+  <ParticlesBackground />
 </div>
 
 
@@ -66,6 +66,8 @@
 <script setup>
 import Typography from '../UI/design-system/Typography.vue'
 import { ref, onMounted } from 'vue'
+import Typography from '../UI/design-system/Typography.vue';
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const produits = ref([])
 
