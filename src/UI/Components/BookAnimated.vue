@@ -1,12 +1,14 @@
 <template>
   <Transition>
     <div class="wrapper" v-if="show">
-      <div v-if="isTitleShown" class="sticky titleAnimation top-16 w-full flex justify-center items-center z-50">
+      <div class="sticky titleAnimation top-16 w-full flex justify-center items-center z-50" :style="{ opacity: titleOpacity }">
         <img class="w-[80%] sm:w-[60%] md:w-[50%] lg:w-[30%] xl:w-[30%] h-auto" alt="Jeu Concours"
           src="/src/assets/img/svg/jeuConcours.svg" />
       </div>
-      <Button v-if="isTitleShown" @click="handleButtonClick"
-        class="sticky top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50" variant="primary">
+      <Button @click="handleButtonClick"
+        class="sticky top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50" 
+        :style="{ opacity: buttonOpacity }"
+        variant="secondary">
         Acceder au jeu
       </Button>
       <div ref="container" class="model-container"></div>
@@ -21,7 +23,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import bookModel from '../../assets/3D_assets/scene.gltf?url';
+import bookModel from '../../assets/3D_assets/3dBook/Livre anim.gltf?url';
+
 import Button from '../design-system/Button.vue'
 import { useRouter } from 'vue-router';
 
@@ -40,7 +43,8 @@ export default {
     let animationId;
     let actions = [];
     let currentTime = 0;
-    const isTitleShown = ref(false);
+    const titleOpacity = ref(0);
+    const buttonOpacity = ref(0);
     let router = useRouter();
     let show = ref(true);
 
@@ -63,7 +67,8 @@ export default {
       container.value.appendChild(renderer.domElement);
 
       camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-      camera.position.set(0, 0, 5);
+      camera.position.set(0, 2, 13);
+      
 
       const ambientLight = new THREE.AmbientLight(0xffffff, 1);
       scene.add(ambientLight);
@@ -80,16 +85,19 @@ export default {
         bookModel,
         (gltf) => {
           if (gltf.cameras && gltf.cameras.length > 0) {
-            const modelCamera = gltf.cameras.find(c => c.name === 'PerspectiveCamera');
+            const modelCamera = gltf.cameras.find(c => c.name === 'Camera');
             if (modelCamera && container.value) {
               camera = modelCamera;
+              camera.position.y += 5;
+              camera.position.z += -0.3;
               camera.aspect = container.value.clientWidth / container.value.clientHeight;
               camera.updateProjectionMatrix();
             }
           }
 
-          scene.add(gltf.scene);
-          mixer = new THREE.AnimationMixer(gltf.scene);
+          const model = gltf.scene;
+          scene.add(model);
+          mixer = new THREE.AnimationMixer(model);
 
           actions = gltf.animations.map((clip) => {
             const action = mixer.clipAction(clip);
@@ -126,12 +134,17 @@ export default {
             mixer.update(0);
           });
 
-          if (self.progress > 0.8 && self.progress < 0.9) {
-            // Longer static period
-            isTitleShown.value = true;
-          } else if (self.progress >= 0.9) {
-            isTitleShown.value = true;
-            // Shorter translation window
+          // Fade in title and button during the animation
+          if (self.progress > 0.7 && self.progress < 0.9) {
+            const fadeProgress = (self.progress - 0.7) / 0.2; // Normalize to 0-1 range
+            titleOpacity.value = fadeProgress;
+            buttonOpacity.value = fadeProgress;
+          } 
+          // Instantly remove when sliding starts
+          else if (self.progress >= 0.9) {
+            titleOpacity.value = 0;
+            buttonOpacity.value = 0;
+            
             const translateX = ((self.progress - 0.9) / 0.1) * -100;
             gsap.to('.wrapper', {
               x: `${translateX}%`,
@@ -139,7 +152,8 @@ export default {
               ease: 'none'
             });
           } else {
-            isTitleShown.value = false;
+            titleOpacity.value = 0;
+            buttonOpacity.value = 0;
             gsap.to('.wrapper', {
               x: '0%',
               duration: 0.1,
@@ -201,7 +215,8 @@ export default {
 
     return {
       container,
-      isTitleShown,
+      titleOpacity,
+      buttonOpacity,
       show,
       handleButtonClick
     };
@@ -216,7 +231,7 @@ export default {
   height: 400vh;
 }
 
-/* nous vous expliquerons ensuite ce que font ces classes ! */
+/* nous vous expliquerons ensuite ce que font ces classes ! */
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
@@ -241,5 +256,13 @@ export default {
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+.titleAnimation {
+  transition: opacity 0.3s ease;
+}
+
+button {
+  transition: opacity 0.3s ease;
 }
 </style>

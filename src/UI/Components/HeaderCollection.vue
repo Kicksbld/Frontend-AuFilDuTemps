@@ -8,29 +8,34 @@
         </div>
 
         <img ref="image1" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
-            top-[15%] sm:top-[20%] left-[5%] sm:left-[10%] transform -translate-y-1/2" 
+            top-[80%] left-[8%] transform -translate-y-1/2" 
             alt="Collection"
             src="../../assets/img/png/collection1.png"
         />
-        <img ref="image2" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
-            top-[35%] sm:top-[40%] right-[5%] sm:right-[15%] transform -translate-y-1/2" 
+        <img ref="image5" class="opacity-0 w-[100px] sm:w-[125px] md:w-[150px] lg:w-[300px] h-auto absolute 
+            top-[35%] sm:top-[70%] right-[15%] transform -translate-y-1/2" 
             alt="Collection"
             src="../../assets/img/png/collection2.png"
         />
-        <img ref="image3" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
-            top-[60%] sm:top-[70%] left-[8%] sm:left-[20%] transform -translate-y-1/2" 
+        <img ref="image6" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
+            top-[25%] left-[75%] transform -translate-y-1/2" 
             alt="Collection"
             src="../../assets/img/png/collection3.png"
         />
-        <img ref="image4" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
-            top-[80%] sm:top-[85%] right-[10%] sm:right-[25%] transform -translate-y-1/2" 
+        <img ref="image4" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[225px] h-auto absolute 
+            top-[75%] right-[85%] transform -translate-y-1/2" 
             alt="Collection"
             src="../../assets/img/png/collection4.png"
         />
-        <img ref="image5" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
-            top-[25%] sm:top-[30%] right-[2%] transform -translate-y-1/2 hidden sm:block" 
+        <img ref="image3" class="opacity-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[275px] h-auto absolute 
+            top-[15%] right-[35%] transform -translate-y-1/2 hidden sm:block" 
             alt="Collection"
             src="../../assets/img/png/collectionTest.png"
+        />
+        <img ref="image2" class="opacity-0 w-[100px] sm:w-[150px] md:w-[300px] lg:w-[400px] h-auto absolute 
+            top-[25%] sm:top-[30%] right-[65%] transform -translate-y-1/2 hidden sm:block" 
+            alt="Collection"
+            src="../../assets/img/png/collection6.png"
         />
     </div>
 </template>
@@ -56,10 +61,11 @@ export default {
         const image3 = ref(null);
         const image4 = ref(null);
         const image5 = ref(null);
+        const image6 = ref(null);
         const title = ref(null);
 
         onMounted(() => {
-            const images = [image1.value, image2.value, image3.value, image4.value, image5.value, title.value];
+            const images = [image1.value, image2.value, image3.value, image4.value, image5.value, image6.value, title.value];
             
             images.forEach((image, index) => {
                 gsap.fromTo(image,
@@ -96,6 +102,7 @@ export default {
             image3,
             image4,
             image5,
+            image6,
             title
         };
     }

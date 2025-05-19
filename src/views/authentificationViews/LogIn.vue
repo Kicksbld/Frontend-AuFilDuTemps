@@ -55,9 +55,18 @@ export default {
     async handleSubmit() {
       try {
         this.isLoading = true;
+
         const { data, error } = await authClient.signIn.email({
           email: this.formData.email,
           password: this.formData.password
+        }, {
+          onSuccess: (ctx)=>{
+            const authToken = ctx.response.headers.get("set-auth-token") // get the token from the response headers
+            // Store the token securely (e.g., in localStorage)
+            localStorage.setItem("bearer_token", authToken);
+
+            this.$router.push('/');
+          }
         });
 
         if (error) {
@@ -65,8 +74,6 @@ export default {
         }
 
         // Redirect to home page or dashboard after successful login
-        this.$router.push('/');
-
       } catch (err) {
         alert(err.message);
         console.error('Login error:', err);

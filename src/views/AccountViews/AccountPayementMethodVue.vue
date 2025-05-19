@@ -175,7 +175,7 @@ export default {
           name: session.user.name || '',
           prenom: session.user.prenom || '',
           email: session.user.email || '',
-          telephone: session.user.telephone || '',
+          telephone: session.user.phoneNumber || '',
         };
       } else {
         console.warn('Aucun utilisateur trouvé');

@@ -9,24 +9,27 @@
         <img src="../assets/img/svg/ouEstLeTee.svg" alt="ou est le tee">
         <div class="space-y-6">
           <Typography theme="gold" variant="h2" font="scholar">
-            Le but est simple, il faut retrouver les personnages habillé par notre marque dans cette carte.
-            C’est exactement comme dans où est Charlie.
+            Le but est simple, il faut retrouver Raph, le seule personnage habillé par notre marque dans cette carte en un temps imparti.
           </Typography>
 
-          <Typography theme="gold" variant="h2" font="scholar">
+          <Typography class="ml-20" theme="gold" variant="h2" font="scholar">
             Les prix à gagner sont les suivants :
           </Typography>
 
-          <div class="w-full h-fit relative">
-            <div class="w-full h-[800px] sm:h-[600px] md:h-[400px] relative flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-0">
+          <div class="w-full h-fit">
+            <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-4">
               <div
                 v-for="(place, index) in order"
                 :key="index"
                 :class="[place.style, 'transition-all duration-300 ease-in-out']"
-                @click="rotateCards(index)"
+                :style="{ backgroundImage: `url(${bgCard})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }"
               >
-                <div class="w-full h-full flex flex-col items-center justify-center">
-                  <Typography variant="h2" font="scholar" theme="gold">{{ place.name }}</Typography>
+                <div class="w-full h-full flex flex-col items-center justify-end pb-6">
+                  <div class="text-center flex flex-col items-center gap-2">
+                    <h2 class="font-scholar text-7xl" :class="place.name === '1' ? 'text-primary' : 'text-gold'">{{ place.name }}</h2>
+                    <p class="font-scholar text-xl max-w-[75%]" :class="place.name === '1' ? 'text-primary' : 'text-gold'">{{ place.details }}</p>
+                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -47,6 +50,7 @@ import Typography from '../UI/design-system/Typography.vue';
 import Button from '../UI/design-system/Button.vue';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import bgCard from "../assets/img/png/bg-card.png"
 
 export default {
   name: 'GameHome',
@@ -58,57 +62,32 @@ export default {
   const router = useRouter();
 
   const order = ref([
+    
     {
-      name: '1ère Place',
-      price: '1000€',
-      color: 'bg-primary',
-      style: 'relative sm:absolute w-[220px] sm:w-[275px] md:w-[325px] h-[240px] sm:h-[300px] md:h-[342px] z-10 bg-primary rounded-lg',
-    },
-    {
-      name: '2ème Place',
+      name: '2',
       price: '500€',
-      color: 'bg-secondary',
-      style: 'relative sm:absolute w-[220px] sm:w-[250px] md:w-[304px] h-[200px] sm:h-[240px] md:h-[276px] sm:right-0 bg-secondary rounded-lg',
+      style: 'relative w-[220px] aspect-square bg-primary rounded-lg',
+      details: "Si tu trouves Raph en moins de 1 minute, tu gagnes -10% !"
     },
     {
-      name: '3ème Place',
+      name: '1',
+      price: '1000€',
+      style: 'relative w-[300px] aspect-square bg-gold rounded-lg',
+      details: "Si tu trouves Raph en moins de 10 secondes, tu gagnes un t-shirt !"
+    },
+    {
+      name: '3',
       price: '250€',
-      color: 'bg-tertiary',
-      style: 'relative sm:absolute w-[220px] sm:w-[250px] md:w-[304px] h-[200px] sm:h-[240px] md:h-[276px] sm:left-0 bg-tertiary rounded-lg',
+      style: 'relative w-[220px] aspect-square  bg-primary rounded-lg',
+      details: "Si tu trouves Raph en moins de 30 secondes, tu gagnes -20% !"
     },
   ]);
 
   
-  const rotateCards = (index) => {
-    if (index === 0) {
-      order.value = defaultOrder.map((card, i) => ({
-        ...card,
-       
-      }));
-    } else if (index === 1) {
-      order.value = [
-        { ...defaultOrder[1],  },
-        { ...defaultOrder[2], },
-        { ...defaultOrder[0],  }
-      ];
-    } else if (index === 2) {
-      order.value = [
-        { ...defaultOrder[2],  },
-        { ...defaultOrder[0], },
-        { ...defaultOrder[1],  }
-      ];
-    }
-  };
-  
-  // Update initial order with proper styles
-  const defaultOrder = order.value.map((card, i) => ({
-    ...card,
-  }));
-  
   return {
     router,
     order,
-    rotateCards
+    bgCard
   };
 }
 
