@@ -19,14 +19,16 @@
 import { ref, onMounted } from "vue";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { TextureLoader } from "three";
 import Typography from '../design-system/Typography.vue';
-import tshirtModel from '../../assets/3D_assets/3dTshirt/model.gltf?url';
+import tshirtModel from '../../assets/3D_assets/3dTshirt/Tshirt-final.gltf?url';
 
 
 const container = ref(null);
 
 onMounted(() => {
   const scene = new THREE.Scene();
+  const textureloader = new TextureLoader();
 
   const sizes = {
     width: window.innerWidth,
@@ -48,6 +50,11 @@ onMounted(() => {
   const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
 
+  // Add directional light for better material rendering
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(5, 5, 5);
+  scene.add(directionalLight);
+
   let mixer = null;
 
   const loader = new GLTFLoader();
@@ -55,11 +62,22 @@ onMounted(() => {
       tshirtModel,
       (gltf) => {
         const model = gltf.scene;
-        model.scale.set(0.8, 0.8, 0.8);
+        model.scale.set(0.5, 0.5, 0.5);
+        model.position.set(0, 0.3, 0);
 
         const mesh = model.children[0];
-        mesh.material = new THREE.MeshBasicMaterial({ color: 0xE7B276 }); // Couleur uniforme sans effet de lumière
-
+        
+        // Set up animation mixer and actions
+        mixer = new THREE.AnimationMixer(model);
+        const animations = gltf.animations;
+        
+        if (animations && animations.length > 0) {
+          console.log(animations);
+          const action = mixer.clipAction(animations[0]);
+          action.setLoop(THREE.LoopRepeat);
+          action.play();
+        }
+        
         scene.add(model);
 
         if (gltf.cameras && gltf.cameras.length > 0) {
@@ -84,15 +102,23 @@ onMounted(() => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   });
 
-
   const clock = new THREE.Clock();
 
   const animate = () => {
     const delta = clock.getDelta();
-    if (mixer) mixer.update(delta);
+    
+    // Update the animation mixer
+    if (mixer) {
+      mixer.update(delta);
+    }
 
-    // Rotation de la scène pour un effet de mouvement
-    scene.rotation.y += 0.005;
+    // Add continuous rotation to the model
+    if (scene.children.length > 0) {
+      const model = scene.children.find(child => child.type === 'Group');
+      if (model) {
+        model.rotation.y += 0.005; // Adjust speed by changing this value
+      }
+    }
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
@@ -103,7 +129,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Ajoute ceci si tu veux forcer le canvas à prendre tout l’espace */
+/* Ajoute ceci si tu veux forcer le canvas à prendre tout l'espace */
 canvas {
   display: block;
 }
