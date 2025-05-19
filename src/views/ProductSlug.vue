@@ -1,39 +1,31 @@
 <template>
   <div v-if="produit" class="w-full bg-quinary p-10 min-h-screen">
-   <ParticlesBackground />
-    <div class="flex pt-40 gap-10 flex-wrap">
-
+    <ParticlesBackground />
+    <div v-if="loadingPanier" class="flex justify-center items-center w-full">
+      <fwb-spinner color="gray" size="10" />
+    </div>
+    <div class="flex flex-col lg:flex-row pt-50 gap-10">
       <!-- img à gauche -->
-      <div class="flex flex-col gap-4">
-        <img
-          v-for="(img, index) in produit.images"
-          :key="index"
-          :src="img"
-          @click="imagePrincipale = img"
-          class="w-24 h-28 object-cover rounded-md cursor-pointer transition hover:scale-105 border-2"
-          :class="{ 'border-gold': img === imagePrincipale, 'border-transparent': img !== imagePrincipale }"
-        />
+      <div class="flex flex-row lg:flex-col gap-4 justify-center lg:items-start">
+        <img v-for="(img, index) in produit.images" :key="index" :src="img" @click="imagePrincipale = img"
+          class="w-20 h-24 sm:w-24 sm:h-28 object-cover cursor-pointer transition hover:scale-105"
+          :class="img === imagePrincipale" style="clip-path: polygon(0% 5%, 100% 0%, 100% 97%, 0% 100%)" />
       </div>
 
-      <!-- Image principale -->
-      <div class="w-[440px] h-[600px] overflow-hidden rounded-2xl border border-gold">
-        <img
-          :src="imagePrincipale"
-          alt="Image principale"
-          class="w-full h-full object-cover"
-        />
+      <div class="w-full sm:w-[440px] h-[400px] sm:h-[600px] overflow-hidden mx-auto">
+        <img :src="imagePrincipale" alt="Image principale" class="w-full h-full object-cover"
+          style="clip-path: polygon(0% 0%, 100% 0%, 100% 97%, 0% 100%)" />
       </div>
 
       <!-- Détails produits -->
-      <div class=" w-[47%]" id="detail_products">
-        <div class="flex justify-between items-center">
+      <div class="w-full lg:w-[47%] pt-10" id="detail_products">
+        <div class="flex justify-between items-center flex-wrap gap-4">
           <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">
             {{ produit.name }}
           </Typography>
-          
-            <img @click.stop ="ajouterAuxFavoris(produit)"
-             class="w-10" src="../assets/img/png/like.png" alt="like icon" />
-     
+
+          <img @click.stop="ajouterAuxFavoris(produit)" class="w-10 cursor-pointer"
+            :src="isLiked ? favorieFilled : favorieOutline" alt="like icon" />
         </div>
 
         <Typography class="mb-[5%]" variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">
@@ -46,19 +38,13 @@
           {{ produit.color }}
         </Typography>
 
-      
         <Button variant="secondary" size="medium" class="w-full" @click="addToCart">
           AJOUTER
         </Button>
-        <div class="flex gap-3 pt-2 w-full">
-          <Button
-            v-for="taille in ['XS', 'S', 'M', 'L', 'XL']"
-            :key="taille"
-            class="w-full"
-            @click="selectTaille(taille)"
-            variant="secondary"
-            size="medium"
-          >
+
+        <div class="flex flex-wrap gap-3 pt-2 w-full">
+          <Button v-for="taille in ['XS', 'S', 'M', 'L', 'XL']" :key="taille" class="w-full sm:w-auto flex-1"
+            @click="selectTaille(taille)" variant="secondary" size="medium">
             {{ taille }}
           </Button>
         </div>
@@ -71,19 +57,28 @@
   </div>
 </template>
 
+
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useSessionDataStore } from "../stores/getUserSession";
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
-import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
+import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue"
+import favorieFilled from '../../src/assets/img/svg/icons/favorie-filled-beige.svg'
+import favorieOutline from '../../src/assets/img/svg/icons/favorie-outline-beige.svg'
+import { FwbSpinner } from 'flowbite-vue'
 
 const route = useRoute()
 const router = useRouter()
 
+const sessionStore = useSessionDataStore()
+const user = computed(() => sessionStore.getUserData)
+
 const produit = ref(null)
 const imagePrincipale = ref(null)
 const selectedTaille = ref(null)
+const isLiked = ref(false)
 
 const fetchProduit = async () => {
   const id = route.params.id
@@ -91,21 +86,35 @@ const fetchProduit = async () => {
   const data = await response.json()
   produit.value = data
   imagePrincipale.value = data.images?.[0] || ''
+
+  const favoris = JSON.parse(localStorage.getItem('favoris')) || []
+  isLiked.value = favoris.some(fav => fav.id === data.id)
 }
 
 const selectTaille = (taille) => {
   selectedTaille.value = taille
 }
-const ajouterAuxFavoris = (produit) => {
-  let favoris = JSON.parse(localStorage.getItem('favoris')) || []
 
-  const existe = favoris.find(fav => fav.id === produit.id)
-  if (!existe) {
-    favoris.push(produit)
-    localStorage.setItem('favoris', JSON.stringify(favoris))
+const ajouterAuxFavoris = (produit) => {
+  if (!user.value) {
+    router.push('/log-in') // Redirection si non connecté
+    return
   }
-  router.push('/favourites')
+
+  let favoris = JSON.parse(localStorage.getItem('favoris')) || []
+  const index = favoris.findIndex(fav => fav.id === produit.id)
+
+  if (index === -1) {
+    favoris.push(produit)
+    isLiked.value = true
+  } else {
+    favoris.splice(index, 1)
+    isLiked.value = false
+  }
+
+  localStorage.setItem('favoris', JSON.stringify(favoris))
 }
+
 const addToCart = () => {
   if (!selectedTaille.value) {
     alert("Veuillez sélectionner une taille avant d'ajouter au panier.")
@@ -113,20 +122,27 @@ const addToCart = () => {
   }
 
   const item = {
-    id: produit.value.id,
-    nom: produit.value.name,
-    prix: produit.value.price,
-    images: produit.value.images,
+    id: produit.value.id + '-' + selectedTaille.value,
+    productId: produit.value.id,
+    name: produit.value.name,
+    price: produit.value.price,
+    images: produit.value.images?.[0],
     description: produit.value.description,
     taille: selectedTaille.value,
     quantité: 1,
   }
 
-  const cart = JSON.parse(localStorage.getItem('cart')) || []
-  cart.push(item)
-  localStorage.setItem('cart', JSON.stringify(cart))
+  const cart = JSON.parse(localStorage.getItem('panier')) || []
+  const existingIndex = cart.findIndex(p => p.id === item.id)
 
-  router.push('/cart')
+  if (existingIndex !== -1) {
+    cart[existingIndex].quantité += 1
+  } else {
+    cart.push(item)
+  }
+
+  localStorage.setItem('panier', JSON.stringify(cart))
+  router.push('/products') // Redirection vers produits
 }
 
 onMounted(() => {

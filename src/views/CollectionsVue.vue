@@ -14,7 +14,7 @@
   </div> -->
   <div class="flex">
   <img src="../assets/img/svg/produits.svg">
-  <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
+  <hr class="w-full my-2 border-[1px]  border-gold mt-45" />
   </div>
 <!-- Popup -->
 <div
