@@ -84,7 +84,7 @@
 
 
     <div>
-      <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="regular" theme="gold">
+      <!-- <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="regular" theme="gold">
         Voir plus
       </Typography>
       <div class="grid grid-cols-6 gap-[2%] items-center justify-center">
@@ -98,7 +98,7 @@
           <img @click.stop="ajouterAuxFavoris(produit)" class="w-8 absolute bottom-3 right-3 cursor-pointer z-10"
             :src="isProduitFavori(produit) ? favorieFilled : favorieOutline" alt="like icon" />
         </div>
-      </div>
+      </div> -->
 
 
 
@@ -171,25 +171,25 @@ const ajouterAuxFavoris = (produit) => {
 }
 
 
-const articlesSimilaires = ref([])
+// const articlesSimilaires = ref([])
 
-const fetchArticlesSimilaires = async () => {
-  try {
-    const response = await fetch(`https://backend-au-fil-du-temps.vercel.app/products`)
-    if (!response.ok) throw new Error('Erreur chargement articles similaires')
-    const data = await response.json()
+// const fetchplusProduits = async () => {
+//   try {
+//     const response = await fetch(`https://backend-au-fil-du-temps.vercel.app/products`)
+//     if (!response.ok) throw new Error('Erreur chargement articles similaires')
+//     const data = await response.json()
 
-    const filtres = data.filter(p => p.id !== route.params.id)
+//     const filtres = data.filter(p => p.id !== route.params.id)
 
-    articlesSimilaires.value = filtres.slice(0, 6)
-  } catch (error) {
-    console.error('Erreur articles similaires :', error)
-  }
-}
+//     articlesSimilaires.value = filtres.slice(0, 6)
+//   } catch (error) {
+//     console.error('Erreur articles similaires :', error)
+//   }
+// }
 
 onMounted(() => {
   fetchProduit()
-  fetchArticlesSimilaires()
+  // fetchplusProduits()
 })
 
 const modalProduit = ref(null)

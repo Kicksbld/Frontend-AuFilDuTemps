@@ -15,7 +15,6 @@
 
       <div class="p-0 md:p-10 space-y-16">
 
-
         <div class="flex flex-col lg:flex-row justify-between gap-10">
           <div class="flex flex-col sm:flex-row gap-8 flex-wrap">
             <div class="flex flex-col">
@@ -48,9 +47,8 @@
           </div>
         </div>
 
-        <!-- Separateur -->
         <div class="flex flex-wrap justify-between gap-4">
-          <div class="h-px bg-gold w-3 md:w-[30%]"></div>
+          <div class="h-px bg-gold w-full md:w-[30%]"></div>
           <div class="h-px bg-gold w-full md:w-[30%]"></div>
         </div>
 
@@ -73,7 +71,6 @@
           </div>
         </div>
 
-        <!-- Separateur -->
         <div class="flex flex-wrap justify-between gap-4">
           <div class="h-px bg-gold w-full md:w-[30%]"></div>
           <div class="h-px bg-gold w-full md:w-[30%]"></div>
@@ -98,7 +95,6 @@
           </div>
         </div>
 
-        <!-- Separateur -->
         <div class="flex flex-wrap justify-between gap-4">
           <div class="h-px bg-gold w-full md:w-[30%]"></div>
           <div class="h-px bg-gold w-full md:w-[30%]"></div>
@@ -167,12 +163,24 @@ export default {
     },
 
     toggleEdition(champ) {
-      if (this.modesEdition[champ]) {
-        this.infos[champ] = this.edited[champ];
+      if (champ === 'nomPrenom') {
+        if (this.modesEdition.nomPrenom) {
+          this.infos.name = this.edited.name;
+          this.infos.prenom = this.edited.prenom;
+        } else {
+          this.edited.name = this.infos.name;
+          this.edited.prenom = this.infos.prenom;
+        }
+        this.modesEdition.nomPrenom = !this.modesEdition.nomPrenom;
       } else {
-        this.edited[champ] = this.infos[champ];
+        if (this.modesEdition[champ]) {
+          this.infos[champ] = this.edited[champ];
+        } else {
+          this.edited[champ] = this.infos[champ];
+        }
+        this.modesEdition[champ] = !this.modesEdition[champ];
       }
-      this.modesEdition[champ] = !this.modesEdition[champ];
+      console.log('Edit:', edited.name);
     },
 
     async handleLogOut() {

@@ -8,7 +8,6 @@
     </div>
 
     <div class="flex flex-col items-center gap-12">
-      <!-- Section avec images statiques associées à un ID produit -->
       <div class="flex flex-wrap justify-center gap-8">
         <RouterLink :to="`/product/1`">
           <img src="../assets/img/png/pull.png" class="w-[260px] shadow-lg rotate-[-2deg] cursor-pointer" />
@@ -23,8 +22,12 @@
 
       <div class="flex flex-col lg:flex-row justify-center items-start gap-12 mt-12">
         <div class="flex flex-row gap-8">
-          <img src="../assets/img/png/collection1.png" class="w-[260px] shadow-lg rounded-lg rotate-[-1deg]" />
-          <img src="../assets/img/png/collection2.png" class="w-[260px] shadow-lg rounded-lg rotate-[-2deg]" />
+          <RouterLink :to="`/product/2`">
+            <img src="../assets/img/png/collection1.png" class="w-[260px] shadow-lg rounded-lg rotate-[-1deg]" />
+          </RouterLink>
+          <RouterLink :to="`/product/3`">
+            <img src="../assets/img/png/collection2.png" class="w-[260px] shadow-lg rounded-lg rotate-[-2deg]" />
+          </RouterLink>
         </div>
 
         <div class="text-gold text-base sm:text-lg italic font-light text-center px-6 max-w-sm">

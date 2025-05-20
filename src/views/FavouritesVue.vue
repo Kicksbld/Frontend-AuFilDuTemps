@@ -1,28 +1,23 @@
 <template>
-  <div v-if="loadingArticles">
-    <fwb-spinner color="yellow" size="10" class="flex justify-center items-center w-full" />
-  </div>
   <div v-if="!isLoggedIn" class="text-center py-20">
     <ParticlesBackground />
     <p class="text-lg text-gray-600">Vous devez être connecté pour voir vos favoris.</p>
     <RouterLink to="/sign-up" class="text-gold underline">Se connecter</RouterLink>
   </div>
 
-
   <div class="w-full bg-quinary p-10" v-else>
     <main class="grid place-content-center min-h-[20vh] w-full"></main>
 
     <div class="flex">
       <img src="../assets/img/svg/favoris.svg" />
-      <hr class="w-full my-2 border-[1px]  border-gold mt-45" />
+      <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
     </div>
 
     <div v-if="articles.length === 0"
       class="flex flex-col items-center justify-center text-center text-lg text-gold gap-4">
-      <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">Aucun favori pour le
-        moment.
+      <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">Aucun favori pour le moment.
       </Typography>
-      <router-link to="/products">
+      <router-link to="/">
         <Button class="justify-center" variant="secondary">Explorer</Button>
       </router-link>
     </div>
@@ -45,8 +40,7 @@
           <div class="flex justify-between text-lg mb-4">
             <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">{{ produit.name }}
             </Typography>
-            <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">{{ produit.price }}
-              €
+            <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">{{ produit.price }} €
             </Typography>
           </div>
 
@@ -91,8 +85,8 @@
       </div>
     </div>
 
-  </div>
 
+  </div>
 
 </template>
 
@@ -103,14 +97,12 @@ import { useRouter } from 'vue-router'
 import { useSessionDataStore } from '@/stores/getUserSession.js'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
-import { FwbSpinner } from 'flowbite-vue'
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 
 const sessionStore = useSessionDataStore()
 const { fetchSession, getSessionData } = sessionStore
 const isLoggedIn = computed(() => !!getSessionData)
 const router = useRouter()
-const loadingArticles = ref(true)
 
 
 const articles = ref([])
@@ -126,10 +118,8 @@ onMounted(async () => {
 })
 
 const fetchArticles = () => {
-  loadingArticles.value = true
   const favoris = JSON.parse(localStorage.getItem('favoris')) || []
   articles.value = favoris
-  loadingArticles.value = false
 }
 
 const supprimerArticle = (id) => {
