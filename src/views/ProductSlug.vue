@@ -54,6 +54,21 @@
         </Typography>
       </div>
     </div>
+    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="regular" theme="gold">
+      Voir plus
+    </Typography>
+    <div class="grid grid-cols-6 gap-[2%] items-center justify-center">
+      <div v-for="produit in articlesSimilaires" :key="produit.id"
+        class="relative w-full h-[300px] overflow-hidden rounded-lg">
+        <router-link :to="`/product/${produit.id}`">
+          <img class="w-full h-full object-cover" :src="produit.images" alt="produit img"
+            style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%)" />
+        </router-link>
+
+        <img @click.stop="ajouterAuxFavoris(produit)" class="w-8 absolute bottom-3 right-3 cursor-pointer z-10"
+          :src="isProduitFavori(produit) ? favorieFilled : favorieOutline" alt="like icon" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -79,6 +94,11 @@ const produit = ref(null)
 const imagePrincipale = ref(null)
 const selectedTaille = ref(null)
 const isLiked = ref(false)
+const isProduitFavori = (produit) => {
+  return favoris.value.some(fav => fav.id === produit.id)
+}
+
+const favoris = ref(JSON.parse(localStorage.getItem('favoris')) || [])
 
 const fetchProduit = async () => {
   const id = route.params.id
@@ -91,13 +111,29 @@ const fetchProduit = async () => {
   isLiked.value = favoris.some(fav => fav.id === data.id)
 }
 
+const articlesSimilaires = ref([])
+
+const fetchArticlesSimilaires = async () => {
+  try {
+    const response = await fetch(`https://backend-au-fil-du-temps.vercel.app/products`)
+    if (!response.ok) throw new Error('Erreur chargement articles similaires')
+    const data = await response.json()
+
+    const filtres = data.filter(p => p.id !== route.params.id)
+
+    articlesSimilaires.value = filtres.slice(0, 6)
+  } catch (error) {
+    console.error('Erreur articles similaires :', error)
+  }
+}
+
 const selectTaille = (taille) => {
   selectedTaille.value = taille
 }
 
 const ajouterAuxFavoris = (produit) => {
   if (!user.value) {
-    router.push('/log-in') // Redirection si non connecté
+    router.push('/log-in')
     return
   }
 
@@ -136,16 +172,17 @@ const addToCart = () => {
   const existingIndex = cart.findIndex(p => p.id === item.id)
 
   if (existingIndex !== -1) {
-    cart[existingIndex].quantité += 1
+    cart[existingIndex].quantité += 0
   } else {
     cart.push(item)
   }
 
   localStorage.setItem('panier', JSON.stringify(cart))
-  router.push('/products') // Redirection vers produits
+  router.push('/products')
 }
 
 onMounted(() => {
   fetchProduit()
+  fetchArticlesSimilaires()
 })
 </script>
