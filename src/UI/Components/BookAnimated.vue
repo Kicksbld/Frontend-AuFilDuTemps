@@ -94,7 +94,7 @@ export default {
               camera.updateProjectionMatrix();
             }
           }
-
+ 
           const model = gltf.scene;
           scene.add(model);
           mixer = new THREE.AnimationMixer(model);

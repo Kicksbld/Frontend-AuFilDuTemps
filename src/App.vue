@@ -9,6 +9,12 @@ const route = useRoute();
 const hideNavAndFooter = computed(() => {
   return ['/log-in', '/sign-up', '/home-game', '/competition-game', '/game-end'].includes(route.path);
 });
+
+
+//Backend Endpoints Exemples
+
+// Coupons
+
 </script>
 
 <template>

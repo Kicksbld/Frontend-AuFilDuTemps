@@ -6,6 +6,7 @@
   </div>
 
   <div class="w-full bg-quinary p-10" v-else>
+    <ParticlesBackground />
     <main class="grid place-content-center min-h-[20vh] w-full"></main>
 
     <div class="flex">
