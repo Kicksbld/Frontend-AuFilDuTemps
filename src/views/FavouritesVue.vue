@@ -14,7 +14,19 @@
       <hr class="w-full my-2 border-[1px] border-[#D4AF8E] mt-45" />
     </div>
 
-    <div v-if="articles.length === 0"
+    <div v-if="loading" class="text-center py-4">
+      <Typography variant="h2" font="scholar" theme="gold">
+        Chargement des Favoris...
+      </Typography>
+    </div>
+
+    <div v-else-if="error" class="text-center py-4">
+      <Typography variant="h2" font="scholar" theme="gold">
+        Erreur lors du chargement des favoris
+      </Typography>
+    </div>
+
+    <div v-else-if="!loading && safeFavorites.length === 0"
       class="flex flex-col items-center justify-center text-center text-lg text-gold gap-4">
       <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">Aucun favori pour le moment.
       </Typography>
@@ -23,31 +35,31 @@
       </router-link>
     </div>
 
-    <div class="flex flex-wrap justify-center gap-12 mt-12">
-      <div v-for="produit in articles" :key="produit.id"
+    <div v-else class="flex flex-wrap justify-center gap-12 mt-12">
+      <div v-for="favorite in safeFavorites" :key="favorite.id"
         class="relative p-4 rounded-2xl shadow-md w-[300px] min-h-[580px] flex flex-col justify-between">
-        <router-link :to="`/product/${produit.id}`">
+        <router-link :to="`/product/${favorite.product.id}`">
           <div class="h-[320px] overflow-hidden">
-            <img class="w-full h-full object-cover" :src="produit.images" alt="produit img"
+            <img class="w-full h-full object-cover" :src="favorite.product.images?.[0]" alt="produit img"
               style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)" />
           </div>
         </router-link>
 
-        <div class="absolute top-6 right-6 cursor-pointer w-[40px]" @click.stop="supprimerArticle(produit.id)">
+        <div class="absolute top-6 right-6 cursor-pointer w-[40px]" @click.stop="supprimerArticle(favorite.product.id)">
           <img src="../assets/img/svg/icons/bin-brown.svg" alt="supprimer" class="w-full" />
         </div>
 
         <div class="mt-6">
           <div class="flex justify-between text-lg mb-4">
-            <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">{{ produit.name }}
+            <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">{{ favorite.product.name }}
             </Typography>
-            <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">{{ produit.price }} €
+            <Typography variant="h2" component="h2" font="halenoir" weight="regular" theme="gold">{{ favorite.product.price }} €
             </Typography>
           </div>
 
           <div class="h-px bg-gold my-4"></div>
 
-          <Button class="w-full mb-4" @click="ouvrirPopup(produit)" variant="secondary" size="medium">AJOUTER</Button>
+          <Button class="w-full mb-4" @click="ouvrirPopup(favorite.product)" variant="secondary" size="medium">AJOUTER</Button>
         </div>
       </div>
     </div>
@@ -55,7 +67,9 @@
     <!-- POPUP -->
     <div v-if="produitSelectionne"
       class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center">
-      <div class="bg-quinary border border-gold p-8 flex gap-10 w-[90%] max-w-4xl relative">
+
+      <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
+        <img :src="produitSelectionne.images?.[0]" alt="image produit" class="w-[300px] h-auto object-cover" />
 
         <div class="w-full flex flex-col">
           <img :src="produitSelectionne.images" alt="image produit"
@@ -103,20 +117,32 @@
 
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionDataStore } from '@/stores/getUserSession.js'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
+import { useApi } from "@/stores/dataBaseData"
+import { favorites } from "@/services"
+
+const { data: favoritesData, error, loading, run: fetchFavorites } = useApi(favorites.list)
+const { run: deleteFavorite } = useApi(favorites.remove)
+
+// Add computed property to safely handle favorites data
+const safeFavorites = computed(() => {
+  return favoritesData.value || []
+})
+
+watch(favoritesData, (newValue) => {
+  console.log('produits reçus :', newValue)
+}, { immediate: true })
 
 const sessionStore = useSessionDataStore()
 const { fetchSession, getSessionData } = sessionStore
 const isLoggedIn = computed(() => !!getSessionData)
 const router = useRouter()
 
-
-const articles = ref([])
 const tailles = ['XS', 'S', 'M', 'L', 'XL']
 
 onMounted(async () => {
@@ -125,21 +151,16 @@ onMounted(async () => {
     router.push('/log-in')
     return
   }
-  fetchArticles()
+  await fetchFavorites()
 })
 
-const fetchArticles = () => {
-  const favoris = JSON.parse(localStorage.getItem('favoris')) || []
-  articles.value = favoris
-}
-
-const supprimerArticle = (id) => {
-  const favoris = JSON.parse(localStorage.getItem('favoris')) || []
-  const index = favoris.findIndex(produit => produit.id === id)
-  if (index !== -1) {
-    favoris.splice(index, 1)
-    localStorage.setItem('favoris', JSON.stringify(favoris))
-    fetchArticles()
+const supprimerArticle = async (id) => {
+  console.log('id :', id)
+  try {
+    await deleteFavorite(id)
+    await fetchFavorites()
+  } catch (error) {
+    console.error('Erreur lors de la suppression du favori :', error)
   }
 }
 

@@ -19,80 +19,99 @@
       </Typography>
     </div>
 
+    <div v-else-if="safeAddresses && safeAddresses.length === 0" class="text-center py-4">
+      <Typography variant="h2" font="scholar" theme="gold">
+        Aucune adresse trouvée
+      </Typography>
+    </div>
+
     <div v-else>
       <div class="p-10">
-        <div class="mb-6">
-          <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">{{
-            safeAddresses[0].label }}
+        <div v-for="address in safeAddresses" class="mb-6" v-if="safeAddresses && safeAddresses.length > 0">
+          <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">
+            {{ address.label || 'Adresse principale' }}
           </Typography>
           <div class="flex items-center gap-4 justify-between">
-            <div v-if="editMode.label">
-              <input type="text" v-model="edited.label" :placeholder="placeholder"
+            <div v-if="isEditingIndex === address.id" class="flex gap-4 flex-wrap">
+              <input type="text" v-model="address.street"
+                class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+              <input type="text" v-model="address.postalCode"
+                class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+              <input type="text" v-model="address.city"
                 class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
             </div>
             <div v-else>
-              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ safeAddresses[0].street }} {{
-                safeAddresses[0].city }} {{ safeAddresses[0].postalCode }}
+              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">
+                {{ address.street }} {{ address.postalCode }} {{ address.city }}
               </Typography>
             </div>
-            <div @click="adresseSave('label')" class="flex">
-              <Button variant="secondary">
-                {{ editMode.label ? 'OK' : 'Modifier' }}
+            <div class="flex gap-2">
+              <Button v-if="isEditingIndex !== address.id" @click="isEditingIndex = address.id" variant="secondary">
+                Modifier
+              </Button>
+              <Button v-else @click="saveEditAdresse(address.id)" variant="secondary">
+                OK
+              </Button>
+              <Button variant="secondary" @click="supprimerAdresse(address.id)">
+                Supprimer
               </Button>
             </div>
           </div>
         </div>
-
-        <!-- Liste des addresses -->
-        <div class="mb-6" v-for="(safeAddresses, index) in addresses" :key="index">
-          <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">
-            Adresse {{ index + 1 }}
-          </Typography>
-          <div class="flex items-center gap-4 justify-between">
-            <div v-if="editMode.addresses[index]">
-              <input type="text" v-model="addresses[index]" placeholder="Entrez une adresse"
-                class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
-            </div>
-            <div v-else>
-              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ safeAddresses.street }}
-              </Typography>
-
-            </div>
-
-            <div class="flex flex-col gap-2 items-end">
-              <Button variant="secondary" @click="supprimerAdresse(index)">Supprimer</Button>
-
-              <template v-if="editMode.addresses[index]">
-                <Button variant="secondary" @click="saveAdresse(index)">Sauvegarder</Button>
-              </template>
-              <template v-else>
-                <Button variant="secondary" @click="editMode.addresses[index] = true">Modifier</Button>
-              </template>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex gap-3 justify-between">
-          <div class="h-px bg-gold my-6" style="width: 360px;"></div>
-          <div class="h-px bg-gold my-6" style="width: 360px;"></div>
-        </div>
-
-        <RouterLink to="/account">
-          <Typography variant="h2" component="h2" font="scholar" weight="regular" theme="gold" class="text-center pt-5">
-            Retour au compte</Typography>
-        </RouterLink>
-
-        <div class="flex justify-center align-center pt-4 ">
-          <Button variant="secondary" @click="ajouterAdresse">Ajouter une adresse</Button>
-        </div>
       </div>
     </div>
+
+    <div v-if="isAdding" class="mb-6">
+      <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">
+        Nouvelle adresse
+      </Typography>
+      <form @submit.prevent="saveAdresse" class="flex gap-4 justify-between">
+        <div class="grid grid-cols-2 gap-x-4 gap-y-4">
+          <input required type="text" placeholder="Entrez une adresse" v-model="infos.street"
+            class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+          <input required type="text" placeholder="Entrez un code postal" v-model="infos.postalCode"
+            class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+          <input required type="text" placeholder="Entrez une ville" v-model="infos.city"
+            class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+          <input required type="text" placeholder="Entrez un département/région" v-model="infos.state"
+            class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+          <input required type="text" placeholder="Entrez un pays" v-model="infos.country"
+            class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+          <input required type="text" placeholder="Entrez un libellé" v-model="infos.label"
+            class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+          <div class="flex items-center gap-2">
+            <input type="checkbox" v-model="infos.isDefault" id="isDefault" class="w-4 h-4" />
+            <label for="isDefault" class="text-gold">Adresse par défaut</label>
+          </div>
+        </div>
+        <div>
+        </div>
+        <div class="flex flex-col gap-2 items-end">
+          <Button type="submit" variant="secondary">Sauvegarder</Button>
+          <Button variant="secondary" @click="isAdding = false">Annuler</Button>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex gap-3 justify-between">
+      <div class="h-px bg-gold my-6" style="width: 360px;"></div>
+      <div class="h-px bg-gold my-6" style="width: 360px;"></div>
+    </div>
+
+    <RouterLink to="/account">
+      <Typography variant="h2" component="h2" font="scholar" weight="regular" theme="gold" class="text-center pt-5">
+        Retour au compte</Typography>
+    </RouterLink>
+
+    <div class="flex justify-center align-center pt-4">
+      <Button variant="secondary" @click="isAdding = true">Ajouter une adresse</Button>
+    </div>
+
   </div>
 </template>
 
 <script>
 import { ref, onMounted, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import Typography from '../../UI/design-system/Typography.vue'
 import Button from '../../UI/design-system/Button.vue'
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
@@ -106,98 +125,100 @@ export default {
     Button
   },
   setup() {
-    const router = useRouter()
 
     const { data: addressesData, error, loading, run: fetchAdresses } = useApi(addresses.list)
+    const { run: editAddress } = useApi(addresses.update)
+    const { run: createAddress } = useApi(addresses.create)
+    const { run: deleteAddress } = useApi(addresses.remove)
+
+    let isAdding = ref(false)
+    let isEditingIndex = ref(null)
+
     const safeAddresses = computed(() => {
       return addressesData.value || []
     })
+
     watch(addressesData, (newValue) => {
-      // localStorage.setItem('userAdresses', JSON.stringify(newAdresses))
-      console.log('Preferences :', newValue)
+      console.log('addressesData :', newValue)
     }, { immediate: true })
 
     const infos = ref({
       label: '',
       street: '',
-      city: ''
+      city: '',
+      state: '',
+      postalCode: '',
+      country: '',
+      isDefault: false
     })
 
-    const edited = ref({ ...infos.value })
-
-    const editMode = ref({
-      label: false,
-      street: false,
-      city: false,
-
-    })
-
-    const placeholderTravail = 'Adresse'
-
-    const ajouterAdresse = () => {
-      if (infos.value.length && infos.value[infos.value.length - 1] === '') return
-      infos.value.push('')
-      editMode.value.infos.push(true)
-      console.log('Adresse ajoutée')
-    }
-
-    const editAdresse = (index) => {
-      editMode.value.infos[index] = true
-    }
-
-    const saveAdresse = (index) => {
-      // localStorage.setItem('userAdresses', JSON.stringify(infos.value))
-      editMode.value.infos[index] = false
-    }
-
-    const supprimerAdresse = (index) => {
-      infos.value.splice(index, 1)
-      editMode.value.infos.splice(index, 1)
-      // localStorage.setItem('userAdresses', JSON.stringify(infos.value))
-      console.log('Adresse supprimée')
-    }
-
-    const adresseSave = (field) => {
-      if (editMode.value[field]) {
-        infos.value[field] = edited.value[field]
-        // localStorage.setItem('userInfos', JSON.stringify(infos.value))
+    const saveAdresse = async () => {
+      try {
+        await createAddress({
+          street: infos.value.street,
+          postalCode: infos.value.postalCode,
+          city: infos.value.city,
+          state: infos.value.state,
+          country: infos.value.country,
+          label: infos.value.label,
+          isDefault: infos.value.isDefault
+        })
+        console.log('Adresse créée:', infos.value)
+        isAdding.value = false
+        // Reset form
+        infos.value = {
+          label: '',
+          street: '',
+          city: '',
+          state: '',
+          postalCode: '',
+          country: '',
+          isDefault: false
+        }
+        await fetchAdresses()
+      } catch (error) {
+        console.error('Erreur lors de la création:', error)
       }
-      editMode.value[field] = !editMode.value[field]
+    }
+
+    const supprimerAdresse = async (index) => {
+      try {
+        await deleteAddress(index)
+        await fetchAdresses()
+      } catch (error) {
+        console.error('Erreur lors de la suppression:', error)
+      }
+    }
+
+    const saveEditAdresse = async (index) => {
+      try {
+        const address = safeAddresses.value.find(addr => addr.id === index)
+        if (address) {
+          await editAddress(index, address)
+          console.log('Adresse modifiée:', address)
+          isEditingIndex.value = null
+          await fetchAdresses()
+        }
+      } catch (error) {
+        console.error('Erreur lors de la modification:', error)
+      }
     }
 
     onMounted(async () => {
       await fetchAdresses()
-      /* const saved = localStorage.getItem('userInfos')
-      if (saved) {
-        infos.value = JSON.parse(saved)
-        edited.value = { ...infos.value }
-      }
-
-      const savedAdresses = localStorage.getItem('userAdresses')
-      if (savedAdresses) {
-        infos.value = JSON.parse(savedAdresses)
-        editMode.value.infos !== null ? "" : infos.value.map(() => false)
-      } */
     })
-
-    // watch(infos, (newAdresses) => {
-    //   localStorage.setItem('userAdresses', JSON.stringify(newAdresses))
-    // }, { deep: true })
 
     return {
       infos,
-      edited,
-      editMode,
-      adresseSave,
-      infos,
-      ajouterAdresse,
+      loading,
+      error,
       supprimerAdresse,
-      editAdresse,
       saveAdresse,
-      placeholderTravail,
       safeAddresses,
       addressesData,
-
+      isAdding,
+      isEditingIndex,
+      saveEditAdresse
     }
   }
 }
