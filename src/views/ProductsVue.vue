@@ -15,36 +15,46 @@
       <!-- POPUP -->
       <div v-if="modalProduit"
         class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center">
-        <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
-          <img :src="modalProduit.images" alt="image produit" class="w-[300px] h-auto object-cover" />
+        <div class="bg-quinary border border-gold p-8 flex gap-10 w-[90%] max-w-4xl relative">
 
-          <div class="flex flex-col justify-center">
-            <Typography class="mb-2" variant="h2" font="scholar" weight="regular" theme="gold">
-              {{ modalProduit.name }}
-            </Typography>
-            <Typography class="mb-4" variant="h3" font="halenoir" weight="regular" theme="gold">
-              {{ modalProduit.price }} €
+          <div class="w-full flex flex-col p-10 ">
+            <img :src="modalProduit.images" alt="image produit"
+              style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)" class="w-300" />
+
+            <div class="flex justify-between pt-5 ">
+              <Typography variant="h2" font="scholar" weight="regular" theme="gold">
+                {{ modalProduit.name }}
+              </Typography>
+              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">
+                {{ modalProduit.price }} EUR
+              </Typography>
+            </div>
+            <hr class="w-full border-gold pt-10">
+          </div>
+
+          <div class="flex flex-col w-full justify-center ">
+            <Typography variant=" h3" font="halenoir" weight="regular" theme="gold" class="pb-6">
+              Sélectionnez votre taille
             </Typography>
 
-            <p class="text-gold mb-2">Sélectionnez votre taille</p>
-            <div class="flex gap-2 mb-4">
+            <div class="flex w-full gap-4 mb-6">
               <Button v-for="taille in tailles" :key="taille" @click="selectTaille(modalProduit.id, taille)"
-                :variant="selectedTaille[modalProduit.id] === taille ? 'primary' : 'secondary'" size="small">
+                :variant="selectedTaille[modalProduit.id] === taille ? 'primary' : 'secondary'" class="w-full">
                 {{ taille }}
               </Button>
             </div>
 
-            <Button @click="validerAjoutPanier" variant="secondary" size="medium">
+            <Button @click="validerAjoutPanier" variant="secondary">
               AJOUTER
             </Button>
           </div>
 
-          <Button class="absolute top-4 right-4 text-gold text-2xl" @click="fermerPopup">
-            ✕
+
+          <Button class="absolute top-4 right-4 w-15" @click="fermerPopup">
+            <img src="../assets/img/svg/icons/cross.svg" alt="close icon">
           </Button>
         </div>
       </div>
-
 
       <div class="flex flex-wrap justify-center gap-12 mt-12">
         <div v-for="produit in produit" :key="produit.id"

@@ -13,10 +13,10 @@
           <img src="../assets/img/png/pull.png" class="w-[260px] shadow-lg rotate-[-2deg] cursor-pointer" />
         </RouterLink>
         <RouterLink :to="`/product/2`">
-          <img src="../assets/img/png/jean.png" class="w-[260px] shadow-lg rotate-[1deg] cursor-pointer" />
+          <img src="../assets/img/png/jeanmokeup3.png" class="w-[260px] shadow-lg rotate-[1deg] cursor-pointer" />
         </RouterLink>
         <RouterLink :to="`/product/3`">
-          <img src="../assets/img/png/t-shirt.png" class="w-[360px] shadow-lg rotate-[2deg] cursor-pointer" />
+          <img src="../assets/img/png/collection2.png" class="w-[360px] shadow-lg rotate-[2deg] cursor-pointer" />
         </RouterLink>
       </div>
 
@@ -30,12 +30,12 @@
           </RouterLink>
         </div>
 
-        <div class="text-gold text-base sm:text-lg italic font-light text-center px-6 max-w-sm">
-          <img src="../assets/img/svg/separatorBubbles.svg" class="w-8 sm:w-12 mb-4 mx-auto" />
-          <Typography variant="h1" component="h1" font="scholar" theme="gold" class="leading-relaxed">
-            “L’art lave notre âme de la <br />poussière du quotidien.”<br />— Pablo Picasso
+        <div class="tsm:text-lg text-center px-6 ">
+          <img src="../assets/img/svg/separatorBubbles.svg" class="w-10 sm:w-20 mb-4 mr-4 mx-auto rotate-160" />
+          <Typography variant="h1" component="h1" font="scholar" weight="light" theme="gold" class="leading-relaxed">
+            “L’art lave notre âme de la <br />poussière du quotidien.”<br>Pablo Picasso
           </Typography>
-          <img src="../assets/img/svg/separatorBubbles.svg" class="w-8 sm:w-12 mt-4 mx-auto rotate-180" />
+          <img src="../assets/img/svg/separatorBubbles.svg" class="w-8 sm:w-20 mr-60 mx-auto rotate-350" />
         </div>
       </div>
 
