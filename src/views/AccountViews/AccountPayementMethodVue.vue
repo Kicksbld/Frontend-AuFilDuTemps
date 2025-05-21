@@ -13,36 +13,34 @@
         <Button @click="handleLogOut" variant="secondary">Log Out</Button>
       </div>
 
-      <div class="p-0 md:p-10 space-y-16">
+      <div v-if="loading" class="text-center py-4">
+        <Typography variant="h2" font="scholar" theme="gold">
+          Chargement des informations...
+        </Typography>
+      </div>
+
+      <div v-else class="p-0 md:p-10 space-y-16">
 
         <div class="flex flex-col lg:flex-row justify-between gap-10">
           <div class="flex flex-col sm:flex-row gap-8 flex-wrap">
             <div class="flex flex-col">
               <Typography variant="h1" font="scholar" theme="gold">Nom</Typography>
-              <div v-if="modesEdition.nomPrenom">
-                <input type="text" v-model="edited.name" :placeholder="placeholder"
+              <div v-if="editingField === 'name'">
+                <input type="text" v-model="infos.name" :placeholder="placeholder"
                   class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
               </div>
               <div v-else>
                 <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ infos.name }}</Typography>
               </div>
             </div>
-
-            <div class="flex flex-col">
-              <Typography variant="h1" font="scholar" theme="gold">Prénom</Typography>
-              <div v-if="modesEdition.nomPrenom">
-                <input type="text" v-model="edited.prenom" :placeholder="placeholder"
-                  class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
-              </div>
-              <div v-else>
-                <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ infos.prenom }}</Typography>
-              </div>
-            </div>
           </div>
 
           <div class="pt-4 self-start">
-            <Button variant="secondary" class="h-[40px]" @click="toggleEdition('nomPrenom')">
-              {{ modesEdition.nomPrenom ? 'Sauvegarder' : 'Modifier' }}
+            <Button v-if="editingField === 'name'" variant="secondary" class="h-[40px]" @click="handleToggleAndSave('name')">
+              Sauvegarder
+            </Button>
+            <Button v-else variant="secondary" class="h-[40px]" @click="startEditing('name')">
+              Modifier
             </Button>
           </div>
         </div>
@@ -56,8 +54,8 @@
         <div class="flex flex-col lg:flex-row justify-between gap-6">
           <div class="flex flex-col">
             <Typography variant="h1" font="scholar" theme="gold">Adresse mail</Typography>
-            <div v-if="modesEdition.email">
-              <input type="text" v-model="edited.email" :placeholder="placeholder"
+            <div v-if="editingField === 'email'">
+              <input type="text" v-model="infos.email" :placeholder="placeholder"
                 class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
             </div>
             <div v-else>
@@ -65,8 +63,11 @@
             </div>
           </div>
           <div class="pt-4 self-start">
-            <Button variant="secondary" class="h-[40px]" @click="toggleEdition('email')">
-              {{ modesEdition.email ? 'Sauvegarder' : 'Modifier' }}
+            <Button v-if="editingField === 'email'" variant="secondary" class="h-[40px]" @click="handleToggleAndSave('email')">
+              Sauvegarder
+            </Button>
+            <Button v-else variant="secondary" class="h-[40px]" @click="startEditing('email')">
+              Modifier
             </Button>
           </div>
         </div>
@@ -80,17 +81,20 @@
         <div class="flex flex-col lg:flex-row justify-between gap-6">
           <div class="flex flex-col">
             <Typography variant="h1" font="scholar" theme="gold">Téléphone</Typography>
-            <div v-if="modesEdition.telephone">
-              <input type="text" v-model="edited.telephone" :placeholder="placeholder"
+            <div v-if="editingField === 'phoneNumber'">
+              <input type="text" v-model="infos.phoneNumber" :placeholder="placeholder"
                 class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
             </div>
             <div v-else>
-              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ infos.telephone }}</Typography>
+              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ infos.phoneNumber }}</Typography>
             </div>
           </div>
           <div class="pt-4 self-start">
-            <Button variant="secondary" class="h-[40px]" @click="toggleEdition('telephone')">
-              {{ modesEdition.telephone ? 'Sauvegarder' : 'Modifier' }}
+            <Button v-if="editingField === 'phoneNumber'" variant="secondary" class="h-[40px]" @click="handleToggleAndSave('phoneNumber')">
+              Sauvegarder
+            </Button>
+            <Button v-else variant="secondary" class="h-[40px]" @click="startEditing('phoneNumber')">
+              Modifier
             </Button>
           </div>
         </div>
@@ -111,6 +115,10 @@ import Button from '../../UI/design-system/Button.vue';
 import { authClient } from '../../lib/auth-client';
 import { useSessionDataStore } from '../../stores/getUserSession';
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
+import { useApi } from "../../stores/dataBaseData"
+import { users } from "../../services/index.js"
+
+const { run: updateUser } = useApi(users.update)
 
 export default {
   components: {
@@ -120,67 +128,69 @@ export default {
   },
   data() {
     return {
-      userData: null,
-      modesEdition: {
-        nomPrenom: false,
-        email: false,
-        telephone: false,
-      },
       infos: {
         name: '',
-        prenom: '',
         email: '',
-        telephone: '',
+        phoneNumber: '',
       },
-      edited: {
-        name: '',
-        prenom: '',
-        email: '',
-        telephone: '',
-      },
+      editingField: null,
+      loading: true,
     };
   },
   mounted() {
     this.fetchUserData();
   },
   methods: {
-    async fetchUserData() {
-      const sessionStore = useSessionDataStore();
-      await sessionStore.fetchSession();
-      const session = sessionStore.getData;
+    startEditing(field) {
+      this.editingField = field;
+    },
 
-      if (session?.user) {
-        this.userData = session.user;
-        this.infos = {
-          name: session.user.name || '',
-          prenom: session.user.prenom || '',
-          email: session.user.email || '',
-          telephone: session.user.phoneNumber || '',
-        };
-      } else {
-        console.warn('Aucun utilisateur trouvé');
+    async fetchUserData() {
+      this.loading = true;
+      try {
+        const sessionStore = useSessionDataStore();
+        await sessionStore.fetchSession();
+        const session = sessionStore.getData;
+
+        if (session?.user) {
+          this.userData = session.user;
+          this.infos = {
+            name: session.user.name || '',
+            email: session.user.email || '',
+            phoneNumber: session.user.phoneNumber || '',
+            id: session.user.id || '',
+          };
+        } else {
+          console.warn('Aucun utilisateur trouvé');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        this.loading = false;
       }
     },
 
-    toggleEdition(champ) {
-      if (champ === 'nomPrenom') {
-        if (this.modesEdition.nomPrenom) {
-          this.infos.name = this.edited.name;
-          this.infos.prenom = this.edited.prenom;
-        } else {
-          this.edited.name = this.infos.name;
-          this.edited.prenom = this.infos.prenom;
-        }
-        this.modesEdition.nomPrenom = !this.modesEdition.nomPrenom;
-      } else {
-        if (this.modesEdition[champ]) {
-          this.infos[champ] = this.edited[champ];
-        } else {
-          this.edited[champ] = this.infos[champ];
-        }
-        this.modesEdition[champ] = !this.modesEdition[champ];
+    async handleToggleAndSave(field) {
+      if (!this.infos.id) {
+        console.error('No user ID found');
+        return;
       }
-      console.log('Edit:', edited.name);
+      
+      this.loading = true;
+      try {
+        console.log('infos', this.infos[field]);
+        
+        await updateUser(this.infos.id, {
+          [field]: this.infos[field]
+        });
+        
+        this.editingField = null;
+        await this.fetchUserData();
+      } catch (error) {
+        console.error('Error updating user:', error);
+      } finally {
+        this.loading = false;
+      }
     },
 
     async handleLogOut() {

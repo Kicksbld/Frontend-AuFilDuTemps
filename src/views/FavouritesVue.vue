@@ -16,7 +16,7 @@
 
     <div v-if="loading" class="text-center py-4">
       <Typography variant="h2" font="scholar" theme="gold">
-        Chargement des commandes...
+        Chargement des Favoris...
       </Typography>
     </div>
 
