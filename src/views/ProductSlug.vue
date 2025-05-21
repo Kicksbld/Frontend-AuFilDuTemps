@@ -54,18 +54,17 @@
         </Typography>
       </div>
     </div>
-    <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="regular" theme="gold">
+    <Typography class="mt-[10%] mb-[3%]" variant="h1" component="h1" font="halenoir" weight="regular" theme="gold">
       Voir plus
     </Typography>
-    <div class="grid grid-cols-6 gap-[2%] items-center justify-center">
-      <div v-for="produit in articlesSimilaires" :key="produit.id"
-        class="relative w-full h-[300px] overflow-hidden rounded-lg">
+    <div class="grid grid-cols-5 gap-[1%] items-center justify-center ">
+      <div v-for="produit in articlesSimilaires" :key="produit.id" class="relative w-full h-[300px] overflow-hidden">
         <router-link :to="`/product/${produit.id}`">
           <img class="w-full h-full object-cover" :src="produit.images" alt="produit img"
-            style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%)" />
+            style="clip-path: polygon(0% 10%, 100% 10%, 95% 100%, 0% 100%)" />
         </router-link>
 
-        <img @click.stop="ajouterAuxFavoris(produit)" class="w-8 absolute bottom-3 right-3 cursor-pointer z-10"
+        <img @click.stop="ajouterAuxFavoris(produit)" class="w-8  absolute bottom-3 right-3 cursor-pointer z-10"
           :src="isProduitFavori(produit) ? favorieFilled : favorieOutline" alt="like icon" />
       </div>
     </div>
@@ -74,7 +73,7 @@
 
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSessionDataStore } from "../stores/getUserSession";
 import Typography from '../UI/design-system/Typography.vue'
@@ -94,6 +93,7 @@ const produit = ref(null)
 const imagePrincipale = ref(null)
 const selectedTaille = ref(null)
 const isLiked = ref(false)
+
 const isProduitFavori = (produit) => {
   return favoris.value.some(fav => fav.id === produit.id)
 }
@@ -119,9 +119,14 @@ const fetchArticlesSimilaires = async () => {
     if (!response.ok) throw new Error('Erreur chargement articles similaires')
     const data = await response.json()
 
-    const filtres = data.filter(p => p.id !== route.params.id)
+    const autresProduits = data.filter(p => p.id !== parseInt(route.params.id))
 
-    articlesSimilaires.value = filtres.slice(0, 6)
+    articlesSimilaires.value = autresProduits
+
+
+    const favoris = JSON.parse(localStorage.getItem('favoris')) || []
+    isLiked.value = favoris.some(fav => fav.id === data.id)
+
   } catch (error) {
     console.error('Erreur articles similaires :', error)
   }
@@ -137,7 +142,7 @@ const ajouterAuxFavoris = (produit) => {
     return
   }
 
-  let favoris = JSON.parse(localStorage.getItem('favoris')) || []
+  const favoris = JSON.parse(localStorage.getItem('favoris')) || []
   const index = favoris.findIndex(fav => fav.id === produit.id)
 
   if (index === -1) {
@@ -184,5 +189,10 @@ const addToCart = () => {
 onMounted(() => {
   fetchProduit()
   fetchArticlesSimilaires()
+})
+
+watch(() => route.params.id, async () => {
+  await fetchProduit()
+  await fetchArticlesSimilaires()
 })
 </script>
