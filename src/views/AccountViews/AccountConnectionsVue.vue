@@ -24,25 +24,28 @@
       </Typography>
     </div>
 
-    <div v-else class="flex overflow-x-auto gap-6 px-4 py-6 justify-center">
+    <div v-else>
       <div class="px-6 sm:px-10 md:px-20 mx-auto mt-8">
         <div class=" flex-col sm:flex-row justify-between gap-10">
 
           <div class="mb-6 ">
             <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">Sexe</Typography>
             <div class="flex items-center gap-4 justify-between">
-              <div v-if="editMode.gender">
-                <input type="text" v-model="edited.gender" placeholder="Entrez votre gender"
-                  class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+              <div>
+                <select
+                  class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none"
+                  v-model="infos.gender" @change="handleToggleAndSave('gender')">
+                  <option value="">Select Gender</option>
+                  <option v-for="option in genderOptions" :key="option.value" :value="option.value">
+                    {{ option.label }}
+                  </option>
+                </select>
+
               </div>
-              <div v-else>
-                <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ safePreference.gender }}
+              <div>
+                <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{
+                  formatEnum(safePreference.gender) }}
                 </Typography>
-              </div>
-              <div @click="handleToggleAndSave('gender')" class="flex ">
-                <Button variant="secondary">
-                  {{ editMode.gender ? 'OK' : 'Modifier' }}
-                </Button>
               </div>
             </div>
           </div>
@@ -50,19 +53,21 @@
           <div class="mb-6">
             <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">Taille</Typography>
             <div class="flex items-center gap-4 justify-between">
-              <div v-if="editMode.preferredSize">
-                <input type="text" v-model="edited.preferredSize" placeholder="Entrez votre preferredSize"
-                  class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+              <div>
+                <select v-model="infos.preferredSize" @change="handleToggleAndSave('preferredSize')"
+                  class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none">
+                  <option value="">Select Size</option>
+                  <option v-for="option in sizeOptions" :key="option.value" :value="option.value">
+                    {{ option.label }}
+                  </option>
+                </select>
+
               </div>
-              <div v-else>
-                <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ safePreference.preferredSize
-                  }}
+              <div>
+                <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{
+                  formatEnum(safePreference.preferredSize) }}
+
                 </Typography>
-              </div>
-              <div @click="handleToggleAndSave('preferredSize')">
-                <Button variant="secondary">
-                  {{ editMode.preferredSize ? 'OK' : 'Modifier' }}
-                </Button>
               </div>
             </div>
           </div>
@@ -73,18 +78,21 @@
           <Typography variant="h1" font="scholar" theme="gold" class="block font-semibold mb-1">Couleur favorite
           </Typography>
           <div class="flex items-center gap-4 justify-between">
-            <div v-if="editMode.favoriteColor">
-              <input type="text" v-model="edited.favoriteColor" placeholder="Entrez votre couleur favorite"
-                class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none" />
+            <div>
+              <select
+                class="mt-1 text-scholar linear-bg block px-4 py-3 border-2 focus:bg-primary border-gold rounded-md bg-primary text-[#756048] focus:outline-none"
+                v-model="infos.favoriteColor" @change="handleToggleAndSave('favoriteColor')">
+                <option value="">Select Color</option>
+                <option v-for="option in colorOptions" :key="option.value" :value="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+
             </div>
-            <div v-else>
-              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{ safePreference.favoriteColor }}
+            <div>
+              <Typography variant="h3" font="halenoir" weight="regular" theme="gold">{{
+                formatEnum(safePreference.favoriteColor) }}
               </Typography>
-            </div>
-            <div @click="handleToggleAndSave('favoriteColor')">
-              <Button variant="secondary">
-                {{ editMode.favoriteColor ? 'OK' : 'Modifier' }}
-              </Button>
             </div>
           </div>
         </div>
@@ -102,13 +110,13 @@
 
 <script>
 import { ref, onMounted, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
 import { preferences } from '@/services';
 import { useApi } from "@/stores/dataBaseData";
-
+import api from "../../api/api"
+import { formatEnum, genderOptions, sizeOptions, colorOptions } from '../../services/enum';
 
 export default {
   components: {
@@ -117,13 +125,13 @@ export default {
     Button
   },
   setup() {
-    const router = useRouter()
 
     const { data: preferencesData, error, loading, run: fetchPreferences } = useApi(preferences.list)
 
     const safePreference = computed(() => {
       return preferencesData.value || []
     })
+
     watch(preferencesData, (newValue) => {
       console.log('Adresse :', newValue)
     }, { immediate: true })
@@ -134,37 +142,38 @@ export default {
       favoriteColor: ''
     })
 
-    const edited = ref({ ...infos.value })
-    const editMode = ref({
-      gender: false,
-      preferredSize: false,
-      favoriteColor: false
-    })
-
     onMounted(async () => {
       await fetchPreferences()
-      const saved = localStorage.getItem('userInfos')
-      if (saved) {
-        infos.value = JSON.parse(saved)
-        edited.value = { ...infos.value }
-      }
     })
 
-    const handleToggleAndSave = (field) => {
-      if (editMode.value[field]) {
-        infos.value[field] = edited.value[field]
-        localStorage.setItem('userInfos', JSON.stringify(infos.value))
+    const handleToggleAndSave = async (field) => {
+      try {
+        // Create the update object with the correct field
+        const updateData = {
+          [field]: infos.value[field]
+        }
+
+        // Use the API directly to make a PATCH request
+        await api.patch('/preferences', updateData)
+
+        // Refresh the data from the API
+        await fetchPreferences()
+      } catch (error) {
+        console.error('Error updating preference:', error)
       }
-      editMode.value[field] = !editMode.value[field]
     }
 
     return {
       infos,
-      edited,
-      editMode,
       handleToggleAndSave,
       safePreference,
-      preferencesData
+      preferencesData,
+      loading,
+      error,
+      formatEnum,
+      genderOptions,
+      sizeOptions,
+      colorOptions
     }
   }
 }
