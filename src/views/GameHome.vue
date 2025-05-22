@@ -21,13 +21,13 @@
               <div
                 v-for="(place, index) in order"
                 :key="index"
-                :class="[place.style, 'transition-all duration-300 ease-in-out']"
+                :class="[place.style, 'card-overlay transition-all duration-300 ease-in-out']"
                 :style="{ backgroundImage: `url(${bgCard})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }"
               >
                 <div class="w-full h-full flex flex-col items-center justify-end pb-6">
                   <div class="text-center flex flex-col items-center gap-2">
-                    <h2 class="font-scholar text-7xl" :class="place.name === '1' ? 'text-primary' : 'text-gold'">{{ place.name }}</h2>
-                    <p class="font-scholar text-xl max-w-[75%]" :class="place.name === '1' ? 'text-primary' : 'text-gold'">{{ place.details }}</p>
+                    <h2 class="font-scholar text-7xl" :class="place.name === '1' ? 'text-quinary' : 'text-gold'">{{ place.name }}</h2>
+                    <p class="font-scholar text-xl max-w-[75%]" :class="place.name === '1' ? 'text-quinary' : 'text-gold'">{{ place.details }}</p>
                   </div>
                   
                 </div>

@@ -21,14 +21,14 @@
         </Typography>
       </div>
 
-      <div v-else-if="!safeCoupons" class="text-center py-4">
+      <div v-else-if="safeCoupons.length === 0" class="text-center py-4">
         <Typography variant="h2" font="scholar" theme="gold">
           Aucun coupon disponible
         </Typography>
       </div>
 
-      <div v-else>
-        <img v-if="safeCoupons[0]?.imageUrl" alt="Coupon" :src="safeCoupons[0].imageUrl" />
+      <div v-else v-for="coupon in safeCoupons" :key="coupon.id">
+        <img class="max-w-[800px] ml-10" v-if="coupon.imageUrl" alt="Coupon" :src="coupon.imageUrl" />
         <Typography v-else variant="h2" font="scholar" theme="gold">
           Image du coupon non disponible
         </Typography>

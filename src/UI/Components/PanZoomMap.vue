@@ -11,7 +11,7 @@
         <!-- Le personnage est dans le même conteneur transformé -->
         <div
           class="absolute"
-          :style="{ top: '475px', left: '720px' }"
+          :style="{ top: randomPos.top, left: randomPos.left }"
           data-selectable
           @click="$emit('characterFound')"
         >
@@ -30,8 +30,33 @@ export default {
   name: "PanZoomMap",
   emits: ["characterFound"],
 
+  data() {
+    return {
+      randomPos: {
+        top: '475px',
+        left: '720px'
+      }
+    }
+  },
   mounted() {
     const container = document.getElementById("myPanzoom");
+    const possiblePositions = [
+      {
+        top: '475px',
+        left: '720px'
+      },
+      {
+        top: '120px',
+        left: '30px'
+      },
+      {
+        top: '40px',
+        left: '850px'
+      },
+    ]
+
+    this.randomPos = possiblePositions[Math.floor(Math.random() * possiblePositions.length)];
+      
     const options = {
       maxScale: 5,
       wheel: {

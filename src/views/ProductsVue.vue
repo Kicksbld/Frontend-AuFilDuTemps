@@ -3,10 +3,17 @@
 
   <div class="w-full bg-quinary p-10">
     <ParticlesBackground />
-    <div v-if="loadingPanier" class="flex justify-center items-center w-full">
-      <fwb-spinner color="gray" size="10" />
+    <div v-if="loading" class="fixed inset-0 bg-quinary bg-opacity-80 z-50 flex items-center justify-center">
+      <div class="text-center">
+        <Typography variant="h2" font="scholar" theme="gold" class="mt-4">
+          Chargement des produits...
+        </Typography>
+      </div>
     </div>
-    <div class="pt-40 min-h-screen flex flex-col">
+
+    <div v-if="loadingPanier" class="flex justify-center items-center w-full">
+    </div>
+    <div v-else class="pt-40 min-h-screen flex flex-col">
       <div class="flex">
         <img src="../assets/img/svg/produits.svg" />
         <hr class="w-full my-2 border-[1px] border-gold mt-45" />
@@ -38,9 +45,9 @@
             </Typography>
 
             <div class="flex w-full gap-4 mb-6">
-              <Button v-for="taille in tailles" :key="taille" @click="selectTaille(modalProduit.id, taille)"
-                :variant="selectedTaille[modalProduit.id] === taille ? 'primary' : 'secondary'" class="w-full">
-                {{ taille }}
+              <Button v-for="taille in tailles" :key="taille.value" @click="selectTaille(modalProduit.id, taille.value)"
+                :variant="selectedTaille[modalProduit.id] === taille.value ? 'primary' : 'secondary'" class="w-full">
+                {{ taille.label }}
               </Button>
             </div>
 
@@ -91,116 +98,91 @@
         </div>
       </div>
     </div>
-
-
-    <div>
-      <!-- <Typography class="mt-[15%] mb-[5%]" variant="h1" component="h1" font="halenoir" weight="regular" theme="gold">
-        Voir plus
-      </Typography>
-      <div class="grid grid-cols-6 gap-[2%] items-center justify-center">
-        <div v-for="produit in articlesSimilaires" :key="produit.id"
-          class="relative w-full h-[300px] overflow-hidden rounded-lg">
-          <router-link :to="`/product/${produit.id}`">
-            <img class="w-full h-full object-cover" :src="produit.images" alt="produit img"
-              style="clip-path: polygon(0% 10%, 100% 10%, 100% 100%, 0% 100%)" />
-          </router-link>
-
-          <img @click.stop="ajouterAuxFavoris(produit)" class="w-8 absolute bottom-3 right-3 cursor-pointer z-10"
-            :src="isProduitFavori(produit) ? favorieFilled : favorieOutline" alt="like icon" />
-        </div>
-      </div> -->
-
-
-
+      <div>
     </div>
-
   </div>
-  <!-- 
-  <fwb-carousel :pictures="pictures" /> -->
-
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Typography from '../UI/design-system/Typography.vue'
 import Button from '../UI/design-system/Button.vue'
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
-import { FwbSpinner } from 'flowbite-vue'
 import favorieFilled from '../assets/img/svg/icons/favorie-filled-beige.svg';
 import favorieOutline from '../assets/img/svg/icons/favorie-outline-beige.svg';
 import { useSessionDataStore } from "../stores/getUserSession";
+import { useApi } from '../stores/dataBaseData';
+import { favorites } from '../services';
+import api from '../api/api';
+import { sizeOptions } from '../services/enum';
 
-
-const route = useRoute()
 const router = useRouter()
 const produit = ref([])
-const tailles = ['XS', 'S', 'M', 'L', 'XL']
+const tailles = sizeOptions
 const selectedTaille = ref({})
+const loading = ref(true)
+
 const isProduitFavori = (produit) => {
-  return favoris.value.some(fav => fav.id === produit.id)
+  return favoritesData.value?.some(fav => fav.product?.id === produit.id) || false;
 }
 
-const favoris = ref(JSON.parse(localStorage.getItem('favoris')) || [])
+const { data: favoritesData, run: fetchFavorites } = useApi(favorites.list)
+
 const sessionStore = useSessionDataStore();
-
-onMounted(() => {
-  sessionStore.fetchSession();
-});
-
-const user = computed(() => sessionStore.getUserData);
 
 const fetchProduit = async () => {
   try {
-    const response = await fetch(`https://backend-au-fil-du-temps.vercel.app/products`)
-    if (!response.ok) throw new Error('Produit non trouvé')
-    const data = await response.json()
+    const { data } = await api.get('/products')
     produit.value = data
   } catch (error) {
     console.error('Erreur lors de la récupération du produit :', error)
+    produit.value = [] // Set empty array on error
   }
 }
+
+onMounted(async () => {
+  try {
+    loading.value = true
+    await Promise.all([
+      fetchProduit(),
+      fetchFavorites(),
+      sessionStore.fetchSession()
+    ])
+  } catch (error) {
+    console.error('Error during initialization:', error)
+  } finally {
+    loading.value = false
+  }
+})
+
+const user = computed(() => sessionStore.getUserData);
 
 const selectTaille = (produitId, taille) => {
   selectedTaille.value[produitId] = taille
 }
 
-const ajouterAuxFavoris = (produit) => {
-  const index = favoris.value.findIndex(fav => fav.id === produit.id)
+const ajouterAuxFavoris = async (produit) => {
   if (!user.value) {
     router.push('/log-in')
-    return;
+    return
   }
 
-  if (index === -1) {
-    favoris.value.push(produit)
-  } else {
-    favoris.value.splice(index, 1)
+  const isFavorite = isProduitFavori(produit)
+  try {
+    if (isFavorite) {
+      await api.delete(`/favorites/${produit.id}`)
+      console.log('Produit retiré des favoris')
+    } else {
+      await api.post(`/favorites/${produit.id}`)
+      console.log('Produit ajouté aux favoris')
+    }
+    await fetchFavorites() // Refresh the favorites list after change
+    console.log('Favoris mis à jour')
+  } catch (error) {
+    console.error('Erreur lors de la modification des favoris:', error)
   }
-  localStorage.setItem('favoris', JSON.stringify(favoris.value))
 }
-
-
-// const articlesSimilaires = ref([])
-
-// const fetchplusProduits = async () => {
-//   try {
-//     const response = await fetch(`https://backend-au-fil-du-temps.vercel.app/products`)
-//     if (!response.ok) throw new Error('Erreur chargement articles similaires')
-//     const data = await response.json()
-
-//     const filtres = data.filter(p => p.id !== route.params.id)
-
-//     articlesSimilaires.value = filtres.slice(0, 6)
-//   } catch (error) {
-//     console.error('Erreur articles similaires :', error)
-//   }
-// }
-
-onMounted(() => {
-  fetchProduit()
-  // fetchplusProduits()
-})
 
 const modalProduit = ref(null)
 
@@ -227,24 +209,23 @@ const validerAjoutPanier = () => {
   )
 
   if (!existeDeja) {
-    panier.push({ ...produit, taille })
+    panier.push({
+      id: produit.id,
+      taille: taille,
+      productId: produit.id,
+      name: produit.name,
+      price: produit.price,
+      images: produit.images?.[0],
+      stripeId: produit.stripeId,
+      description: produit.description
+    })
     localStorage.setItem('panier', JSON.stringify(panier))
   }
 
   fermerPopup()
-  router.push('/products')
+  router.push('/cart')
 }
 
-// import { FwbCarousel } from 'flowbite-vue'
-// import caroussel1 from '../assets/img/png/carous1.png';
-// import caroussel2 from '../assets/img/png/carous2.png';
-// import caroussel3 from '../assets/img/png/carous3.png';
-
-// const pictures = [
-//   { src: caroussel1, alt: 'Image 1' },
-//   { src: caroussel2, alt: 'Image 2' },
-//   { src: caroussel3, alt: 'Image 3' },
-// ]
 </script>
 
 <style>

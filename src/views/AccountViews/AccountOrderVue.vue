@@ -1,22 +1,25 @@
 <template>
-  <div class="w-full bg-quinary">
+  <div class="w-full bg-quinary min-h-screen">
     <ParticlesBackground />
 
-    <main class="grid place-content-center min-h-[20vh] w-full">
-
-
-    </main>
-
-    <div class="flex mt-10">
+   
+    <div class="flex mt-60">
       <img src="../../assets/img/svg/commandes.svg" />
       <hr class="w-full my-2 border-[1px]  border-gold mt-30" />
     </div>
 
-    <div v-if="loading" class="text-center py-4">
+    <div v-if="loading" class="text-center py-4 ">
       <Typography variant="h2" font="scholar" theme="gold">
         Chargement des commandes...
       </Typography>
     </div>
+
+    <div v-if="ordersData.length === 0" class="text-center py-4">
+      <Typography variant="h2" font="scholar" theme="gold">
+        Vous n'avez pas de commandes
+      </Typography>
+    </div>
+
 
     <div v-else-if="error" class="text-center py-4">
       <Typography variant="h2" font="scholar" theme="gold">
@@ -28,19 +31,24 @@
       <div v-for="(order) in ordersData" :key="order.id"
         class="min-w-[300px] max-w-[300px] bg-[#4C0B0C] flex-shrink-0 rounded-xl"
         :style="{ clipPath: 'polygon(0% 0%, 100% 5%, 100% 100%, 0% 98%)' }">
-        <RouterLink :to="`/product/${order.id}`">
+        <RouterLink :to="`/product/${order.items[0].product.id}`">
           <img class="w-full h-[250px] object-cover" :src="order.items[0].product.images?.[0]" alt="produit img"
             style="clip-path: polygon(0% 0%, 100% 5%, 100% 100%, 0% 95%)" />
 
 
           <div class="p-4 flex flex-col justify-between min-h-[200px]">
-            <div>
-              <Typography variant="h2" font="scholar" weight="regular" theme="gold">
-                {{ order.items[0].product.name }}
+            <div class="flex items-center justify-between gap-2" v-for="item in order.items">
+              <Typography  variant="h2" font="scholar" weight="regular" theme="gold">
+                {{ item.product.name }}
               </Typography>
-              <br />
               <Typography variant="h3" font="scholar" weight="regular" theme="gold">
-                {{ order.items[0].product.description }}
+                {{ item.product.price }} € * {{ item.quantity }}
+              </Typography>
+            </div>
+            <br />
+            <div>
+              <Typography variant="h3" font="scholar" weight="regular" theme="gold">
+                Total: {{ (order.totalAmount).toFixed(2) }} €
               </Typography>
             </div>
             <br />
