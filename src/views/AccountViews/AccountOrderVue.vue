@@ -1,22 +1,25 @@
 <template>
-  <div class="w-full bg-quinary">
+  <div class="w-full bg-quinary min-h-screen">
     <ParticlesBackground />
 
-    <main class="grid place-content-center min-h-[20vh] w-full">
-
-
-    </main>
-
-    <div class="flex mt-10">
+   
+    <div class="flex mt-60">
       <img src="../../assets/img/svg/commandes.svg" />
       <hr class="w-full my-2 border-[1px]  border-gold mt-30" />
     </div>
 
-    <div v-if="loading" class="text-center py-4">
+    <div v-if="loading" class="text-center py-4 ">
       <Typography variant="h2" font="scholar" theme="gold">
         Chargement des commandes...
       </Typography>
     </div>
+
+    <div v-if="ordersData.length === 0" class="text-center py-4">
+      <Typography variant="h2" font="scholar" theme="gold">
+        Vous n'avez pas de commandes
+      </Typography>
+    </div>
+
 
     <div v-else-if="error" class="text-center py-4">
       <Typography variant="h2" font="scholar" theme="gold">

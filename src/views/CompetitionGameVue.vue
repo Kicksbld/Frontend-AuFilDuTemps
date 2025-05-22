@@ -63,7 +63,7 @@ const handleGameEnd = () => {
         </Button>
       </div>
         <img class="absolute top-4  left-1/2 transform -translate-x-1/2 w-[80%] sm:w-[70%] md:w-[60%] lg:w-[50%] max-w-[450px]"
-            alt="ou est raph" src="../assets/img/svg/OuEstRaph.svg" />
+            alt="ou est raph" src="../assets/img/svg/OuestRaph.svg" />
         <div class="absolute items-end flex gap-8 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%]">
 
             <div class="flex flex-col space-y-[16px]">
