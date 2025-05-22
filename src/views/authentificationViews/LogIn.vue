@@ -33,6 +33,7 @@ import { authClient } from '../../lib/auth-client';
 import CustomInput from '../../UI/design-system/CustomInput.vue';
 import Typography from '../../UI/design-system/Typography.vue';
 import Button from '../../UI/design-system/Button.vue';
+import { useSessionDataStore } from '../../stores/getUserSession';
 
 export default {
   name: 'LogIn',
@@ -55,25 +56,31 @@ export default {
     async handleSubmit() {
       try {
         this.isLoading = true;
+        const sessionStore = useSessionDataStore();
 
         const { data, error } = await authClient.signIn.email({
           email: this.formData.email,
           password: this.formData.password
         }, {
-          onSuccess: (ctx)=>{
-            const authToken = ctx.response.headers.get("set-auth-token") // get the token from the response headers
-            // Store the token securely (e.g., in localStorage)
+          onSuccess: async (ctx) => {
+            const authToken = ctx.response.headers.get("set-auth-token");
             localStorage.setItem("bearer_token", authToken);
-
-            this.$router.push('/');
+            
+            // Fetch the session data
+            await sessionStore.fetchSession();
+            
+            // Only redirect after session is loaded
+            if (sessionStore.getSessionData) {
+              this.$router.push('/');
+            } else {
+              console.error('Session not loaded properly');
+            }
           }
         });
 
         if (error) {
           throw error;
         }
-
-        // Redirect to home page or dashboard after successful login
       } catch (err) {
         alert(err.message);
         console.error('Login error:', err);

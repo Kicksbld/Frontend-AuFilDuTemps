@@ -86,17 +86,23 @@ import { FwbSpinner } from 'flowbite-vue'; // 🧩 Ajout du spinner
 
 const panier = ref([]);
 const loadingPanier = ref(true); // 👈 état de chargement
-const productId = "price_1QxqwxBYXgW8ATru1sFnAEuu";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 onMounted(() => {
-  setTimeout(() => {
+ 
     const donnees = localStorage.getItem('panier');
     if (donnees) {
-      panier.value = JSON.parse(donnees);
+      const parsedPanier = JSON.parse(donnees);
+      // Ensure each product has a quantity of at least 1
+      panier.value = parsedPanier.map(produit => ({
+        ...produit,
+        quantité: produit.quantité || 1
+      }));
+      // Save back to localStorage with default quantities
+      localStorage.setItem('panier', JSON.stringify(panier.value));
     }
-    loadingPanier.value = false; // 👈 On désactive le loading une fois les données récupérées
-  }, 500); // 👈 petit délai pour voir le spinner, à ajuster selon ton cas
+    loadingPanier.value = false;
+
 })
 
 const supprimerArticle = (id) => {
@@ -125,22 +131,39 @@ const totalPanier = computed(() => {
 
 const handleCheckout = async () => {
   try {
+    // Create an array of items with their details
+    const items = panier.value.map(item => ({
+      priceId: item.stripeId,
+      quantity: item.quantité || 1,
+      productId: item.id,
+      price: item.price,
+      size: item.taille
+    }));
+
+    console.log('Items being sent:', items);
+
     const response = await fetch(`${BACKEND_URL}/payement`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        priceId: productId,
+        items: items,
+        totalAmount: totalPanier.value,
+        successUrl: `${window.location.origin}/order-review`
       }),
     });
 
     const data = await response.json();
+    console.log('Response from server:', data);
     if (data.url) {
+
       window.location.href = data.url;
+    } else {
+      console.error("No checkout URL received from server");
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error during checkout:", error);
   }
 };
 </script>

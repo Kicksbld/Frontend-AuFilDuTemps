@@ -92,3 +92,30 @@
 .linear-bg {
   box-shadow: 0px 4px 30px 0px rgba(231, 178, 118, 0.30);
 }
+
+.slide-in-left {
+  animation: slideInLeft 0.3s ease-in-out;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.card-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* foncé semi-transparent */
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.card-overlay > * {
+  position: relative;
+  z-index: 1;
+}

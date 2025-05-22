@@ -26,7 +26,7 @@
       </Typography>
     </div>
 
-    <div v-else-if="!loading && safeFavorites.length === 0"
+    <div v-else-if="safeFavorites.length === 0"
       class="flex flex-col items-center justify-center text-center text-lg text-gold gap-4">
       <Typography variant="h1" component="h1" font="scholar" weight="regular" theme="gold">Aucun favori pour le moment.
       </Typography>
@@ -69,7 +69,6 @@
       class="fixed inset-0 backdrop-blur-md bg-transparent z-50 flex items-center justify-center">
 
       <div class="bg-quinary border border-gold p-8 flex gap-10 w-[80%] max-w-4xl relative">
-        <img :src="produitSelectionne.images?.[0]" alt="image produit" class="w-[300px] h-auto object-cover" />
 
         <div class="w-full flex flex-col">
           <img :src="produitSelectionne.images" alt="image produit"
