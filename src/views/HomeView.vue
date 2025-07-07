@@ -1,6 +1,5 @@
 <script setup>
 import Header from "../UI/Components/Header.vue";
-import Separator from "../UI/Components/Separator.vue";
 import HeaderCollection from "../UI/Components/HeaderCollection.vue";
 import HeaderGame from "@/UI/Components/HeaderGame.vue";
 import ParticlesBackground from "@/UI/Components/ParticlesBackground.vue";
