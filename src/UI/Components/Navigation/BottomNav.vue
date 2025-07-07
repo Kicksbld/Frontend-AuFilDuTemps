@@ -16,7 +16,7 @@
 
     <div class="w-[1px] h-[85%] bg-gold"></div>
     <router-link to="/outfit-gallery">
-      <Typography variant="h3" font="scholar" theme="gold" class="hover:underline">Galerie D'outfit</Typography>
+      <Typography variant="h3" font="scholar" theme="gold" class="hover:underline">Galerie d'outfit</Typography>
     </router-link>
     <div class="w-[1px] h-[85%] bg-gold"></div>
     <router-link to="/cart" :class="[
@@ -30,7 +30,7 @@
     </router-link>
 
     <router-link v-else to="/log-in" class="text-gold ">
-      <Typography variant="h3" font="scholar" theme="gold" class="hover:underline">Log-in</Typography>
+      <Typography variant="h3" font="scholar" theme="gold" class="hover:underline">Se connecter</Typography>
     </router-link>
   </div>
 </template>

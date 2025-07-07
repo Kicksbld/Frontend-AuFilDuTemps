@@ -14,16 +14,15 @@
       </Typography>
     </div>
 
-    <div v-if="ordersData.length === 0" class="text-center py-4">
-      <Typography variant="h2" font="scholar" theme="gold">
-        Vous n'avez pas de commandes
-      </Typography>
-    </div>
-
-
     <div v-else-if="error" class="text-center py-4">
       <Typography variant="h2" font="scholar" theme="gold">
         Erreur lors du chargement des commandes
+      </Typography>
+    </div>
+
+    <div v-else-if="ordersData && ordersData.length === 0" class="text-center py-4">
+      <Typography variant="h2" font="scholar" theme="gold">
+        Vous n'avez pas de commandes
       </Typography>
     </div>
 

@@ -49,7 +49,7 @@ const handleGameEnd = () => {
 </script>
 
 <template>
-    <main class="grid relative place-content-center min-h-screen bg-[#E7B276] w-full">
+    <main class="grid z-50 relative place-content-center min-h-screen bg-[#E7B276] w-full">
       <div v-if="isCharacterFound" class="absolute bottom-4 right-4 bg-quinary p-4 rounded-lg flex items-center gap-4" :class="{ 'slide-in-left': isCharacterFound }">
         <Typography variant="h2" font="scholar" theme="gold">
           Vous avez trouvé Raph
@@ -62,7 +62,7 @@ const handleGameEnd = () => {
             terminer
         </Button>
       </div>
-        <img class="absolute top-4  left-1/2 transform -translate-x-1/2 w-[80%] sm:w-[70%] md:w-[60%] lg:w-[50%] max-w-[450px]"
+        <img class="absolute top-4 z-50  left-1/2 transform -translate-x-1/2 w-[80%] sm:w-[70%] md:w-[60%] lg:w-[50%] max-w-[450px]"
             alt="ou est raph" src="../assets/img/svg/OuestRaph.svg" />
         <div class="absolute items-end flex gap-8 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%]">
 

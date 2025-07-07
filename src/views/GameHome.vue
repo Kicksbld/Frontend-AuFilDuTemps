@@ -9,10 +9,10 @@
         <img src="../assets/img/svg/ouEstLeTee.svg" alt="ou est le tee">
         <div class="space-y-6">
           <Typography theme="gold" variant="h2" font="scholar">
-            Le but est simple, il faut retrouver Raph, le seule personnage habillé par notre marque dans cette carte en un temps imparti.
+            Le but est simple, il faut retrouver Raph, le seul personnage habillé par notre marque dans cette carte en un temps imparti.
           </Typography>
 
-          <Typography class="ml-20" theme="gold" variant="h2" font="scholar">
+          <Typography theme="gold" variant="h2" font="scholar">
             Les prix à gagner sont les suivants :
           </Typography>
 
@@ -21,10 +21,10 @@
               <div
                 v-for="(place, index) in order"
                 :key="index"
-                :class="[place.style, 'card-overlay transition-all duration-300 ease-in-out']"
-                :style="{ backgroundImage: `url(${bgCard})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }"
+                :class="[place.style, 'transition-all duration-300 ease-in-out']"
+                :style="{ backgroundImage: `url(${bgCard})`, backgroundRepeat: 'no-repeat', backgroundSize: '80%', backgroundPosition: 'bottom left' }"
               >
-                <div class="w-full h-full flex flex-col items-center justify-end pb-6">
+                <div class="w-full h-full flex flex-col items-center justify-start pt-4 pb-6">
                   <div class="text-center flex flex-col items-center gap-2">
                     <h2 class="font-scholar text-7xl" :class="place.name === '1' ? 'text-quinary' : 'text-gold'">{{ place.name }}</h2>
                     <p class="font-scholar text-xl max-w-[75%]" :class="place.name === '1' ? 'text-quinary' : 'text-gold'">{{ place.details }}</p>
@@ -66,7 +66,7 @@ export default {
     {
       name: '2',
       price: '500€',
-      style: 'relative w-[220px] aspect-square bg-primary rounded-lg',
+      style: 'relative w-[220px] aspect-square bg-primary rounded-lg card-overlay',
       details: "Si tu trouves Raph en moins de 1 minute, tu gagnes -10% !"
     },
     {
@@ -78,7 +78,7 @@ export default {
     {
       name: '3',
       price: '250€',
-      style: 'relative w-[220px] aspect-square  bg-primary rounded-lg',
+      style: 'relative w-[220px] aspect-square  bg-primary rounded-lg card-overlay',
       details: "Si tu trouves Raph en moins de 30 secondes, tu gagnes -20% !"
     },
   ]);

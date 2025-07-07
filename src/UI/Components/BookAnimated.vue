@@ -23,7 +23,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import bookModel from '../../assets/3D_assets/3dBook/Livre anim.gltf?url';
+const bookModel = '/3D_assets/3dBook/Livre anim.gltf';
 
 import Button from '../design-system/Button.vue'
 import { useRouter } from 'vue-router';
